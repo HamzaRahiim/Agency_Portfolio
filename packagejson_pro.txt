@@ -1,0 +1,63 @@
+{
+  "name": "property_production", // Project name (must be lowercase, no spaces)
+  "version": "0.1.0", // Project version (MAJOR.MINOR.PATCH)
+  "private": true, // Prevents accidental publishing to npm registry
+  
+  "scripts": {
+    // Development & Production
+    "dev": "next dev", // Start development server on localhost:3000
+    "dev:turbo": "next dev --turbo", // Start dev server with Turbo mode (faster)
+    "build": "next build", // Create optimized production build
+    "start": "next start", // Start production server (run after build)
+    
+    // Code Quality
+    "lint": "eslint .", // Check code for errors and warnings
+    "lint:fix": "eslint . --fix", // Auto-fix linting errors
+    "format": "prettier --write .", // Format all files with Prettier
+    "format:check": "prettier --check .", // Check if files are formatted
+    
+    // TypeScript
+    "type-check": "tsc --noEmit", // Check TypeScript types without building
+    
+    // Testing (add jest/vitest if needed)
+    "test": "jest", // Run all tests
+    "test:watch": "jest --watch", // Run tests in watch mode
+    
+    // Database (if using Prisma)
+    "db:push": "prisma db push", // Push schema changes to database
+    "db:studio": "prisma studio", // Open Prisma Studio GUI
+    "db:migrate": "prisma migrate dev", // Create and run migrations
+    
+    // Git Hooks
+    "prepare": "husky install", // Setup git hooks (runs after npm install)
+    
+    // Deployment
+    "preview": "next build && next start", // Build and preview locally
+    "clean": "rm -rf .next out node_modules", // Clean build files
+    
+    // Analytics & Performance
+    "analyze": "ANALYZE=true next build" // Analyze bundle size
+  },
+  
+  "dependencies": {
+    "next": "16.0.3", // Next.js framework (required to run app)
+    "react": "19.2.0", // React library (required for UI)
+    "react-dom": "19.2.0" // React DOM renderer (required for web)
+  },
+  
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4", // Tailwind CSS PostCSS plugin (dev only)
+    "@types/node": "^20", // TypeScript types for Node.js (dev only)
+    "@types/react": "^19", // TypeScript types for React (dev only)
+    "@types/react-dom": "^19", // TypeScript types for React DOM (dev only)
+    "eslint": "^9", // Linter to find code errors (dev only)
+    "eslint-config-next": "16.0.3", // ESLint config for Next.js (dev only)
+    "tailwindcss": "^4", // Tailwind CSS framework (dev only - compiles to CSS)
+    "typescript": "^5" // TypeScript compiler (dev only - compiles to JS)
+  },
+  
+  "engines": {
+    "node": ">=18.0.0", // Minimum Node.js version required
+    "npm": ">=9.0.0" // Minimum npm version required
+  }
+}

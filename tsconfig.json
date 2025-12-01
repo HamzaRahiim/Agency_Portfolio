@@ -1,27 +1,79 @@
 {
   "compilerOptions": {
+    // JavaScript version to compile to (ES2017 = async/await, spread operator)
     "target": "ES2017",
+
+    // Available JavaScript APIs (dom = browser APIs, esnext = latest features)
     "lib": ["dom", "dom.iterable", "esnext"],
+
+    // Allow JavaScript files in TypeScript project
     "allowJs": true,
+
+    // Skip type checking in node_modules for faster compilation
     "skipLibCheck": true,
+
+    // Enable all strict type-checking rules (catches most bugs)
     "strict": true,
+
+    // TypeScript only checks code, doesn't output .js files (Next.js handles compilation)
     "noEmit": true,
+
+    // Better compatibility with CommonJS modules (allows "import React from 'react'")
     "esModuleInterop": true,
+
+    // Use latest module system (import/export instead of require)
     "module": "esnext",
+
+    // How TypeScript resolves imports (bundler = works with Next.js/Webpack)
     "moduleResolution": "bundler",
+
+    // Allow importing JSON files as modules
     "resolveJsonModule": true,
+
+    // Each file compiled independently (required for fast compilers like SWC)
     "isolatedModules": true,
+
+    // How to transform JSX (react-jsx = auto imports React, no manual import needed)
     "jsx": "react-jsx",
+
+    // Cache compilation results for faster rebuilds
     "incremental": true,
+
+    // Next.js TypeScript plugin for better autocomplete and error messages
     "plugins": [
       {
         "name": "next"
       }
     ],
+
+    // Import aliases: @/components = ./src/components (cleaner imports, no ../../../)
     "paths": {
       "@/*": ["./src/*"]
+      // "@components/*": ["./src/components/*"],
+      // "@ui/*": ["./src/components/ui/*"],
+      // "@lib/*": ["./src/lib/*"],
+      // "@hooks/*": ["./src/hooks/*"],
+      // "@utils/*": ["./src/utils/*"],
+      // "@types/*": ["./src/types/*"]
     }
+
+    // Custom type definitions location (for global.d.ts)
+    // "typeRoots": ["./node_modules/@types", "./src/types"],
+
+    // Error on unused local variables (keeps code clean)
+    // "noUnusedLocals": true,
+
+    // Error on unused function parameters (prevents dead code)
+    // "noUnusedParameters": true,
+
+    // All code paths in function must return a value (prevents bugs)
+    // "noImplicitReturns": true,
+
+    // Switch cases must have break/return (prevents fallthrough bugs)
+    // "noFallthroughCasesInSwitch": true
   },
+
+  // Which files TypeScript should check
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -30,5 +82,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
+
+  // Which folders to ignore (node_modules has thousands of files)
   "exclude": ["node_modules"]
 }
