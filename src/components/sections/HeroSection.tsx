@@ -25,8 +25,9 @@ export default function HeroSection() {
             objectPosition: 'center',
           }}
         >
-          {/* Optional: Add mobile-optimized video source if you have one */}
-          {/* <source src="/hero-video-mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> */}
+          {/* Mobile-optimized video for better performance */}
+          <source src="/hero-video-mbl.mp4" type="video/mp4" media="(max-width: 768px)" />
+          {/* Desktop video */}
           <source src="/hero-video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
