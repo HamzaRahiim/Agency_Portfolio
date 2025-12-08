@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^10.27.0",
-    "next": "16.0.3",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "next": "^16.2.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,7 +22,7 @@
     "autoprefixer": "^10.4.22",
     "cssnano": "^7.1.2",
     "eslint": "^9",
-    "eslint-config-next": "16.0.3",
+    "eslint-config-next": "^16.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
