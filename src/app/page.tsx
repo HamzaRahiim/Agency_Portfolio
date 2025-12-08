@@ -5,6 +5,7 @@ import StoreManagementSection from "@/components/sections/StoreManagementSection
 import GrowthProcessSection from "@/components/sections/GrowthProcessSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import SuccessfulStoresSection from "@/components/sections/SuccessfulStoresSection";
+import CaseStudiesSection from "@/components/sections/CaseStudiesSection";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <GrowthProcessSection />
       <TestimonialsSection />
       <SuccessfulStoresSection />
+      <CaseStudiesSection />
     </>
   );
 }

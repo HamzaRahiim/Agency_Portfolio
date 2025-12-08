@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const stores = [
   {
@@ -61,62 +68,6 @@ const stores = [
 ];
 
 export default function SuccessfulStoresSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    let scrollAmount = 0;
-    const scrollSpeed = 0.5; // Adjust speed (lower = slower)
-    let interval: NodeJS.Timeout | null = null;
-    let isPaused = false;
-
-    const autoScroll = () => {
-      if (isPaused) return;
-      
-      scrollAmount += scrollSpeed;
-      scrollContainer.scrollLeft = scrollAmount;
-
-      // Reset scroll when reaching the end
-      if (
-        scrollAmount >=
-        scrollContainer.scrollWidth - scrollContainer.clientWidth
-      ) {
-        scrollAmount = 0;
-      }
-    };
-
-    const startScrolling = () => {
-      if (interval) clearInterval(interval);
-      interval = setInterval(autoScroll, 16); // ~60fps
-    };
-
-    const stopScrolling = () => {
-      if (interval) {
-        clearInterval(interval);
-        interval = null;
-      }
-      isPaused = true;
-    };
-
-    const resumeScrolling = () => {
-      isPaused = false;
-      startScrolling();
-    };
-
-    startScrolling();
-
-    // Pause on hover
-    scrollContainer.addEventListener("mouseenter", stopScrolling);
-    scrollContainer.addEventListener("mouseleave", resumeScrolling);
-
-    return () => {
-      if (interval) clearInterval(interval);
-      scrollContainer.removeEventListener("mouseenter", stopScrolling);
-      scrollContainer.removeEventListener("mouseleave", resumeScrolling);
-    };
-  }, []);
 
   return (
     <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-background">
@@ -131,111 +82,145 @@ export default function SuccessfulStoresSection() {
           </p>
         </div>
 
-        {/* Horizontal Scrolling Container */}
-        <div className="relative">
-          <div
-            ref={scrollRef}
-            className="overflow-x-auto scrollbar-hide pb-4"
-            style={{ scrollBehavior: "smooth" }}
+        {/* Carousel Container */}
+        <div className="relative pt-12 sm:pt-16 lg:pt-20">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+              slidesToScroll: 1,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 3000,
+                stopOnInteraction: false,
+                stopOnMouseEnter: true,
+              }) as any,
+            ]}
+            className="w-full"
           >
-            <div className="flex gap-6 sm:gap-8 min-w-max px-4">
+            <CarouselContent className="-ml-4 sm:-ml-6 lg:-ml-8">
               {stores.map((store) => (
-                <div
+                <CarouselItem
                   key={store.id}
-                  className="flex-shrink-0 w-[280px] sm:w-[320px] bg-card rounded-2xl border border-border p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  className="pl-4 sm:pl-6 lg:pl-8 basis-full sm:basis-1/2 lg:basis-1/3"
                 >
-                  {/* Phone Mockup */}
-                  <div className="bg-background rounded-xl border-2 border-border p-4 shadow-inner">
-                    {/* Phone Header */}
-                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {store.time}
-                      </span>
-                      <div className="text-xs font-semibold text-foreground">
-                        amazon seller
-                      </div>
-                    </div>
+                  <div className="w-full flex justify-center">
+                    {/* Phone Frame */}
+                    <div className="relative w-[280px] sm:w-[320px] bg-gray-900 dark:bg-gray-800 rounded-[2.5rem] p-2 shadow-2xl">
+                      {/* Phone Notch */}
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-900 dark:bg-gray-800 rounded-b-2xl z-10"></div>
 
-                    {/* Stats */}
-                    <div className="space-y-3 mb-4">
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1">
-                          Sales today so far
-                        </p>
-                        <p className="text-lg font-bold text-foreground">
-                          {store.sales}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1">
-                          Units today so far
-                        </p>
-                        <p className="text-base font-semibold text-foreground">
-                          {store.units}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1">Current</p>
-                        <p className="text-base font-semibold text-foreground">
-                          {store.current}
-                        </p>
-                      </div>
-                    </div>
+                      {/* Phone Screen */}
+                      <div className="bg-background rounded-[2rem] overflow-hidden min-h-[600px] sm:min-h-[650px]">
+                        {/* Phone Status Bar */}
+                        <div className="bg-background px-4 pt-8 pb-2 flex items-center justify-between text-xs font-medium text-foreground border-b border-border">
+                          <span>{store.time}</span>
+                          <div className="flex items-center gap-1">
+                            <div className="w-4 h-2 border border-foreground rounded-sm"></div>
+                            <div className="w-1 h-1 rounded-full bg-foreground"></div>
+                          </div>
+                        </div>
 
-                    {/* Product Sales */}
-                    <div className="mb-4 pb-4 border-b border-border">
-                      <p className="text-xs text-muted-foreground mb-1">Product sales</p>
-                      <p className="text-base font-bold text-foreground">
-                        {store.productSales}
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {store.period}
-                      </p>
-                      <p className="text-xs text-emerald-500 font-semibold mt-1">
-                        {store.increase}
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {store.previousIncrease}
-                      </p>
-                    </div>
+                        {/* Screen Content */}
+                        <div className="p-4 h-full">
+                          {/* App Header */}
+                          <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
+                            <div className="text-sm font-semibold text-foreground">
+                              amazon seller
+                            </div>
+                          </div>
 
-                    {/* Graph Placeholder */}
-                    <div className="mb-4 h-24 bg-muted rounded flex items-end justify-between p-2">
-                      {[...Array(6)].map((_, i) => (
-                        <div
-                          key={i}
-                          className={`w-8 rounded-t ${
-                            store.id === 3
-                              ? "bg-gradient-to-t from-orange-400 to-yellow-400"
-                              : "bg-muted-foreground/30"
-                          }`}
-                          style={{
-                            height: `${Math.random() * 60 + 30}%`,
-                          }}
-                        ></div>
-                      ))}
-                    </div>
+                          {/* Stats */}
+                          <div className="space-y-3 mb-4">
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">
+                                Sales today so far
+                              </p>
+                              <p className="text-lg font-bold text-foreground">
+                                {store.sales}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">
+                                Units today so far
+                              </p>
+                              <p className="text-base font-semibold text-foreground">
+                                {store.units}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1">Current</p>
+                              <p className="text-base font-semibold text-foreground">
+                                {store.current}
+                              </p>
+                            </div>
+                          </div>
 
-                    {/* Menu Items */}
-                    <div className="space-y-2 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50"></div>
-                        <span>Add a Product</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50"></div>
-                        <span>Quick Start Guide</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50"></div>
-                        <span>Manage Orders</span>
+                          {/* Product Sales */}
+                          <div className="mb-4 pb-4 border-b border-border">
+                            <p className="text-xs text-muted-foreground mb-1">Product sales</p>
+                            <p className="text-base font-bold text-foreground">
+                              {store.productSales}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {store.period}
+                            </p>
+                            <p className="text-xs text-emerald-500 font-semibold mt-1">
+                              {store.increase}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {store.previousIncrease}
+                            </p>
+                          </div>
+
+                          {/* Graph Placeholder */}
+                          <div className="mb-4 h-28 bg-muted rounded flex items-end justify-between p-2">
+                            {[...Array(6)].map((_, i) => (
+                              <div
+                                key={i}
+                                className={`w-8 rounded-t ${store.id === 3
+                                  ? "bg-gradient-to-t from-orange-400 to-yellow-400"
+                                  : "bg-muted-foreground/30"
+                                  }`}
+                                style={{
+                                  height: `${Math.random() * 60 + 30}%`,
+                                }}
+                              ></div>
+                            ))}
+                          </div>
+
+                          {/* Menu Items */}
+                          <div className="space-y-2 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50"></div>
+                              <span>Add a Product</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50"></div>
+                              <span>Quick Start Guide</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50"></div>
+                              <span>Manage Orders</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </CarouselItem>
               ))}
-            </div>
-          </div>
+            </CarouselContent>
+            <CarouselPrevious
+              variant="outline"
+              className="left-0 -translate-x-4 sm:-translate-x-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 dark:bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:bg-card hover:border-primary hover:shadow-2xl transition-all duration-300 !text-primary hover:!text-primary [&>svg]:!text-primary [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-[2.5]"
+            />
+            <CarouselNext
+              variant="outline"
+              className="right-0 translate-x-4 sm:translate-x-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 dark:bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:bg-card hover:border-primary hover:shadow-2xl transition-all duration-300 !text-primary hover:!text-primary [&>svg]:!text-primary [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-[2.5]"
+            />
+          </Carousel>
         </div>
       </div>
     </section>

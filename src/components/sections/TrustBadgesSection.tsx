@@ -1,21 +1,62 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import CountUp from "react-countup";
+
+// Helper function to extract numeric value from badge number string
+function extractNumber(value: string): number {
+  // Remove all non-numeric characters except decimal points
+  const cleaned = value.replace(/[^0-9.]/g, "");
+  const num = parseFloat(cleaned);
+
+  // Handle "M" for millions
+  if (value.includes("M") || value.includes("m")) {
+    return num * 1000000;
+  }
+
+  // Handle "K" for thousands
+  if (value.includes("K") || value.includes("k")) {
+    return num * 1000;
+  }
+
+  return num || 0;
+}
+
+// Helper function to format the number back to display format
+function formatNumber(value: string, animatedValue: number): string {
+  if (value.includes("M") || value.includes("m")) {
+    return `$${(animatedValue / 1000000).toFixed(0)}M+`;
+  }
+  if (value.includes("K") || value.includes("k")) {
+    return `${(animatedValue / 1000).toFixed(0)}K+`;
+  }
+  if (value.includes("%")) {
+    return `${Math.round(animatedValue)}%`;
+  }
+  if (value.includes("+")) {
+    return `${Math.round(animatedValue)}+`;
+  }
+  if (value.includes("yrs") || value.includes("yr")) {
+    return `${Math.round(animatedValue)}+ yrs`;
+  }
+  if (value.includes("/")) {
+    // For "24/7", don't animate, return original
+    return value;
+  }
+  return `${Math.round(animatedValue)}`;
+}
 
 export default function TrustBadgesSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -400, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 400, behavior: "smooth" });
-    }
-  };
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const trustBadges = [
     {
@@ -50,139 +91,104 @@ export default function TrustBadgesSection() {
     },
   ];
 
-  // Duplicate badges for seamless infinite scroll
-  const duplicatedBadges = [...trustBadges, ...trustBadges];
-
+  // Intersection Observer to detect when section is in view
   useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    let scrollAmount = 0;
-    const scrollSpeed = 1.5; // Increased speed for visible scrolling
-    let animationFrameId: number;
-    let isPaused = false;
-
-    const autoScroll = () => {
-      if (isPaused) {
-        animationFrameId = requestAnimationFrame(autoScroll);
-        return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            // Disconnect after first trigger to prevent re-animation
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of section is visible
       }
+    );
 
-      scrollAmount += scrollSpeed;
-      scrollContainer.scrollLeft = scrollAmount;
-
-      // Reset scroll when reaching halfway (seamless loop)
-      const maxScroll = scrollContainer.scrollWidth / 2;
-      if (scrollAmount >= maxScroll) {
-        scrollAmount = 0;
-        scrollContainer.scrollLeft = 0;
-      }
-
-      animationFrameId = requestAnimationFrame(autoScroll);
-    };
-
-    const startScrolling = () => {
-      isPaused = false;
-      animationFrameId = requestAnimationFrame(autoScroll);
-    };
-
-    const stopScrolling = () => {
-      isPaused = true;
-    };
-
-    startScrolling();
-
-    // Pause on hover
-    scrollContainer.addEventListener("mouseenter", stopScrolling);
-    scrollContainer.addEventListener("mouseleave", startScrolling);
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      scrollContainer.removeEventListener("mouseenter", stopScrolling);
-      scrollContainer.removeEventListener("mouseleave", startScrolling);
+      observer.disconnect();
     };
   }, []);
 
   return (
     <>
       {/* Position cards to overlap with hero section - half on video, half below */}
-      <div className="relative -mt-[180px] sm:-mt-[220px] lg:-mt-[260px] mb-16 sm:mb-20 lg:mb-24 z-30">
+      <div
+        ref={sectionRef}
+        className="relative -mt-[180px] sm:-mt-[220px] lg:-mt-[260px] mb-16 sm:mb-20 lg:mb-24 z-30"
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Horizontal Scrolling Container */}
+          {/* Carousel Container */}
           <div className="relative">
-            {/* Left Arrow Button */}
-            <button
-              onClick={scrollLeft}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 backdrop-blur-md border border-border/60 shadow-xl hover:bg-card hover:border-primary/40 hover:shadow-2xl transition-all duration-300 flex items-center justify-center group"
-              aria-label="Scroll left"
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+                slidesToScroll: 1,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 2000,
+                  stopOnInteraction: false,
+                  stopOnMouseEnter: true,
+                }) as any,
+              ]}
+              className="w-full"
             >
-              <svg
-                className="w-6 h-6 text-foreground group-hover:text-primary transition-colors"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
+              <CarouselContent className="-ml-2 sm:-ml-4 lg:-ml-6">
+                {trustBadges.map((badge, index) => {
+                  const targetValue = extractNumber(badge.number);
+                  const shouldAnimate = !badge.number.includes("/"); // Don't animate "24/7"
 
-            {/* Right Arrow Button */}
-            <button
-              onClick={scrollRight}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 backdrop-blur-md border border-border/60 shadow-xl hover:bg-card hover:border-primary/40 hover:shadow-2xl transition-all duration-300 flex items-center justify-center group"
-              aria-label="Scroll right"
-            >
-              <svg
-                className="w-6 h-6 text-foreground group-hover:text-primary transition-colors"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
+                  return (
+                    <CarouselItem
+                      key={index}
+                      className="pl-2 sm:pl-4 lg:pl-6 basis-full sm:basis-1/2 lg:basis-1/3"
+                    >
+                      <div className="group w-full rounded-xl lg:rounded-2xl border-2 border-border bg-card shadow-lg backdrop-blur-sm px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 text-center hover:border-primary hover:shadow-xl hover:shadow-primary/20 transition-all duration-300">
+                        {/* Icon */}
+                        <div className="h-12 sm:h-14 lg:h-16 flex items-center justify-center mb-3 sm:mb-4">
+                          <div className="text-3xl sm:text-4xl lg:text-5xl group-hover:scale-105 transition-transform duration-300 origin-center">
+                            {badge.icon}
+                          </div>
+                        </div>
 
-            <div
-              ref={scrollRef}
-              className="overflow-x-auto scrollbar-hide px-12 sm:px-16"
-              style={{ scrollBehavior: "smooth" }}
-            >
-              <div className="flex gap-6 sm:gap-8 lg:gap-10 min-w-max py-4">
-                {duplicatedBadges.map((badge, index) => (
-                  <div
-                    key={index}
-                    className="group shrink-0 w-[280px] sm:w-[320px] lg:w-[380px] rounded-2xl lg:rounded-3xl border-2 border-border bg-card shadow-lg backdrop-blur-sm px-6 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 text-center hover:border-primary hover:shadow-xl hover:shadow-primary/20 transition-all duration-300"
-                  >
-                    {/* Icon */}
-                    <div className="h-16 sm:h-20 lg:h-24 flex items-center justify-center mb-4 sm:mb-5">
-                      <div className="text-5xl sm:text-6xl lg:text-7xl group-hover:scale-105 transition-transform duration-300 origin-center">
-                        {badge.icon}
+                        {/* Number with Animation */}
+                        <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-primary mb-2 sm:mb-3">
+                          {shouldAnimate && isVisible ? (
+                            <CountUp
+                              start={0}
+                              end={targetValue}
+                              duration={2.5}
+                              decimals={badge.number.includes("%") ? 0 : 0}
+                              formattingFn={(value) =>
+                                formatNumber(badge.number, value)
+                              }
+                            />
+                          ) : (
+                            badge.number
+                          )}
+                        </div>
+
+                        {/* Label */}
+                        <div className="text-sm sm:text-base text-muted-foreground font-medium leading-tight">
+                          {badge.label}
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Number */}
-                    <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary mb-2 sm:mb-3">
-                      {badge.number}
-                    </div>
-
-                    {/* Label */}
-                    <div className="text-base sm:text-lg text-muted-foreground font-medium leading-tight">
-                      {badge.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+              <CarouselPrevious className="left-0 -translate-x-4 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-card/95 backdrop-blur-md border border-border/60 shadow-xl hover:bg-card hover:border-primary/40 hover:shadow-2xl transition-all duration-300" />
+              <CarouselNext className="right-0 translate-x-4 w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-card/95 backdrop-blur-md border border-border/60 shadow-xl hover:bg-card hover:border-primary/40 hover:shadow-2xl transition-all duration-300" />
+            </Carousel>
           </div>
         </div>
       </div>

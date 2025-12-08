@@ -1,33 +1,35 @@
 "use client";
 
-import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden pt-20">
+    <section className="relative h-screen min-h-[500px] sm:min-h-[600px] flex items-center overflow-hidden pt-20">
       {/* Background Video */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 -z-10 w-full h-full">
         {/* Video Overlay - Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/40 z-10" />
 
-        {/* TODO: Replace this placeholder with your actual video */}
-        {/* 
-        Add your video file to: /public/hero-video.mp4
-        Then uncomment the video element below and remove the placeholder div
-        */}
-
+        {/* Video - Fully Responsive */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{
+            minWidth: '100%',
+            minHeight: '100%',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
         >
+          {/* Optional: Add mobile-optimized video source if you have one */}
+          {/* <source src="/hero-video-mobile.mp4" type="video/mp4" media="(max-width: 768px)" /> */}
           <source src="/hero-video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-
-
       </div>
 
       {/* Content Overlay */}
