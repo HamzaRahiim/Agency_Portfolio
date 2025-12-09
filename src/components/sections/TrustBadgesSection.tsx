@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import CountUp from "react-countup";
+import { Store, Star, Globe, DollarSign, CheckCircle, RefreshCw } from "lucide-react";
 
 // Helper function to extract numeric value from badge number string
 function extractNumber(value: string): number {
@@ -56,38 +57,45 @@ function formatNumber(value: string, animatedValue: number): string {
 
 export default function TrustBadgesSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const trustBadges = [
     {
       number: "500+",
       label: "Stores Launched",
-      icon: "🏪",
+      icon: Store,
+      animation: "pulse",
     },
     {
       number: "5+ yrs",
       label: "Ecommerce Experience",
-      icon: "⭐",
+      icon: Star,
+      animation: "bounce",
     },
     {
       number: "100+",
       label: "International Clients",
-      icon: "🌍",
+      icon: Globe,
+      animation: "spin-slow",
     },
     {
       number: "$50M+",
       label: "Revenue Generated",
-      icon: "💰",
+      icon: DollarSign,
+      animation: "pulse",
     },
     {
       number: "98%",
       label: "Client Satisfaction",
-      icon: "✅",
+      icon: CheckCircle,
+      animation: "bounce",
     },
     {
       number: "24/7",
       label: "Support Available",
-      icon: "🔄",
+      icon: RefreshCw,
+      animation: "spin",
     },
   ];
 
@@ -119,10 +127,9 @@ export default function TrustBadgesSection() {
 
   return (
     <>
-      {/* Position cards to overlap with hero section - half on video, half below */}
       <div
         ref={sectionRef}
-        className="relative -mt-[180px] sm:-mt-[220px] lg:-mt-[260px] mb-16 sm:mb-20 lg:mb-24 z-30"
+        className="relative pt-6 sm:pt-10 lg:pt-14 pb-8 sm:pb-12 lg:pb-16 z-30"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Carousel Container */}
@@ -152,11 +159,22 @@ export default function TrustBadgesSection() {
                       key={index}
                       className="pl-2 sm:pl-4 lg:pl-6 basis-full sm:basis-1/2 lg:basis-1/3"
                     >
-                      <div className="group w-full rounded-xl lg:rounded-2xl border-2 border-border bg-card shadow-lg backdrop-blur-sm px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 text-center hover:border-primary hover:shadow-xl hover:shadow-primary/20 transition-all duration-300">
+                      <div
+                        className={`group relative w-full rounded-xl lg:rounded-2xl border-2 border-border bg-card shadow-lg backdrop-blur-sm px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 text-center cursor-pointer transition-all duration-300 ${activeCard === index
+                          ? "border-primary shadow-xl shadow-primary/20 bg-gradient-to-br from-primary/5 via-accent/5 to-primary/5"
+                          : "hover:border-primary hover:shadow-xl hover:shadow-primary/20 hover:bg-gradient-to-br hover:from-primary/5 hover:via-accent/5 hover:to-primary/5"
+                          }`}
+                        onClick={() => setActiveCard(activeCard === index ? null : index)}
+                        onMouseLeave={() => setActiveCard(null)}
+                      >
                         {/* Icon */}
                         <div className="h-12 sm:h-14 lg:h-16 flex items-center justify-center mb-3 sm:mb-4">
-                          <div className="text-3xl sm:text-4xl lg:text-5xl group-hover:scale-105 transition-transform duration-300 origin-center">
-                            {badge.icon}
+                          <div className={`text-primary group-hover:scale-110 transition-transform duration-300 origin-center ${badge.animation === "pulse" ? "animate-pulse" :
+                            badge.animation === "bounce" ? "animate-bounce" :
+                              badge.animation === "spin" ? "animate-spin" :
+                                badge.animation === "spin-slow" ? "animate-spin-slow" : ""
+                            }`}>
+                            <badge.icon className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12" strokeWidth={2.5} />
                           </div>
                         </div>
 

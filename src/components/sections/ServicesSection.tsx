@@ -53,6 +53,41 @@ export default function ServicesSection() {
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/5 to-background" />
+        {/* Subtle decorative dots - kept to the sides for both themes */}
+        {/* Light mode dots */}
+        <div
+          className="absolute inset-y-0 -left-20 sm:-left-10 w-56 pointer-events-none dark:hidden"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(30,64,175,0.22) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
+        <div
+          className="absolute inset-y-0 -right-20 sm:-right-10 w-56 pointer-events-none dark:hidden"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(251,191,36,0.22) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
+        {/* Dark mode dots */}
+        <div
+          className="absolute inset-y-0 -left-20 sm:-left-10 w-56 pointer-events-none hidden dark:block"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(96,165,250,0.22) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
+        <div
+          className="absolute inset-y-0 -right-20 sm:-right-10 w-56 pointer-events-none hidden dark:block"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(251,191,36,0.24) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,7 +96,7 @@ export default function ServicesSection() {
           {/* Left: Title */}
           <div>
             <div className="mb-4">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-muted-foreground bg-muted/50 px-4 py-2 rounded-full inline-block">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary-foreground bg-gradient-to-r from-primary to-accent px-4 py-2 rounded-full inline-block shadow-sm">
                 Service Ecosystem
               </span>
             </div>
@@ -89,7 +124,7 @@ export default function ServicesSection() {
             <Link
               key={index}
               href={service.href}
-              className="group relative rounded-2xl lg:rounded-3xl border-2 border-border bg-card hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 overflow-hidden h-[200px] sm:h-[220px] lg:h-[240px]"
+              className="group relative rounded-2xl lg:rounded-3xl border-2 border-border bg-card hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 overflow-hidden h-auto sm:h-[220px] lg:h-[240px]"
             >
               {/* Animated Background Gradient on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
@@ -117,11 +152,14 @@ export default function ServicesSection() {
                   </div>
                 </div>
 
-                {/* Right: Title */}
+                {/* Right: Title + mobile description */}
                 <div className="flex-1 min-w-0">
                   <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                     {service.title}
                   </h3>
+                  <p className="mt-2 text-sm text-muted-foreground sm:hidden line-clamp-2">
+                    {service.description}
+                  </p>
                 </div>
               </div>
 

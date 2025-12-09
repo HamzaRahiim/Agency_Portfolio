@@ -1,9 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useTheme } from "@/components/providers/ThemeProvider";
+import { useModal } from "@/components/providers/ModalProvider";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { CheckCircle, X } from "lucide-react";
 
 export default function LeadCaptureModal() {
+  const { isModalOpen, closeModal } = useModal();
   const [isOpen, setIsOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -11,38 +19,56 @@ export default function LeadCaptureModal() {
     phone: "",
     message: "",
   });
+  const [errors, setErrors] = useState({
+    email: "",
+    phone: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { resolvedTheme } = useTheme();
 
-  // Show modal every 30 seconds
+  // Show modal when triggered from context (Header button)
+  useEffect(() => {
+    if (isModalOpen) {
+      setIsOpen(true);
+    }
+  }, [isModalOpen]);
+
+  // Auto-show modal after 1 minute (60 seconds) - only if not manually opened
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
     const showModal = () => {
-      setIsOpen(true);
+      if (!isOpen && !isModalOpen) {
+        setIsOpen(true);
+      }
     };
 
-    // Show first time after 30 seconds
-    timer = setTimeout(showModal, 120000);
+    // Show first time after 1 minute (60000ms) only if modal hasn't been opened manually
+    if (!isModalOpen) {
+      timer = setTimeout(showModal, 60000);
+    }
 
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [isOpen, isModalOpen]);
 
-  // Reset timer when modal is closed to show again after 30 seconds
+  // Reset timer when modal is closed to show again after 1 minute (only if auto-triggered)
   useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen && !isModalOpen && !showSuccess) {
       const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 30000); // 30 seconds after closing
+        if (!isModalOpen) {
+          setIsOpen(true);
+        }
+      }, 60000); // 1 minute (60000ms) after closing
 
       return () => clearTimeout(timer);
     }
-  }, [isOpen]);
+  }, [isOpen, isModalOpen, showSuccess]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || showSuccess) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -51,38 +77,97 @@ export default function LeadCaptureModal() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen]);
+  }, [isOpen, showSuccess]);
 
   const handleClose = () => {
     setIsOpen(false);
+    closeModal();
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    // Email validation
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (value && !emailRegex.test(value)) {
+        setErrors((prev) => ({ ...prev, email: "Please enter a valid email address" }));
+      } else {
+        setErrors((prev) => ({ ...prev, email: "" }));
+      }
+    }
+  };
+
+  const handlePhoneChange = (value: string) => {
+    setFormData({
+      ...formData,
+      phone: value,
+    });
+    // Phone validation (react-phone-input-2 includes country code, so we check for valid format)
+    // Minimum should be country code + at least 7-10 digits
+    if (value && value.length < 7) {
+      setErrors((prev) => ({ ...prev, phone: "Please enter a valid phone number" }));
+    } else {
+      setErrors((prev) => ({ ...prev, phone: "" }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrors((prev) => ({ ...prev, email: "Please enter a valid email address" }));
+      return;
+    }
+
+    // Validate phone (react-phone-input-2 includes country code)
+    if (!formData.phone || formData.phone.length < 7) {
+      setErrors((prev) => ({ ...prev, phone: "Please enter a valid phone number" }));
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // TODO: Replace with your actual API endpoint
+    const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
+    if (!formspreeEndpoint) {
+      console.error("Formspree endpoint is not configured");
+      alert("Form submission is not configured. Please contact support.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      // Example API call
-      // await fetch('/api/leads', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // });
+      // Formspree accepts form-encoded data
+      const formDataToSend = new URLSearchParams();
+      formDataToSend.append('firstName', formData.firstName);
+      formDataToSend.append('lastName', formData.lastName);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('_subject', `New Lead from ${formData.firstName} ${formData.lastName}`);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: formDataToSend,
+      });
 
-      // Reset form and close modal
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
+
+      // Reset form and show success message
       setFormData({
         firstName: "",
         lastName: "",
@@ -90,8 +175,14 @@ export default function LeadCaptureModal() {
         phone: "",
         message: "",
       });
-      setIsOpen(false);
-      alert("Thank you! We'll get back to you soon.");
+      setErrors({ email: "", phone: "" });
+      setShowSuccess(true);
+
+      // Close success modal after 3 seconds and then close main modal
+      setTimeout(() => {
+        setShowSuccess(false);
+        setIsOpen(false);
+      }, 3000);
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Something went wrong. Please try again.");
@@ -104,6 +195,36 @@ export default function LeadCaptureModal() {
 
   return (
     <>
+      {/* Success Modal */}
+      {showSuccess && (
+        <div className="fixed inset-0 z-[103] flex items-center justify-center p-4 pointer-events-auto">
+          <div className="fixed inset-0 bg-black/10 backdrop-blur-sm" onClick={() => setShowSuccess(false)} />
+          <div className="relative bg-background rounded-2xl lg:rounded-3xl shadow-2xl max-w-md w-full p-8 border border-border/50">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
+                <CheckCircle className="w-10 h-10 text-green-500" strokeWidth={2.5} />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-2">Thank You!</h3>
+              <p className="text-muted-foreground mb-6">
+                We've received your message and will get back to you soon.
+              </p>
+              <button
+                onClick={() => {
+                  setShowSuccess(false);
+                  setIsOpen(false);
+                }}
+                className="px-6 py-2 rounded-lg text-primary-foreground font-semibold transition-all duration-300 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(to right, var(--primary), var(--accent), var(--primary))',
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Backdrop with blur - Dark gray/black background */}
       <div
         className="fixed inset-0 z-[100] bg-gray-900/85 backdrop-blur-md transition-opacity duration-300"
@@ -179,14 +300,14 @@ export default function LeadCaptureModal() {
           <div className="p-6 sm:p-8 lg:p-10 pb-6 sm:pb-8 lg:pb-10">
             {/* Logo */}
             <div className="flex justify-center mb-6">
-              <div className="flex flex-col items-center">
-                <span className="text-2xl sm:text-3xl font-bold text-foreground">
-                  Fast Line
-                </span>
-                <span className="text-xs font-medium uppercase tracking-wider text-emerald-400 mt-1">
-                  Build, Scale, Evolve
-                </span>
-              </div>
+              <Image
+                src={resolvedTheme === "dark" ? "/logo-white.svg" : "/logo.svg"}
+                alt="Fast Line Logo"
+                width={160}
+                height={160}
+                className="transition-opacity duration-300"
+                priority
+              />
             </div>
 
             {/* Heading */}
@@ -195,9 +316,9 @@ export default function LeadCaptureModal() {
             </h2>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 mb-0">
+            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7 mb-0">
               {/* First Name & Last Name */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div>
                   <label
                     htmlFor="firstName"
@@ -237,7 +358,7 @@ export default function LeadCaptureModal() {
               </div>
 
               {/* Email & Phone */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div>
                   <label
                     htmlFor="email"
@@ -252,9 +373,13 @@ export default function LeadCaptureModal() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                    className={`w-full px-4 py-3 rounded-lg border ${errors.email ? "border-red-500" : "border-border"
+                      } bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200`}
                     placeholder="your@email.com"
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -263,22 +388,24 @@ export default function LeadCaptureModal() {
                   >
                     Phone Number
                   </label>
-                  <div className="relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                      <span className="text-sm text-muted-foreground">🇺🇸</span>
-                      <span className="text-sm text-muted-foreground">+1</span>
-                    </div>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
+                  <div className={`${errors.phone ? "border border-red-500 rounded-lg" : ""}`}>
+                    <PhoneInput
+                      country={"us"}
                       value={formData.phone}
-                      onChange={handleChange}
-                      required
-                      className="w-full pl-16 pr-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
-                      placeholder="(555) 123-4567"
+                      onChange={handlePhoneChange}
+                      inputClass="!w-full !py-3 !pr-4 !rounded-lg !border !border-border !bg-background !text-foreground !placeholder:text-muted-foreground focus:!outline-none focus:!ring-2 focus:!ring-ring focus:!border-transparent !transition-all !duration-200"
+                      buttonClass="!bg-background !border !border-border !rounded-l-lg"
+                      dropdownClass="!bg-background !border !border-border"
+                      containerClass="!w-full"
+                      inputProps={{
+                        required: true,
+                        name: "phone",
+                      }}
                     />
                   </div>
+                  {errors.phone && (
+                    <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+                  )}
                 </div>
               </div>
 
@@ -305,7 +432,20 @@ export default function LeadCaptureModal() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full group flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-500 px-6 py-4 text-base sm:text-lg font-bold text-white shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/40 hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full group flex items-center justify-center gap-2 rounded-lg px-6 py-4 text-base sm:text-lg font-bold text-primary-foreground shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                style={{
+                  background: 'linear-gradient(to right, var(--primary), var(--accent), var(--primary))',
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSubmitting) {
+                    e.currentTarget.style.background = 'linear-gradient(to right, var(--primary-hover), var(--accent-hover), var(--primary-hover))';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSubmitting) {
+                    e.currentTarget.style.background = 'linear-gradient(to right, var(--primary), var(--accent), var(--primary))';
+                  }
+                }}
               >
                 {isSubmitting ? (
                   <>

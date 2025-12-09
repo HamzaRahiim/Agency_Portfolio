@@ -35,6 +35,41 @@ export default function StoreManagementSection() {
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/5" />
+        {/* Subtle side dots for both themes */}
+        {/* Light mode */}
+        <div
+          className="absolute inset-y-0 -left-20 sm:-left-10 w-56 pointer-events-none dark:hidden"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(30,64,175,0.22) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
+        <div
+          className="absolute inset-y-0 -right-20 sm:-right-10 w-56 pointer-events-none dark:hidden"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(251,191,36,0.22) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
+        {/* Dark mode */}
+        <div
+          className="absolute inset-y-0 -left-20 sm:-left-10 w-56 pointer-events-none hidden dark:block"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(96,165,250,0.22) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
+        <div
+          className="absolute inset-y-0 -right-20 sm:-right-10 w-56 pointer-events-none hidden dark:block"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(251,191,36,0.24) 1.6px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
@@ -49,35 +84,33 @@ export default function StoreManagementSection() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-12 sm:pb-16 lg:pb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 pb-12 sm:pb-16 lg:pb-20 px-2 sm:px-0">
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative rounded-2xl lg:rounded-3xl border border-border/60 bg-muted/30 backdrop-blur-sm p-6 sm:p-8 overflow-hidden cursor-pointer"
+              className="group relative rounded-2xl lg:rounded-3xl border border-border/60 bg-muted/30 backdrop-blur-sm p-4 sm:p-6 lg:p-8 cursor-pointer"
             >
               {/* Left Side Hover Effect */}
-              <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-1/2 bg-gradient-to-r from-primary to-primary/80 transition-all duration-700 ease-out rounded-l-2xl lg:rounded-l-3xl z-0" />
+              <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-1/2 group-active:w-1/2 bg-gradient-to-r from-primary to-primary/80 transition-all duration-700 ease-out rounded-l-2xl lg:rounded-l-3xl z-0 overflow-hidden" />
 
               {/* Right Side Hover Effect */}
-              <div className="absolute right-0 top-0 bottom-0 w-0 group-hover:w-1/2 bg-gradient-to-l from-accent to-accent/80 transition-all duration-700 ease-out rounded-r-2xl lg:rounded-r-3xl z-0" />
+              <div className="absolute right-0 top-0 bottom-0 w-0 group-hover:w-1/2 group-active:w-1/2 bg-gradient-to-l from-accent to-accent/80 transition-all duration-700 ease-out rounded-r-2xl lg:rounded-r-3xl z-0 overflow-hidden" />
 
               {/* Center Merge Effect - Appears when both sides meet */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-0 group-hover:w-full -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300 z-0 rounded-2xl lg:rounded-3xl" />
+              <div className="absolute left-1/2 top-0 bottom-0 w-0 group-hover:w-full group-active:w-full -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 delay-300 z-0 rounded-2xl lg:rounded-3xl overflow-hidden" />
+
+              {/* Number Circle - Positioned on left border (half outside, half inside) */}
+              <div className="absolute -left-6 sm:-left-7 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg sm:text-xl group-hover:bg-accent group-active:bg-accent group-hover:text-accent-foreground group-active:text-accent-foreground transition-all duration-500 shadow-lg z-20 border-2 border-border">
+                {service.number}
+              </div>
 
               {/* Content */}
-              <div className="relative z-10">
-                {/* Number Circle */}
-                <div className="flex items-start gap-4 sm:gap-6">
-                  <div className="shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg sm:text-xl group-hover:bg-accent group-hover:text-accent-foreground transition-all duration-500 shadow-lg">
-                    {service.number}
-                  </div>
-
-                  {/* Title */}
-                  <div className="flex-1 pt-1">
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-white transition-colors duration-500 leading-tight">
-                      {service.title}
-                    </h3>
-                  </div>
+              <div className="relative z-10 pl-12 sm:pl-14">
+                {/* Title */}
+                <div className="flex-1">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-white group-active:text-white transition-colors duration-500 leading-tight">
+                    {service.title}
+                  </h3>
                 </div>
               </div>
             </div>

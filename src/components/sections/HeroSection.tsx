@@ -3,27 +3,19 @@
 
 export default function HeroSection() {
   return (
-    <section className="relative h-screen min-h-[500px] sm:min-h-[600px] flex items-center overflow-hidden pt-20">
+    <section className="relative h-[80vh] md:h-screen min-h-[500px] sm:min-h-[600px] flex items-center overflow-hidden pt-20">
       {/* Background Video */}
       <div className="absolute inset-0 -z-10 w-full h-full">
-        {/* Video Overlay - Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-black/40 z-10" />
+        {/* Video Overlay - Theme-aware overlay for text readability */}
+        <div className="absolute inset-0 bg-black/20 dark:bg-black/20 z-10" />
 
-        {/* Video - Fully Responsive */}
+        {/* Video - Fully Responsive with opacity */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{
-            minWidth: '100%',
-            minHeight: '100%',
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
+          className="absolute inset-0 w-full h-full object-contain md:object-cover bg-black opacity-70 dark:opacity-100"
         >
           {/* Mobile-optimized video for better performance */}
           <source src="/hero-video-mbl.mp4" type="video/mp4" media="(max-width: 768px)" />

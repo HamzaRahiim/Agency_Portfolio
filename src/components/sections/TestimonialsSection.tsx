@@ -105,9 +105,9 @@ export default function TestimonialsSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center pb-12 sm:pb-16">
           <div className="inline-block mb-4">
-            <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-white/70 bg-white/10 px-4 py-2 rounded-full">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary-foreground bg-gradient-to-r from-primary to-accent px-4 py-2 rounded-full inline-block shadow-sm">
               Testimonials
             </span>
           </div>
@@ -117,11 +117,9 @@ export default function TestimonialsSection() {
               Fast Line
             </span>
           </h2>
-          <div className="max-w-2xl mx-auto">
-            <p className="text-base sm:text-lg text-white/80 text-center">
-              Trusted by hundreds of e-commerce businesses worldwide
-            </p>
-          </div>
+          <p className="text-base sm:text-lg text-white/80">
+            Trusted by hundreds of e-commerce businesses worldwide
+          </p>
         </div>
 
         {/* Carousel Container */}

@@ -48,15 +48,13 @@ export default function CaseStudiesSection() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
             Case Studies
           </h2>
-          <div className="max-w-2xl mx-auto">
-            <p className="text-base sm:text-lg text-muted-foreground text-center">
-              Real results from real businesses. See how we've helped companies achieve remarkable growth and success.
-            </p>
-          </div>
+          <p className="text-base sm:text-lg text-muted-foreground">
+            Real results from real businesses. See how we've helped companies achieve remarkable growth and success.
+          </p>
         </div>
 
         {/* Carousel Container */}
-        <div className="relative mt-6 sm:mt-8 lg:mt-10">
+        <div className="relative pt-6 sm:pt-8 lg:pt-10">
           <Carousel
             opts={{
               align: "start",
@@ -91,13 +89,13 @@ export default function CaseStudiesSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious 
+            <CarouselPrevious
               variant="outline"
-              className="left-0 -translate-x-4 sm:-translate-x-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 dark:bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:bg-card hover:border-primary hover:shadow-2xl transition-all duration-300 !text-primary hover:!text-primary [&>svg]:!text-primary [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-[2.5]" 
+              className="left-0 -translate-x-4 sm:-translate-x-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 dark:bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:bg-card hover:border-primary hover:shadow-2xl transition-all duration-300 !text-primary hover:!text-primary [&>svg]:!text-primary [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-[2.5]"
             />
-            <CarouselNext 
+            <CarouselNext
               variant="outline"
-              className="right-0 translate-x-4 sm:translate-x-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 dark:bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:bg-card hover:border-primary hover:shadow-2xl transition-all duration-300 !text-primary hover:!text-primary [&>svg]:!text-primary [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-[2.5]" 
+              className="right-0 translate-x-4 sm:translate-x-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-card/95 dark:bg-card/95 backdrop-blur-md border-2 border-primary/30 shadow-xl hover:bg-card hover:border-primary hover:shadow-2xl transition-all duration-300 !text-primary hover:!text-primary [&>svg]:!text-primary [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-[2.5]"
             />
           </Carousel>
         </div>

@@ -1,26 +1,31 @@
 "use client";
 
+import { Search, Zap, Rocket } from "lucide-react";
+
 const processSteps = [
   {
     number: "1",
     title: "Deep Market Research",
     description:
       "We analyze market trends, competitor strategies, and customer behavior to identify profitable niches and products.",
-    icon: "🔍",
+    icon: Search,
+    animation: "pulse",
   },
   {
     number: "2",
     title: "Strategic Design & Optimization",
     description:
       "From store setup to listing optimization, we craft a high-converting presence tailored for your target audience.",
-    icon: "⚡",
+    icon: Zap,
+    animation: "bounce",
   },
   {
     number: "3",
     title: "Scale & Automated Growth",
     description:
       "We implement advanced marketing funnels, automation tools, and continuous optimization to ensure sustainable growth.",
-    icon: "🚀",
+    icon: Rocket,
+    animation: "pulse",
   },
 ];
 
@@ -152,7 +157,7 @@ export default function GrowthProcessSection() {
             {/* Header */}
             <div className="mb-8 sm:mb-10">
               <div className="inline-block mb-4">
-                <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-white/70 bg-white/10 px-4 py-2 rounded-full">
+                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary-foreground bg-gradient-to-r from-primary to-accent px-4 py-2 rounded-full inline-block shadow-sm">
                   Our Growth Process
                 </span>
               </div>
@@ -185,11 +190,12 @@ export default function GrowthProcessSection() {
                             : "bg-primary"
                           }`}
                       >
-                        {index === 0 ? (
-                          <span className="text-2xl">{step.icon}</span>
-                        ) : (
-                          <span className="text-2xl">{step.icon}</span>
-                        )}
+                        <step.icon
+                          className={`w-6 h-6 sm:w-7 sm:h-7 ${step.animation === "pulse" ? "animate-pulse" :
+                            step.animation === "bounce" ? "animate-bounce" : ""
+                            }`}
+                          strokeWidth={2.5}
+                        />
                       </div>
                       {/* Pulse Effect */}
                       <div

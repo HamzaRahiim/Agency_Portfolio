@@ -13,8 +13,8 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+  const [theme, setThemeState] = useState<Theme>("dark");
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Load theme from localStorage
     const savedTheme = localStorage.getItem("theme") as Theme | null;
     const root = document.documentElement;
-    
+
     if (savedTheme) {
       setThemeState(savedTheme);
       // Apply theme immediately
@@ -38,12 +38,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         root.classList.add(savedTheme);
       }
     } else {
-      // If no saved theme, detect system preference
-      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const effectiveTheme = systemPrefersDark ? "dark" : "light";
-      setResolvedTheme(effectiveTheme);
+      // If no saved theme, default to dark
+      setThemeState("dark");
+      setResolvedTheme("dark");
       root.classList.remove("light", "dark");
-      root.classList.add(effectiveTheme);
+      root.classList.add("dark");
     }
   }, []);
 

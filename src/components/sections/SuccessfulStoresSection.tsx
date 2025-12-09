@@ -107,9 +107,9 @@ export default function SuccessfulStoresSection() {
                 >
                   <div className="w-full flex justify-center">
                     {/* Phone Frame */}
-                    <div className="relative w-[280px] sm:w-[320px] bg-gray-900 dark:bg-gray-800 rounded-[2.5rem] p-2 shadow-2xl">
+                    <div className="relative w-[280px] sm:w-[320px] bg-gray-900 dark:bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl border-2 border-gray-700 dark:border-gray-600">
                       {/* Phone Notch */}
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-900 dark:bg-gray-800 rounded-b-2xl z-10"></div>
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-900 dark:bg-gray-900 rounded-b-2xl z-10 border-x-2 border-gray-700 dark:border-gray-600"></div>
 
                       {/* Phone Screen */}
                       <div className="bg-background rounded-[2rem] overflow-hidden min-h-[600px] sm:min-h-[650px]">

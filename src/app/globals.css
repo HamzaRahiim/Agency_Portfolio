@@ -257,6 +257,162 @@ body {
   animation: spin-slow-reverse 15s linear infinite;
 }
 
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-bounce {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+/* React Phone Input 2 Styling */
+.react-tel-input {
+  width: 100% !important;
+}
+
+.react-tel-input .flag-dropdown {
+  background-color: var(--background) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 0.5rem 0 0 0.5rem !important;
+}
+
+.react-tel-input .flag-dropdown.open {
+  background-color: var(--muted) !important;
+}
+
+.react-tel-input .flag-dropdown {
+  width: 52px !important;
+}
+
+.react-tel-input .flag-dropdown .selected-flag {
+  background-color: transparent !important;
+  width: 52px !important;
+  padding: 0 8px !important;
+}
+
+.react-tel-input .flag-dropdown .selected-flag .flag {
+  margin-right: 6px !important;
+}
+
+.react-tel-input .flag-dropdown .selected-flag:hover {
+  background-color: var(--muted) !important;
+}
+
+.react-tel-input .country-list {
+  background-color: var(--background) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.react-tel-input .country-list .country {
+  color: var(--foreground) !important;
+}
+
+.react-tel-input .country-list .country:hover {
+  background-color: var(--muted) !important;
+}
+
+.react-tel-input .country-list .country.highlight {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+.react-tel-input input {
+  color: var(--foreground) !important;
+  background-color: var(--background) !important;
+  padding-left: 60px !important;
+  width: 100% !important;
+}
+
+.react-tel-input input::placeholder {
+  color: var(--muted-foreground) !important;
+}
+
+/* React Phone Input 2 Styling */
+.react-tel-input {
+  width: 100% !important;
+}
+
+.react-tel-input .flag-dropdown {
+  background-color: var(--background) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 0.5rem 0 0 0.5rem !important;
+}
+
+.react-tel-input .flag-dropdown.open {
+  background-color: var(--muted) !important;
+}
+
+.react-tel-input .flag-dropdown {
+  width: 52px !important;
+}
+
+.react-tel-input .flag-dropdown .selected-flag {
+  background-color: transparent !important;
+  width: 52px !important;
+  padding: 0 8px !important;
+}
+
+.react-tel-input .flag-dropdown .selected-flag .flag {
+  margin-right: 6px !important;
+}
+
+.react-tel-input .flag-dropdown .selected-flag:hover {
+  background-color: var(--muted) !important;
+}
+
+.react-tel-input .country-list {
+  background-color: var(--background) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.react-tel-input .country-list .country {
+  color: var(--foreground) !important;
+}
+
+.react-tel-input .country-list .country:hover {
+  background-color: var(--muted) !important;
+}
+
+.react-tel-input .country-list .country.highlight {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+.react-tel-input input {
+  color: var(--foreground) !important;
+  background-color: var(--background) !important;
+  padding-left: 60px !important;
+  width: 100% !important;
+}
+
+.react-tel-input input::placeholder {
+  color: var(--muted-foreground) !important;
+}
+
 /* Hide Scrollbar but keep functionality */
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
