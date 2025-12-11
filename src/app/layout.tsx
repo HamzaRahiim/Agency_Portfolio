@@ -121,24 +121,24 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
           <ModalProvider>
-            <Header />
+          <Header />
 
-            {/* Main Content */}
-            <main>
-              <Suspense fallback={<Loading />}>
-                {children}
-              </Suspense>
-              {/* <GoogleAnalytics gaId="G-XXXXXXXXXX" /> */}
-            </main>
+          {/* Main Content */}
+          <main>
+            <Suspense fallback={<Loading />}>
+              {children}
+            </Suspense>
+            {/* <GoogleAnalytics gaId="G-XXXXXXXXXX" /> */}
+          </main>
 
-            {/* Global Footer */}
-            <Footer />
+          {/* Global Footer */}
+          <Footer />
 
             {/* Lead Capture Modal - Shows after 1 minute or when triggered from Header */}
-            <LeadCaptureModal />
+          <LeadCaptureModal />
 
-            {/* Optional: Toast Notifications */}
-            {/* <Toaster /> */}
+          {/* Optional: Toast Notifications */}
+          {/* <Toaster /> */}
           </ModalProvider>
         </ThemeProvider>
       </body>

@@ -1,0 +1,46 @@
+{
+  "processSteps": [
+    {
+      "number": "1",
+      "title": "Deep Market Research",
+      "description": "We analyze market trends, competitor strategies, and customer behavior to identify profitable niches and products.",
+      "icon": "Search",
+      "animation": "pulse"
+    },
+    {
+      "number": "2",
+      "title": "Strategic Design & Optimization",
+      "description": "From store setup to listing optimization, we craft a high-converting presence tailored for your target audience.",
+      "icon": "Zap",
+      "animation": "bounce"
+    },
+    {
+      "number": "3",
+      "title": "Scale & Automated Growth",
+      "description": "We implement advanced marketing funnels, automation tools, and continuous optimization to ensure sustainable growth.",
+      "icon": "Rocket",
+      "animation": "pulse"
+    }
+  ],
+  "dataCards": [
+    {
+      "tier": "MINI",
+      "amount": "$1,500",
+      "graphColor": "from-blue-500 to-blue-400",
+      "badgeBg": "bg-primary"
+    },
+    {
+      "tier": "STANDARD",
+      "amount": "$3,000",
+      "graphColor": "from-accent to-yellow-400",
+      "badgeBg": "bg-accent"
+    },
+    {
+      "tier": "PREMIUM",
+      "amount": "$5,000",
+      "graphColor": "from-primary via-accent to-primary",
+      "badgeBg": "bg-gradient-to-r from-primary to-accent"
+    }
+  ]
+}
+

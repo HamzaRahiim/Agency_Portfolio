@@ -1,0 +1,36 @@
+{
+  "navigation": {
+    "links": [
+      {
+        "name": "Home",
+        "href": "/"
+      },
+      {
+        "name": "Services",
+        "href": "/services"
+      },
+      {
+        "name": "Portfolio",
+        "href": "/portfolio"
+      },
+      {
+        "name": "About Us",
+        "href": "/about"
+      },
+      {
+        "name": "Contact",
+        "href": "/contact"
+      }
+    ]
+  },
+  "contact": {
+    "phone": {
+      "display": "+1 (234) 567-890",
+      "href": "tel:+1234567890"
+    }
+  },
+  "cta": {
+    "text": "Get Free Consultation"
+  }
+}
+

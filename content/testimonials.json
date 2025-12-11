@@ -1,0 +1,71 @@
+{
+  "testimonials": [
+    {
+      "name": "Daniel Abram",
+      "initials": "DA",
+      "reviewCount": "1 review",
+      "location": "US",
+      "rating": 5,
+      "timeAgo": "2 days ago",
+      "title": "I'm so impressed with their Walmart...",
+      "text": "I'm so impressed with their Walmart account services. They're always ahead of the curve and know exactly what they're doing!",
+      "date": "December 19, 2024"
+    },
+    {
+      "name": "Yolanda Tolliver",
+      "initials": "YT",
+      "reviewCount": "1 review",
+      "location": "US",
+      "rating": 5,
+      "timeAgo": "A day ago",
+      "title": "We're so grateful to have found a...",
+      "text": "We're so grateful to have found a company that offers excellent Walmart account services. You guys are the best!",
+      "date": "December 20, 2024"
+    },
+    {
+      "name": "Christina R. Sewell",
+      "initials": "CR",
+      "reviewCount": "1 review",
+      "location": "US",
+      "rating": 5,
+      "timeAgo": "3 days ago",
+      "title": "I'm so impressed with the TikTok...",
+      "text": "I'm so impressed with the TikTok account services provided by Fast Line. They're always ahead of the curve and know exactly what they're doing!",
+      "date": "December 16, 2024"
+    },
+    {
+      "name": "Michael Chen",
+      "initials": "MC",
+      "reviewCount": "2 reviews",
+      "location": "US",
+      "rating": 5,
+      "timeAgo": "5 days ago",
+      "title": "Outstanding Shopify automation...",
+      "text": "Outstanding Shopify automation services! Fast Line transformed our store and increased our sales by 300% in just 3 months.",
+      "date": "December 15, 2024"
+    },
+    {
+      "name": "Sarah Johnson",
+      "initials": "SJ",
+      "reviewCount": "1 review",
+      "location": "US",
+      "rating": 5,
+      "timeAgo": "A week ago",
+      "title": "Best Amazon FBA service provider!",
+      "text": "Best Amazon FBA service provider! They handle everything from product research to fulfillment. Highly recommended!",
+      "date": "December 12, 2024"
+    },
+    {
+      "name": "Robert Martinez",
+      "initials": "RM",
+      "reviewCount": "1 review",
+      "location": "US",
+      "rating": 5,
+      "timeAgo": "2 weeks ago",
+      "title": "Professional and reliable team...",
+      "text": "Professional and reliable team. They helped us scale our e-commerce business across multiple platforms seamlessly.",
+      "date": "December 5, 2024"
+    }
+  ]
+}
+

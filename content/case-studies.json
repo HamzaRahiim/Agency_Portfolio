@@ -1,0 +1,25 @@
+{
+  "caseStudies": [
+    {
+      "id": 1,
+      "src": "/landingpage/sale1.png",
+      "alt": "Case Study 1 - Sales Analytics Dashboard"
+    },
+    {
+      "id": 2,
+      "src": "/landingpage/sale2.png",
+      "alt": "Case Study 2 - Sales Analytics Dashboard"
+    },
+    {
+      "id": 3,
+      "src": "/landingpage/sale3.png",
+      "alt": "Case Study 3 - Sales Analytics Dashboard"
+    },
+    {
+      "id": 4,
+      "src": "/landingpage/sale4.png",
+      "alt": "Case Study 4 - Sales Analytics Dashboard"
+    }
+  ]
+}
+

@@ -1,107 +1,110 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, MapPin } from "lucide-react";
+import Image from "next/image";
+import { useTheme } from "@/components/providers/ThemeProvider";
+import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, MapPin, LucideIcon } from "lucide-react";
+import type { FooterData } from "@/types/footer";
 
-const quickLinks = [
-  { name: "Home", href: "/" },
-  { name: "About Us", href: "/about" },
-  { name: "Blog", href: "/blog" },
-  { name: "Contact", href: "/contact" },
-];
-
-const services = [
-  { name: "Amazon Wholesale FBA", href: "/services/amazon-wholesale" },
-  { name: "TikTok Shop Automation", href: "/services/tiktok-automation" },
-  { name: "Shopify Dropshipping", href: "/services/shopify-dropshipping" },
-  { name: "Walmart Automation", href: "/services/walmart-automation" },
-  { name: "Amazon Private Label", href: "/services/amazon-private-label" },
-];
-
-const socialLinks = [
-  {
-    name: "Facebook",
-    href: "https://www.facebook.com/profile.php?id=61584115540162",
-    icon: Facebook,
-  },
-  {
-    name: "Instagram",
-    href: "https://www.instagram.com", // Update with your Instagram profile URL
-    icon: Instagram,
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com",
-    icon: Linkedin,
-  },
-  {
-    name: "YouTube",
-    href: "https://youtube.com",
-    icon: Youtube,
-  },
-];
+const iconMap: Record<string, LucideIcon> = {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+};
 
 export default function Footer() {
+  const { resolvedTheme } = useTheme();
+  const [footerData, setFooterData] = useState<FooterData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch footer data from API route
+  useEffect(() => {
+    const fetchFooterData = async () => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+        const response = await fetch(`${baseUrl}/api/footer`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch footer data");
+        }
+
+        const data: FooterData = await response.json();
+        setFooterData(data);
+      } catch (error) {
+        console.error("Error fetching footer data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFooterData();
+  }, []);
+
   return (
-    <footer className="relative bg-gradient-to-b from-slate-900 via-blue-900 to-slate-900 text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
+    <footer className="relative border-t border-border/40 bg-linear-to-b from-background via-background to-muted text-foreground">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 pb-12 items-start">
           {/* Left Column - Company Info */}
-          <div className="lg:col-span-1">
-            {/* Logo */}
-            <div className="mb-6">
-              <Link href="/" className="flex items-center gap-3">
-                {/* TODO: Replace with your actual logo image */}
-                {/* <Image src="/logo.svg" alt="Fast Line Logo" width={40} height={40} /> */}
-                <div className="flex flex-col">
-                  <span className="text-2xl font-bold">Fast Line</span>
-                  <span className="text-xs font-medium uppercase tracking-wider text-emerald-400">
-                    Build, Scale, Evolve
-                  </span>
-                </div>
+          <div className="lg:col-span-1 flex flex-col">
+            {/* Logo - Aligned with headings */}
+            <div>
+              <Link href="/" className="inline-block">
+                <Image
+                  src={resolvedTheme === "dark" ? "/logo-white.svg" : "/logo.svg"}
+                  alt="Fast Line Logo"
+                  width={200}
+                  height={200}
+                  className="transition-opacity duration-300w-auto object-contain"
+                  priority
+                />
               </Link>
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-gray-300 leading-relaxed mb-8">
-              We help brands scale and succeed on Amazon, Walmart, Shopify, and
-              TikTok with AI-driven automation, expert marketing, and seamless
-              store management—maximizing growth, efficiency, and profitability.
-            </p>
+            {footerData?.company.description && (
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed pb-8">
+                {footerData.company.description}
+              </p>
+            )}
 
             {/* Social Media */}
             <div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-5">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-primary pb-5">
                 Follow Us On:
               </h4>
               <div className="flex gap-3">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-white transition-all duration-200 hover:scale-110"
-                    aria-label={social.name}
-                  >
-                    <social.icon className="w-5 h-5" strokeWidth={2.5} />
-                  </a>
-                ))}
+                {footerData?.socialLinks.map((social, index) => {
+                  const IconComponent = iconMap[social.icon];
+                  return IconComponent ? (
+                    <a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-lg border border-border bg-muted text-foreground hover:bg-primary/10 hover:text-primary flex items-center justify-center transition-all duration-200 hover:scale-105"
+                      aria-label={social.name}
+                    >
+                      <IconComponent className="w-5 h-5" strokeWidth={2.5} />
+                    </a>
+                  ) : null;
+                })}
               </div>
             </div>
           </div>
 
           {/* Middle Column 1 - Quick Links */}
-          <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-6">
+          <div className="pt-8 lg:pt-20">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
               Quick Links
             </h4>
-            <ul className="space-y-4">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
+            <ul className="">
+              {footerData?.quickLinks.map((link, index) => (
+                <li key={index} className="pb-2">
                   <Link
                     href={link.href}
-                    className="text-sm sm:text-base text-gray-300 hover:text-white transition-colors duration-200"
+                    className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200 "
                   >
                     {link.name}
                   </Link>
@@ -111,16 +114,16 @@ export default function Footer() {
           </div>
 
           {/* Middle Column 2 - Services */}
-          <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-6">
+          <div className="pt-8 lg:pt-20">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
               Services
             </h4>
-            <ul className="space-y-4">
-              {services.map((service, index) => (
-                <li key={index}>
+            <ul >
+              {footerData?.services.map((service, index) => (
+                <li key={index} className="pb-2">
                   <Link
                     href={service.href}
-                    className="text-sm sm:text-base text-gray-300 hover:text-white transition-colors duration-200"
+                    className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
                   >
                     {service.name}
                   </Link>
@@ -130,71 +133,70 @@ export default function Footer() {
           </div>
 
           {/* Right Column - Contact */}
-          <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-6">
+          <div className="pt-8 lg:pt-20">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
               Contact
             </h4>
-            <ul className="space-y-5">
-              <li className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5 animate-pulse" strokeWidth={2.5} />
-                <a
-                  href="tel:+17195635059"
-                  className="text-sm sm:text-base text-gray-300 hover:text-white transition-colors duration-200"
-                >
-                  +1 (719) 563-5059
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                <a
-                  href="mailto:hello@fastline.com"
-                  className="text-sm sm:text-base text-gray-300 hover:text-white transition-colors duration-200"
-                >
-                  hello@fastline.com
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                <span className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                  2356 West Touhy Ave #1020
-                  <br />
-                  Chicago, IL 60645
-                  <br />
-                  United States
-                </span>
-              </li>
+            <ul >
+              {footerData?.contact.phone && (
+                <li className="flex items-start gap-3 pb-2">
+                  <Phone className="w-5 h-5 text-primary shrink-0 mt-0.5 animate-pulse" strokeWidth={2.5} />
+                  <a
+                    href={footerData.contact.phone.href}
+                    className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  >
+                    {footerData.contact.phone.display}
+                  </a>
+                </li>
+              )}
+              {footerData?.contact.email && (
+                <li className="flex items-start gap-3 pb-2">
+                  <Mail className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <a
+                    href={footerData.contact.email.href}
+                    className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  >
+                    {footerData.contact.email.display}
+                  </a>
+                </li>
+              )}
+              {footerData?.contact.address && (
+                <li className="flex items-start gap-3 pb-2">
+                  <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <span className="text-sm sm:text-base text-muted-foreground leading-relaxed pb-2">
+                    {footerData.contact.address.line1}
+                    <br />
+                    {footerData.contact.address.line2}
+                    <br />
+                    {footerData.contact.address.line3}
+                  </span>
+                </li>
+              )}
             </ul>
           </div>
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-white/10 pt-8 mt-8">
+        <div className="border-t border-border/50 pt-8 mt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             {/* Copyright */}
-            <p className="text-sm text-gray-400 text-center sm:text-left">
-              © 2024 Fast Line. All Rights Reserved.
-            </p>
+            {footerData?.copyright && (
+              <p className="text-sm text-muted-foreground text-center sm:text-left">
+                {footerData.copyright}
+              </p>
+            )}
 
             {/* Footer Links */}
             <div className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-6">
-              <Link
-                href="/privacy"
-                className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                href="/terms"
-                className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                Terms & Condition
-              </Link>
-              <Link
-                href="/refund"
-                className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
-              >
-                Refund Policy
-              </Link>
+              {footerData?.footerLinks.map((link, index) => (
+                <Link
+                  key={index}
+                  href={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

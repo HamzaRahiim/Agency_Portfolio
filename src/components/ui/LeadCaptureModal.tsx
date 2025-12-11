@@ -231,141 +231,130 @@ export default function LeadCaptureModal() {
         onClick={handleClose}
       />
 
-      {/* Torch light effects from screen corners hitting the modal */}
-      {/* Top Right Screen Corner - Torch light pointing to modal */}
+      {/* Window/Torch Light Effects - Narrow diagonal beams from screen edges */}
+      {/* Top Right Corner - Light beam pointing toward modal center */}
       <div
-        className="fixed top-0 right-0 z-[101] w-[800px] h-[800px] pointer-events-none"
+        className="fixed top-0 right-0 z-[101] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at top right, rgba(147, 197, 253, 0.4) 0%, rgba(96, 165, 250, 0.25) 20%, rgba(59, 130, 246, 0.15) 40%, transparent 70%)',
-          transform: 'translate(30%, -30%)',
-          filter: 'blur(60px)',
+          width: '100vw',
+          height: '100vh',
+          background: 'linear-gradient(to bottom left, rgba(147, 197, 253, 0.8) 0%, rgba(96, 165, 250, 0.6) 5%, rgba(59, 130, 246, 0.4) 12%, rgba(37, 99, 235, 0.25) 20%, rgba(29, 78, 216, 0.12) 30%, transparent 45%)',
+          transformOrigin: 'top right',
+          filter: 'blur(50px)',
+          mixBlendMode: 'screen',
+          clipPath: 'polygon(85% 0, 100% 0, 100% 15%, 50% 50%)',
         }}
       />
+      {/* Bright core of top right beam */}
       <div
-        className="fixed top-0 right-0 z-[101] w-[600px] h-[600px] pointer-events-none"
+        className="fixed top-0 right-0 z-[101] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at top right, rgba(255, 255, 255, 0.3) 0%, rgba(191, 219, 254, 0.2) 15%, transparent 50%)',
-          transform: 'translate(25%, -25%)',
-          filter: 'blur(40px)',
+          width: '100vw',
+          height: '100vh',
+          background: 'linear-gradient(to bottom left, rgba(255, 255, 255, 0.7) 0%, rgba(191, 219, 254, 0.5) 3%, rgba(147, 197, 253, 0.35) 8%, rgba(96, 165, 250, 0.2) 15%, transparent 25%)',
+          transformOrigin: 'top right',
+          filter: 'blur(25px)',
+          mixBlendMode: 'screen',
+          clipPath: 'polygon(90% 0, 100% 0, 100% 10%, 55% 45%)',
         }}
       />
 
-      {/* Bottom Left Screen Corner - Torch light pointing to modal */}
+      {/* Bottom Left Corner - Light beam pointing toward modal center */}
       <div
-        className="fixed bottom-0 left-0 z-[101] w-[800px] h-[800px] pointer-events-none"
+        className="fixed bottom-0 left-0 z-[101] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at bottom left, rgba(147, 197, 253, 0.4) 0%, rgba(96, 165, 250, 0.25) 20%, rgba(59, 130, 246, 0.15) 40%, transparent 70%)',
-          transform: 'translate(-30%, 30%)',
-          filter: 'blur(60px)',
+          width: '100vw',
+          height: '100vh',
+          background: 'linear-gradient(to top right, rgba(147, 197, 253, 0.8) 0%, rgba(96, 165, 250, 0.6) 5%, rgba(59, 130, 246, 0.4) 12%, rgba(37, 99, 235, 0.25) 20%, rgba(29, 78, 216, 0.12) 30%, transparent 45%)',
+          transformOrigin: 'bottom left',
+          filter: 'blur(50px)',
+          mixBlendMode: 'screen',
+          clipPath: 'polygon(0 85%, 0 100%, 15% 100%, 50% 50%)',
         }}
       />
+      {/* Bright core of bottom left beam */}
       <div
-        className="fixed bottom-0 left-0 z-[101] w-[600px] h-[600px] pointer-events-none"
+        className="fixed bottom-0 left-0 z-[101] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at bottom left, rgba(255, 255, 255, 0.3) 0%, rgba(191, 219, 254, 0.2) 15%, transparent 50%)',
-          transform: 'translate(-25%, 25%)',
-          filter: 'blur(40px)',
+          width: '100vw',
+          height: '100vh',
+          background: 'linear-gradient(to top right, rgba(255, 255, 255, 0.7) 0%, rgba(191, 219, 254, 0.5) 3%, rgba(147, 197, 253, 0.35) 8%, rgba(96, 165, 250, 0.2) 15%, transparent 25%)',
+          transformOrigin: 'bottom left',
+          filter: 'blur(25px)',
+          mixBlendMode: 'screen',
+          clipPath: 'polygon(0 90%, 0 100%, 10% 100%, 45% 55%)',
         }}
       />
 
       {/* Modal */}
       <div className="fixed inset-0 z-[102] flex items-center justify-center p-4 pointer-events-none">
         <div
-          className="relative bg-background rounded-2xl lg:rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto pointer-events-auto border border-border/50 overflow-hidden"
+          className="relative bg-background rounded-2xl shadow-2xl max-w-xl w-full pointer-events-auto border border-border/50 overflow-visible"
           onClick={(e) => e.stopPropagation()}
         >
 
-          {/* Close Button */}
-          <button
-            onClick={handleClose}
-            className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring"
-            aria-label="Close modal"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-
           {/* Modal Content */}
-          <div className="p-6 sm:p-8 lg:p-10 pb-6 sm:pb-8 lg:pb-10">
-            {/* Logo */}
-            <div className="flex justify-center mb-6">
-              <Image
-                src={resolvedTheme === "dark" ? "/logo-white.svg" : "/logo.svg"}
-                alt="Fast Line Logo"
-                width={160}
-                height={160}
-                className="transition-opacity duration-300"
-                priority
-              />
+          <div className="p-2 sm:p-3">
+            {/* Logo and Close Button Row */}
+            <div className="flex items-center justify-between">
+              <div className="flex-1"></div>
+              {/* Logo */}
+              <div className="flex-1 flex justify-center">
+                <Image
+                  src={resolvedTheme === "dark" ? "/logo-white.svg" : "/logo.svg"}
+                  alt="Fast Line Logo"
+                  width={140}
+                  height={140}
+                  className="transition-opacity duration-300"
+                  priority
+                />
+              </div>
+              {/* Close Button */}
+              <div className="flex-1 flex justify-end">
+                <button
+                  onClick={handleClose}
+                  className="w-10 h-10 rounded-full bg-muted hover:bg-muted/80 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-ring"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             {/* Heading */}
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground text-center mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center pb-6">
               GET A FREE CONSULTANCY
             </h2>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-7 mb-0">
+            <form onSubmit={handleSubmit} className="space-y-3 pb-10">
               {/* First Name & Last Name */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                <div>
-                  <label
-                    htmlFor="firstName"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
-                    placeholder="Enter your first name"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
-                    placeholder="Enter your last name"
-                  />
-                </div>
+              <div className="grid grid-cols-2 gap-3 pb-2">
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                  placeholder="First Name"
+                />
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                  placeholder="Last Name"
+                />
               </div>
 
               {/* Email & Phone */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+              <div className="grid grid-cols-2 gap-3 pb-2">
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Email Address
-                  </label>
                   <input
                     type="email"
                     id="email"
@@ -375,66 +364,59 @@ export default function LeadCaptureModal() {
                     required
                     className={`w-full px-4 py-3 rounded-lg border ${errors.email ? "border-red-500" : "border-border"
                       } bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200`}
-                    placeholder="your@email.com"
+                    placeholder="Email Address"
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                    <p className="mt-1 text-xs text-red-500">{errors.email}</p>
                   )}
                 </div>
                 <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-foreground mb-2"
-                  >
-                    Phone Number
-                  </label>
                   <div className={`${errors.phone ? "border border-red-500 rounded-lg" : ""}`}>
                     <PhoneInput
                       country={"us"}
                       value={formData.phone}
                       onChange={handlePhoneChange}
-                      inputClass="!w-full !py-3 !pr-4 !rounded-lg !border !border-border !bg-background !text-foreground !placeholder:text-muted-foreground focus:!outline-none focus:!ring-2 focus:!ring-ring focus:!border-transparent !transition-all !duration-200"
-                      buttonClass="!bg-background !border !border-border !rounded-l-lg"
+                      inputClass="!w-full !h-[48px] !py-3 !pr-4 !rounded-lg !border !border-border !bg-background !text-foreground !placeholder:text-muted-foreground focus:!outline-none focus:!ring-2 focus:!ring-ring focus:!border-transparent !transition-all !duration-200"
+                      buttonClass="!bg-background !border !border-border !rounded-l-lg !h-[48px]"
                       dropdownClass="!bg-background !border !border-border"
-                      containerClass="!w-full"
+                      containerClass="!w-full [&_.react-tel-input]:!h-[48px]"
                       inputProps={{
                         required: true,
                         name: "phone",
+                        placeholder: "+1"
                       }}
                     />
                   </div>
                   {errors.phone && (
-                    <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+                    <p className="mt-1 text-xs text-red-500">{errors.phone}</p>
                   )}
                 </div>
               </div>
 
               {/* Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-foreground mb-2"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200 resize-none"
-                  placeholder="Tell us about your project..."
-                />
-              </div>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={3}
+                className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200 resize-none pb-2"
+                placeholder="Message"
+              />
 
-              {/* Submit Button */}
+            </form>
+          </div>
+
+          {/* Submit Button - Half inside, half outside modal */}
+          <div className="absolute bottom-0 left-0 right-0 flex justify-center pointer-events-none" style={{ transform: 'translateY(50%)' }}>
+            <form onSubmit={handleSubmit} className="pointer-events-auto">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full group flex items-center justify-center gap-2 rounded-lg px-6 py-4 text-base sm:text-lg font-bold text-primary-foreground shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="group flex items-center justify-center gap-2 rounded-lg px-8 py-4 text-base font-bold text-primary-foreground shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 style={{
                   background: 'linear-gradient(to right, var(--primary), var(--accent), var(--primary))',
+                  minWidth: '200px',
                 }}
                 onMouseEnter={(e) => {
                   if (!isSubmitting) {
@@ -497,4 +479,3 @@ export default function LeadCaptureModal() {
     </>
   );
 }
-

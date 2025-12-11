@@ -1,0 +1,97 @@
+{
+  "company": {
+    "description": "We help brands scale and succeed on Amazon, Walmart, Shopify, and TikTok with AI-driven automation, expert marketing, and seamless store management—maximizing growth, efficiency, and profitability."
+  },
+  "quickLinks": [
+    {
+      "name": "Home",
+      "href": "/"
+    },
+    {
+      "name": "About Us",
+      "href": "/about"
+    },
+    {
+      "name": "Blog",
+      "href": "/blog"
+    },
+    {
+      "name": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "services": [
+    {
+      "name": "Amazon Wholesale FBA",
+      "href": "/services/amazon-wholesale"
+    },
+    {
+      "name": "TikTok Shop Automation",
+      "href": "/services/tiktok-automation"
+    },
+    {
+      "name": "Shopify Dropshipping",
+      "href": "/services/shopify-dropshipping"
+    },
+    {
+      "name": "Walmart Automation",
+      "href": "/services/walmart-automation"
+    },
+    {
+      "name": "Amazon Private Label",
+      "href": "/services/amazon-private-label"
+    }
+  ],
+  "socialLinks": [
+    {
+      "name": "Facebook",
+      "href": "https://www.facebook.com/profile.php?id=61584115540162",
+      "icon": "Facebook"
+    },
+    {
+      "name": "Instagram",
+      "href": "https://www.instagram.com",
+      "icon": "Instagram"
+    },
+    {
+      "name": "LinkedIn",
+      "href": "https://linkedin.com",
+      "icon": "Linkedin"
+    },
+    {
+      "name": "YouTube",
+      "href": "https://youtube.com",
+      "icon": "Youtube"
+    }
+  ],
+  "contact": {
+    "phone": {
+      "display": "+1 (719) 563-5059",
+      "href": "tel:+17195635059"
+    },
+    "email": {
+      "display": "hello@fastline.com",
+      "href": "mailto:hello@fastline.com"
+    },
+    "address": {
+      "line1": "2356 West Touhy Ave #1020",
+      "line2": "Chicago, IL 60645",
+      "line3": "United States"
+    }
+  },
+  "footerLinks": [
+    {
+      "name": "Privacy Policy",
+      "href": "/privacy"
+    },
+    {
+      "name": "Terms & Condition",
+      "href": "/terms"
+    },
+    {
+      "name": "Refund Policy",
+      "href": "/refund"
+    }
+  ],
+  "copyright": "© 2024 Fast Line. All Rights Reserved."
+}

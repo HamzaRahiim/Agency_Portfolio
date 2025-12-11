@@ -1,0 +1,40 @@
+{
+  "trustBadges": [
+    {
+      "number": "500+",
+      "label": "Stores Launched",
+      "icon": "Store",
+      "animation": "pulse"
+    },
+    {
+      "number": "5+ yrs",
+      "label": "Ecommerce Experience",
+      "icon": "Star",
+      "animation": "bounce"
+    },
+    {
+      "number": "100+",
+      "label": "International Clients",
+      "icon": "Globe",
+      "animation": "spin-slow"
+    },
+    {
+      "number": "$50M+",
+      "label": "Revenue Generated",
+      "icon": "DollarSign",
+      "animation": "pulse"
+    },
+    {
+      "number": "98%",
+      "label": "Client Satisfaction",
+      "icon": "CheckCircle",
+      "animation": "bounce"
+    },
+    {
+      "number": "24/7",
+      "label": "Support Available",
+      "icon": "RefreshCw",
+      "animation": "spin"
+    }
+  ]
+}

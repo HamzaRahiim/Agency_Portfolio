@@ -1,0 +1,47 @@
+{
+  "services": [
+    {
+      "title": "Amazon Wholesale FBA",
+      "description": "Complete Amazon FBA wholesale solutions for scaling your business with proven strategies and expert support.",
+      "icon": "📦",
+      "href": "/services/amazon-wholesale",
+      "gradient": "from-blue-600 to-blue-500"
+    },
+    {
+      "title": "TikTok Shop Automation",
+      "description": "Automate your TikTok Shop operations for maximum efficiency and reach millions of potential customers.",
+      "icon": "🎵",
+      "href": "/services/tiktok-automation",
+      "gradient": "from-blue-500 to-yellow-400"
+    },
+    {
+      "title": "Shopify Dropshipping",
+      "description": "Full-service Shopify dropshipping store setup and management to launch and scale your online business.",
+      "icon": "🛍️",
+      "href": "/services/shopify-dropshipping",
+      "gradient": "from-yellow-400 to-blue-500"
+    },
+    {
+      "title": "Walmart Automation",
+      "description": "End-to-end Walmart marketplace automation services to streamline operations and boost sales.",
+      "icon": "🏪",
+      "href": "/services/walmart-automation",
+      "gradient": "from-blue-700 to-blue-500"
+    },
+    {
+      "title": "Amazon Private Label",
+      "description": "Build and scale your own private label brand on Amazon with comprehensive branding and marketing support.",
+      "icon": "🏷️",
+      "href": "/services/amazon-private-label",
+      "gradient": "from-yellow-500 to-yellow-400"
+    },
+    {
+      "title": "Proxy Marketing",
+      "description": "Strategic marketing solutions to boost your online presence and drive targeted traffic to your stores.",
+      "icon": "📊",
+      "href": "/services/proxy-marketing",
+      "gradient": "from-blue-500 to-blue-600"
+    }
+  ]
+}
+

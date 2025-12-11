@@ -1,0 +1,60 @@
+{
+  "stores": [
+    {
+      "id": 1,
+      "sales": "$868",
+      "units": "40 Units",
+      "current": "721 Current",
+      "productSales": "19.99K USD",
+      "period": "Last 30 days",
+      "increase": "68% increase",
+      "previousIncrease": "1096% increase from Last year",
+      "time": "9:54"
+    },
+    {
+      "id": 2,
+      "sales": "$0.00",
+      "units": "0 Units",
+      "current": "1970 Current",
+      "productSales": "50.38K USD",
+      "period": "Last 12 months",
+      "increase": "43% increase",
+      "previousIncrease": "from Previous period",
+      "time": "2:38"
+    },
+    {
+      "id": 3,
+      "sales": "$868",
+      "units": "40 Units",
+      "current": "721 Current",
+      "productSales": "19.99K USD",
+      "period": "Last 30 days",
+      "increase": "68% increase",
+      "previousIncrease": "1096% increase from Last year",
+      "time": "9:54"
+    },
+    {
+      "id": 4,
+      "sales": "$14",
+      "units": "1 Unit",
+      "current": "5819 Current",
+      "productSales": "9.1K USD",
+      "period": "This month",
+      "increase": "39% increase",
+      "previousIncrease": "775% increase from Last year",
+      "time": "2:38"
+    },
+    {
+      "id": 5,
+      "sales": "$1,250",
+      "units": "55 Units",
+      "current": "1,200 Current",
+      "productSales": "45.5K USD",
+      "period": "Last 30 days",
+      "increase": "125% increase",
+      "previousIncrease": "890% increase from Last year",
+      "time": "10:15"
+    }
+  ]
+}
+

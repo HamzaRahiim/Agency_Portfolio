@@ -3,7 +3,11 @@
 import { useTheme } from "../providers/ThemeProvider";
 import { Moon, Sun } from "lucide-react";
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  className?: string;
+};
+
+export function ThemeToggle({ className = "" }: ThemeToggleProps) {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = () => {
@@ -18,7 +22,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-md p-2 text-foreground hover:bg-muted transition-colors focus:outline-none"
+      className={`rounded-md p-2 transition-colors focus:outline-none ${className || "text-foreground hover:bg-muted"}`}
       aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
       {resolvedTheme === "dark" ? (

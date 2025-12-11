@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Carousel,
@@ -9,47 +10,52 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-
-// Import images
-import sale1 from "@/assets/img/sale1.png";
-import sale2 from "@/assets/img/sale2.png";
-import sale3 from "@/assets/img/sale3.png";
-import sale4 from "@/assets/img/sale4.png";
-
-const caseStudyImages = [
-  {
-    id: 1,
-    src: sale1,
-    alt: "Case Study 1 - Sales Analytics Dashboard",
-  },
-  {
-    id: 2,
-    src: sale2,
-    alt: "Case Study 2 - Sales Analytics Dashboard",
-  },
-  {
-    id: 3,
-    src: sale3,
-    alt: "Case Study 3 - Sales Analytics Dashboard",
-  },
-  {
-    id: 4,
-    src: sale4,
-    alt: "Case Study 4 - Sales Analytics Dashboard",
-  },
-];
+import type { CaseStudy, CaseStudiesData } from "@/types/caseStudies";
 
 export default function CaseStudiesSection() {
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch case studies data from API route
+  useEffect(() => {
+    const fetchCaseStudies = async () => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+        const response = await fetch(`${baseUrl}/api/case-studies`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch case studies data");
+        }
+
+        const data: CaseStudiesData = await response.json();
+        setCaseStudies(data.caseStudies);
+      } catch (error) {
+        console.error("Error fetching case studies:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCaseStudies();
+  }, []);
   return (
     <section className="relative py-8 sm:py-12 lg:py-16 overflow-hidden bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
-            Case Studies
+          <div className="inline-block mb-4">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary-foreground bg-gradient-to-r from-primary to-accent px-4 py-2 rounded-full inline-block shadow-sm">
+              Case Studies
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2 sm:mb-4 leading-tight">
+            Real Results from{" "}
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              Real Businesses
+            </span>
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground">
-            Real results from real businesses. See how we've helped companies achieve remarkable growth and success.
+            See how we've helped companies achieve remarkable growth and success.
           </p>
         </div>
 
@@ -71,7 +77,14 @@ export default function CaseStudiesSection() {
             className="w-full"
           >
             <CarouselContent className="-ml-2 sm:-ml-4 lg:-ml-6">
-              {caseStudyImages.map((image) => (
+              {isLoading ? (
+                <CarouselItem className="pl-2 sm:pl-4 lg:pl-6 basis-full">
+                  <div className="flex items-center justify-center py-12">
+                    <div className="text-muted-foreground">Loading...</div>
+                  </div>
+                </CarouselItem>
+              ) : (
+                caseStudies.map((image) => (
                 <CarouselItem
                   key={image.id}
                   className="pl-2 sm:pl-4 lg:pl-6 basis-full sm:basis-1/2 lg:basis-1/2"
@@ -87,7 +100,8 @@ export default function CaseStudiesSection() {
                     />
                   </div>
                 </CarouselItem>
-              ))}
+                ))
+              )}
             </CarouselContent>
             <CarouselPrevious
               variant="outline"

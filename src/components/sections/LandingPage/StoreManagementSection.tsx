@@ -1,35 +1,35 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const services = [
-  {
-    number: "01",
-    title: "Product Research & Listings",
-  },
-  {
-    number: "02",
-    title: "Inventory Management",
-  },
-  {
-    number: "03",
-    title: "Order Processing & Returns",
-  },
-  {
-    number: "04",
-    title: "Order Tracking",
-  },
-  {
-    number: "05",
-    title: "Customer Service & Reviews",
-  },
-  {
-    number: "06",
-    title: "Grow & Scale Your Amazon Store",
-  },
-];
+import type { StoreManagementService, StoreManagementData } from "@/types/storeManagement";
 
 export default function StoreManagementSection() {
+  const [services, setServices] = useState<StoreManagementService[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch store management data from API route
+  useEffect(() => {
+    const fetchStoreManagement = async () => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+        const response = await fetch(`${baseUrl}/api/store-management`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch store management data");
+        }
+
+        const data: StoreManagementData = await response.json();
+        setServices(data.services);
+      } catch (error) {
+        console.error("Error fetching store management:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStoreManagement();
+  }, []);
   return (
     <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Background */}
@@ -84,38 +84,44 @@ export default function StoreManagementSection() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 pb-12 sm:pb-16 lg:pb-20 px-2 sm:px-0">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className="group relative rounded-2xl lg:rounded-3xl border border-border/60 bg-muted/30 backdrop-blur-sm p-4 sm:p-6 lg:p-8 cursor-pointer"
-            >
-              {/* Left Side Hover Effect */}
-              <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-1/2 group-active:w-1/2 bg-gradient-to-r from-primary to-primary/80 transition-all duration-700 ease-out rounded-l-2xl lg:rounded-l-3xl z-0 overflow-hidden" />
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-muted-foreground">Loading...</div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 pb-12 sm:pb-16 lg:pb-20 px-2 sm:px-0">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="group relative rounded-2xl lg:rounded-3xl border border-border/60 bg-muted/30 backdrop-blur-sm p-4 sm:p-6 lg:p-8 cursor-pointer"
+              >
+                {/* Left Side Hover Effect */}
+                <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-1/2 group-active:w-1/2 bg-gradient-to-r from-primary to-primary/80 transition-all duration-700 ease-out rounded-l-2xl lg:rounded-l-3xl z-0 overflow-hidden" />
 
-              {/* Right Side Hover Effect */}
-              <div className="absolute right-0 top-0 bottom-0 w-0 group-hover:w-1/2 group-active:w-1/2 bg-gradient-to-l from-accent to-accent/80 transition-all duration-700 ease-out rounded-r-2xl lg:rounded-r-3xl z-0 overflow-hidden" />
+                {/* Right Side Hover Effect */}
+                <div className="absolute right-0 top-0 bottom-0 w-0 group-hover:w-1/2 group-active:w-1/2 bg-gradient-to-l from-accent to-accent/80 transition-all duration-700 ease-out rounded-r-2xl lg:rounded-r-3xl z-0 overflow-hidden" />
 
-              {/* Center Merge Effect - Appears when both sides meet */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-0 group-hover:w-full group-active:w-full -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 delay-300 z-0 rounded-2xl lg:rounded-3xl overflow-hidden" />
+                {/* Center Merge Effect - Appears when both sides meet */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-0 group-hover:w-full group-active:w-full -translate-x-1/2 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-500 delay-300 z-0 rounded-2xl lg:rounded-3xl overflow-hidden" />
 
-              {/* Number Circle - Positioned on left border (half outside, half inside) */}
-              <div className="absolute -left-6 sm:-left-7 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg sm:text-xl group-hover:bg-accent group-active:bg-accent group-hover:text-accent-foreground group-active:text-accent-foreground transition-all duration-500 shadow-lg z-20 border-2 border-border">
-                {service.number}
-              </div>
+                {/* Number Circle - Positioned on left border (half outside, half inside) */}
+                <div className="absolute -left-6 sm:-left-7 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg sm:text-xl group-hover:bg-accent group-active:bg-accent group-hover:text-accent-foreground group-active:text-accent-foreground transition-all duration-500 shadow-lg z-20 border-2 border-border">
+                  {service.number}
+                </div>
 
-              {/* Content */}
-              <div className="relative z-10 pl-12 sm:pl-14">
-                {/* Title */}
-                <div className="flex-1">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-white group-active:text-white transition-colors duration-500 leading-tight">
-                    {service.title}
-                  </h3>
+                {/* Content */}
+                <div className="relative z-10 pl-12 sm:pl-14">
+                  {/* Title */}
+                  <div className="flex-1">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-white group-active:text-white transition-colors duration-500 leading-tight">
+                      {service.title}
+                    </h3>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* CTA Button */}
         <div className="text-center">

@@ -3,19 +3,20 @@
 
 export default function HeroSection() {
   return (
-    <section className="relative h-[80vh] md:h-screen min-h-[500px] sm:min-h-[600px] flex items-center overflow-hidden pt-20">
+    <section className="relative overflow-hidden pt-20">
       {/* Background Video */}
-      <div className="absolute inset-0 -z-10 w-full h-full">
-        {/* Video Overlay - Theme-aware overlay for text readability */}
-        <div className="absolute inset-0 bg-black/20 dark:bg-black/20 z-10" />
-
-        {/* Video - Fully Responsive with opacity */}
+      <div
+        className="relative w-full overflow-hidden"
+        style={{
+          background: "linear-gradient(to bottom, rgba(15, 23, 42, 0.98) 0%, rgba(30, 58, 138, 0.95) 50%, rgba(15, 23, 42, 0.98) 100%)",
+        }}
+      >
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-contain md:object-cover bg-black opacity-70 dark:opacity-100"
+          className="w-full h-auto max-h-[80vh] object-contain md:h-[80vh] md:object-cover"
         >
           {/* Mobile-optimized video for better performance */}
           <source src="/hero-video-mbl.mp4" type="video/mp4" media="(max-width: 768px)" />
@@ -23,6 +24,13 @@ export default function HeroSection() {
           <source src="/hero-video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+        {/* Overlay for text readability */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.25) 100%)",
+          }}
+        />
       </div>
 
       {/* Content Overlay */}

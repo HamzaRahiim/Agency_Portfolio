@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,76 +9,52 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-
-const stores = [
-  {
-    id: 1,
-    sales: "$868",
-    units: "40 Units",
-    current: "721 Current",
-    productSales: "19.99K USD",
-    period: "Last 30 days",
-    increase: "68% increase",
-    previousIncrease: "1096% increase from Last year",
-    time: "9:54",
-  },
-  {
-    id: 2,
-    sales: "$0.00",
-    units: "0 Units",
-    current: "1970 Current",
-    productSales: "50.38K USD",
-    period: "Last 12 months",
-    increase: "43% increase",
-    previousIncrease: "from Previous period",
-    time: "2:38",
-  },
-  {
-    id: 3,
-    sales: "$868",
-    units: "40 Units",
-    current: "721 Current",
-    productSales: "19.99K USD",
-    period: "Last 30 days",
-    increase: "68% increase",
-    previousIncrease: "1096% increase from Last year",
-    time: "9:54",
-  },
-  {
-    id: 4,
-    sales: "$14",
-    units: "1 Unit",
-    current: "5819 Current",
-    productSales: "9.1K USD",
-    period: "This month",
-    increase: "39% increase",
-    previousIncrease: "775% increase from Last year",
-    time: "2:38",
-  },
-  {
-    id: 5,
-    sales: "$1,250",
-    units: "55 Units",
-    current: "1,200 Current",
-    productSales: "45.5K USD",
-    period: "Last 30 days",
-    increase: "125% increase",
-    previousIncrease: "890% increase from Last year",
-    time: "10:15",
-  },
-];
+import type { Store, SuccessfulStoresData } from "@/types/successfulStores";
 
 export default function SuccessfulStoresSection() {
+  const [stores, setStores] = useState<Store[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch successful stores data from API route
+  useEffect(() => {
+    const fetchSuccessfulStores = async () => {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+        const response = await fetch(`${baseUrl}/api/successful-stores`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch successful stores data");
+        }
+
+        const data: SuccessfulStoresData = await response.json();
+        setStores(data.stores);
+      } catch (error) {
+        console.error("Error fetching successful stores:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSuccessfulStores();
+  }, []);
 
   return (
     <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
-            Our Successful Stores
+          <div className="inline-block mb-4">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary-foreground bg-gradient-to-r from-primary to-accent px-4 py-2 rounded-full inline-block shadow-sm">
+              Success Stories
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-2 sm:mb-4 leading-tight">
+            Our{" "}
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              Successful Stores
+            </span>
           </h2>
-          <p className="text-lg sm:text-xl md:text-2xl text-primary font-semibold">
+          <p className="text-base sm:text-lg text-muted-foreground">
             Experience in Making Businesses Grow.
           </p>
         </div>
@@ -100,7 +77,14 @@ export default function SuccessfulStoresSection() {
             className="w-full"
           >
             <CarouselContent className="-ml-4 sm:-ml-6 lg:-ml-8">
-              {stores.map((store) => (
+              {isLoading ? (
+                <CarouselItem className="pl-4 sm:pl-6 lg:pl-8 basis-full">
+                  <div className="flex items-center justify-center py-12">
+                    <div className="text-muted-foreground">Loading...</div>
+                  </div>
+                </CarouselItem>
+              ) : (
+                stores.map((store) => (
                 <CarouselItem
                   key={store.id}
                   className="pl-4 sm:pl-6 lg:pl-8 basis-full sm:basis-1/2 lg:basis-1/3"
@@ -210,7 +194,8 @@ export default function SuccessfulStoresSection() {
                     </div>
                   </div>
                 </CarouselItem>
-              ))}
+                ))
+              )}
             </CarouselContent>
             <CarouselPrevious
               variant="outline"

@@ -1,0 +1,29 @@
+{
+  "services": [
+    {
+      "number": "01",
+      "title": "Product Research & Listings"
+    },
+    {
+      "number": "02",
+      "title": "Inventory Management"
+    },
+    {
+      "number": "03",
+      "title": "Order Processing & Returns"
+    },
+    {
+      "number": "04",
+      "title": "Order Tracking"
+    },
+    {
+      "number": "05",
+      "title": "Customer Service & Reviews"
+    },
+    {
+      "number": "06",
+      "title": "Grow & Scale Your Amazon Store"
+    }
+  ]
+}
+
