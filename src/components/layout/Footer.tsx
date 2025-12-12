@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, MapPin, LucideIcon } from "lucide-react";
 import type { FooterData } from "@/types/footer";
+import { getCurrentYear } from "@/lib/utils";
 
 const iconMap: Record<string, LucideIcon> = {
   Facebook,
@@ -71,7 +72,7 @@ export default function Footer() {
 
             {/* Social Media */}
             <div>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-primary pb-5">
+              <h4 className="text-base sm:text-lg font-bold uppercase tracking-wider text-primary pb-5">
                 Follow Us On:
               </h4>
               <div className="flex gap-3">
@@ -96,7 +97,7 @@ export default function Footer() {
 
           {/* Middle Column 1 - Quick Links */}
           <div className="pt-8 lg:pt-20">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
+            <h4 className="text-base sm:text-lg font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
               Quick Links
             </h4>
             <ul className="">
@@ -115,7 +116,7 @@ export default function Footer() {
 
           {/* Middle Column 2 - Services */}
           <div className="pt-8 lg:pt-20">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
+            <h4 className="text-base sm:text-lg font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
               Services
             </h4>
             <ul >
@@ -134,7 +135,7 @@ export default function Footer() {
 
           {/* Right Column - Contact */}
           <div className="pt-8 lg:pt-20">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
+            <h4 className="text-base sm:text-lg font-bold uppercase tracking-wider text-primary md:pb-16 pb-8">
               Contact
             </h4>
             <ul >
@@ -182,7 +183,7 @@ export default function Footer() {
             {/* Copyright */}
             {footerData?.copyright && (
               <p className="text-sm text-muted-foreground text-center sm:text-left">
-                {footerData.copyright}
+                {footerData.copyright.replace("2024", getCurrentYear().toString())}
               </p>
             )}
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -10,10 +10,20 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import type { Testimonial, TestimonialsData } from "@/types/testimonials";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register GSAP plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function TestimonialsSection() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   // Fetch testimonials data from API route
   useEffect(() => {
@@ -38,8 +48,247 @@ export default function TestimonialsSection() {
     fetchTestimonials();
   }, []);
 
+  // GSAP ScrollTrigger animations
+  useEffect(() => {
+    if (!sectionRef.current || isLoading || testimonials.length === 0) return;
+
+    const ctx = gsap.context(() => {
+      // Badge animation
+      if (headerRef.current) {
+        const badge = headerRef.current.querySelector('[data-badge]');
+        if (badge) {
+          gsap.set(badge, {
+            opacity: 0,
+            scale: 0,
+            rotation: -360,
+            y: -50,
+            x: -20,
+            transformOrigin: "center center",
+            willChange: "transform, opacity"
+          });
+
+          gsap.to(badge, {
+            opacity: 1,
+            scale: 1,
+            rotation: 0,
+            y: 0,
+            x: 0,
+            duration: 1.2,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 85%",
+              end: "top 50%",
+              toggleActions: "play none none none",
+            },
+          });
+        }
+
+        // Description text animation
+        const description = headerRef.current.querySelector('[data-description]');
+        if (description) {
+          gsap.set(description, {
+            opacity: 0,
+            y: 30,
+            willChange: "transform, opacity",
+          });
+
+          gsap.to(description, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          });
+        }
+
+        // Title animation
+        const titleContainer = headerRef.current.querySelector('[data-title]');
+        const titleTextElement = headerRef.current.querySelector('[data-title-text]');
+        const titleSpan = headerRef.current.querySelector('[data-title-span]');
+
+        if (titleContainer && titleTextElement && titleSpan) {
+          const mainText = titleTextElement.textContent || "See What People Say About";
+          const spanText = titleSpan.textContent || "Fast Line";
+
+          const mainWords = mainText.split(" ").filter(w => w.length > 0);
+          const spanWords = spanText.split(" ").filter(w => w.length > 0);
+
+          if (mainWords.length > 0) {
+            const animatedMainHTML = mainWords
+              .map((word, i) => {
+                return `<span class="inline-block mr-2 word-${i}">${word}</span>`;
+              })
+              .join(" ");
+            titleTextElement.innerHTML = animatedMainHTML;
+          }
+
+          if (spanWords.length > 0) {
+            const animatedSpanHTML = spanWords
+              .map((word, i) => {
+                return `<span class="inline-block mr-2 span-word-${i}">${word}</span>`;
+              })
+              .join(" ");
+            titleSpan.innerHTML = animatedSpanHTML;
+          }
+
+          const mainWordElements = titleTextElement.querySelectorAll('[class^="word-"]');
+          if (mainWordElements.length > 0) {
+            gsap.set(mainWordElements, {
+              opacity: 0,
+              y: 120,
+              rotationX: -90,
+              scale: 0.6,
+              transformOrigin: "50% 50%",
+              z: -200,
+              willChange: "transform, opacity",
+            });
+
+            gsap.to(mainWordElements, {
+              opacity: 1,
+              y: 0,
+              rotationX: 0,
+              scale: 1,
+              z: 0,
+              duration: 1.2,
+              stagger: {
+                each: 0.1,
+                from: "start",
+                ease: "power2.out",
+              },
+              ease: "back.out(1.7)",
+              scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 80%",
+                toggleActions: "play none none none",
+              },
+            });
+          }
+
+          gsap.set(titleSpan, {
+            backgroundPosition: "200% 0",
+            filter: "blur(15px)",
+            willChange: "background-position, filter",
+          });
+
+          gsap.to(titleSpan, {
+            backgroundPosition: "0% 0",
+            filter: "blur(0px)",
+            duration: 2.8,
+            ease: "power3.inOut",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          });
+
+          gsap.to(titleSpan, {
+            backgroundPosition: "100% 0",
+            duration: 4,
+            ease: "none",
+            repeat: -1,
+            yoyo: true,
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          });
+
+          const spanWordElements = titleSpan.querySelectorAll('[class^="span-word-"]');
+          if (spanWordElements.length > 0) {
+            gsap.set(spanWordElements, {
+              opacity: 0,
+              scale: 0.3,
+              y: 50,
+              rotationY: -45,
+              willChange: "transform, opacity",
+            });
+
+            gsap.to(spanWordElements, {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              rotationY: 0,
+              duration: 0.8,
+              stagger: {
+                each: 0.12,
+                from: "start",
+              },
+              ease: "elastic.out(1, 0.6)",
+              scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            });
+          }
+        }
+      }
+
+      // Testimonial cards animations
+      if (carouselRef.current) {
+        const cards = carouselRef.current.querySelectorAll('[data-testimonial-card]');
+        cards.forEach((card, index) => {
+          const direction = index % 3 === 0 ? -1 : index % 3 === 1 ? 1 : 0;
+          gsap.set(card, {
+            opacity: 0,
+            y: 100,
+            rotationY: direction * 30,
+            scale: 0.8,
+            transformOrigin: "center center",
+            willChange: "transform, opacity",
+          });
+
+          gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            rotationY: 0,
+            scale: 1,
+            duration: 1,
+            ease: "power3.out",
+            delay: index * 0.1,
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          });
+
+          // Enhanced hover effect with GSAP
+          card.addEventListener("mouseenter", () => {
+            gsap.to(card, {
+              y: -10,
+              scale: 1.02,
+              rotationY: direction * 5,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+          });
+
+          card.addEventListener("mouseleave", () => {
+            gsap.to(card, {
+              y: 0,
+              scale: 1,
+              rotationY: 0,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+          });
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [isLoading, testimonials.length]);
+
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Split Background: Top Half - Dark */}
       <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
         {/* Background Pattern */}
@@ -63,25 +312,25 @@ export default function TestimonialsSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center pb-12 sm:pb-16">
+        <div ref={headerRef} className="text-center pb-12 sm:pb-16">
           <div className="inline-block mb-4">
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary-foreground bg-gradient-to-r from-primary to-accent px-4 py-2 rounded-full inline-block shadow-sm">
+            <span data-badge className="text-xs sm:text-sm font-bold uppercase tracking-wider text-primary-foreground bg-gradient-to-r from-primary to-accent px-4 py-2 rounded-full inline-block shadow-sm">
               Testimonials
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-4 leading-tight">
-            See What People Say About{" "}
-            <span className="bg-gradient-to-r from-blue-400 via-accent to-blue-400 bg-clip-text text-transparent">
+          <h2 data-title className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-4 leading-tight">
+            <span data-title-text>See What People Say About</span>{" "}
+            <span data-title-span className="bg-gradient-to-r from-blue-400 via-accent to-blue-400 bg-clip-text text-transparent bg-[length:200%_auto]">
               Fast Line
             </span>
           </h2>
-          <p className="text-base sm:text-lg text-white/80">
+          <p data-description className="text-base sm:text-lg text-white/80">
             Trusted by hundreds of e-commerce businesses worldwide
           </p>
         </div>
 
         {/* Carousel Container */}
-        <div className="relative">
+        <div ref={carouselRef} className="relative">
           <Carousel
             opts={{
               align: "start",
@@ -110,7 +359,11 @@ export default function TestimonialsSection() {
                     key={index}
                     className="pl-4 sm:pl-6 lg:pl-8 basis-full sm:basis-1/2 lg:basis-1/3"
                   >
-                    <div className="group w-full bg-white rounded-2xl lg:rounded-3xl p-6 sm:p-8 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 border-2 border-transparent hover:border-primary/20 relative overflow-hidden">
+                    <div 
+                      data-testimonial-card
+                      className="group w-full bg-white rounded-2xl lg:rounded-3xl p-6 sm:p-8 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 border-2 border-transparent hover:border-primary/20 relative overflow-hidden"
+                      style={{ transformStyle: "preserve-3d", backfaceVisibility: "hidden", willChange: "transform, opacity" }}
+                    >
                       {/* Decorative Gradient Overlay on Hover */}
                       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 

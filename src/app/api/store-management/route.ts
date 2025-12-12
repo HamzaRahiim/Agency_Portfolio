@@ -1,16 +1,15 @@
-import { NextResponse } from 'next/server';
-import { getStoreManagement } from '@/lib/services/storeManagementService';
+import { NextResponse } from "next/server";
+import { getStoreManagement } from "@/lib/services/LandingPage/storeManagementService";
 
 export async function GET() {
   try {
     const data = await getStoreManagement();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error fetching store management:', error);
+    console.error("Error fetching store management:", error);
     return NextResponse.json(
-      { error: 'Failed to fetch store management' },
+      { error: "Failed to fetch store management" },
       { status: 500 }
     );
   }
 }
-

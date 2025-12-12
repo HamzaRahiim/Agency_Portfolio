@@ -3,7 +3,7 @@ import path from 'path';
 import type { GrowthProcessData } from '@/types/growthProcess';
 
 export const getGrowthProcess = async (): Promise<GrowthProcessData> => {
-  const filePath = path.join(process.cwd(), 'content', 'growth-process.json');
+  const filePath = path.join(process.cwd(), 'content', 'landingPage', 'growth-process.json');
   const data = await fs.readFile(filePath, 'utf8');
   return JSON.parse(data);
 };

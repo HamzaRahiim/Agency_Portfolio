@@ -1,12 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import type { StoreManagementService, StoreManagementData } from "@/types/storeManagement";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register GSAP plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function StoreManagementSection() {
   const [services, setServices] = useState<StoreManagementService[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   // Fetch store management data from API route
   useEffect(() => {
@@ -30,8 +40,220 @@ export default function StoreManagementSection() {
 
     fetchStoreManagement();
   }, []);
+
+  // GSAP ScrollTrigger animations
+  useEffect(() => {
+    if (!sectionRef.current || isLoading || services.length === 0) return;
+
+    const ctx = gsap.context(() => {
+      // Title animation - Same as ServicesSection
+      if (headerRef.current) {
+        const titleContainer = headerRef.current.querySelector('[data-title]');
+        const titleTextElement = headerRef.current.querySelector('[data-title-text]');
+        const titleSpan = headerRef.current.querySelector('[data-title-span]');
+
+        if (titleContainer && titleTextElement && titleSpan) {
+          // Get the original text content BEFORE modifying
+          const mainText = titleTextElement.textContent || "Your One-Stop Solution for Full-Scale Store Management.";
+          const spanText = titleSpan.textContent || "Done-For-You";
+
+          // Split into words
+          const mainWords = mainText.split(" ").filter(w => w.length > 0);
+          const spanWords = spanText.split(" ").filter(w => w.length > 0);
+
+          // Wrap main title words in spans for animation
+          if (mainWords.length > 0) {
+            const animatedMainHTML = mainWords
+              .map((word, i) => {
+                return `<span class="inline-block mr-2 word-${i}">${word}</span>`;
+              })
+              .join(" ");
+
+            // Update with wrapped words
+            titleTextElement.innerHTML = animatedMainHTML;
+          }
+
+          // Wrap span words in spans for animation
+          if (spanWords.length > 0) {
+            const animatedSpanHTML = spanWords
+              .map((word, i) => {
+                return `<span class="inline-block mr-2 span-word-${i}">${word}</span>`;
+              })
+              .join(" ");
+
+            // Update with wrapped words
+            titleSpan.innerHTML = animatedSpanHTML;
+          }
+
+          // Animate main words - Enhanced 3D cascade effect
+          const mainWordElements = titleTextElement.querySelectorAll('[class^="word-"]');
+          if (mainWordElements.length > 0) {
+            // Set initial animation state with 3D transforms
+            gsap.set(mainWordElements, {
+              opacity: 0,
+              y: 120,
+              rotationX: -90,
+              scale: 0.6,
+              transformOrigin: "50% 50%",
+              z: -200,
+              willChange: "transform, opacity",
+            });
+
+            // Animate to visible with enhanced 3D effect
+            gsap.to(mainWordElements, {
+              opacity: 1,
+              y: 0,
+              rotationX: 0,
+              scale: 1,
+              z: 0,
+              duration: 1.2,
+              stagger: {
+                each: 0.1,
+                from: "start",
+                ease: "power2.out",
+              },
+              ease: "back.out(1.7)",
+              scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            });
+          }
+
+          // Animate span gradient background - Smooth flowing gradient effect
+          gsap.set(titleSpan, {
+            backgroundPosition: "200% 0",
+            filter: "blur(15px)",
+            willChange: "background-position, filter",
+          });
+
+          const gradientTween = gsap.to(titleSpan, {
+            backgroundPosition: "0% 0",
+            filter: "blur(0px)",
+            duration: 2.8,
+            ease: "power3.inOut",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+            onComplete: () => {
+              // Start continuous gradient flow after initial animation
+              gsap.to(titleSpan, {
+                backgroundPosition: "100% 0",
+                duration: 4,
+                ease: "none",
+                repeat: -1,
+                yoyo: true,
+              });
+            },
+          });
+
+          // Animate span words - Enhanced elastic bounce effect
+          const spanWordElements = titleSpan.querySelectorAll('[class^="span-word-"]');
+          if (spanWordElements.length > 0) {
+            // Set initial state for span words
+            gsap.set(spanWordElements, {
+              opacity: 0,
+              scale: 0.3,
+              y: 50,
+              rotationY: -45,
+              willChange: "transform, opacity",
+            });
+
+            // Animate to visible with elastic bounce
+            gsap.to(spanWordElements, {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              rotationY: 0,
+              duration: 0.8,
+              stagger: {
+                each: 0.12,
+                from: "start",
+              },
+              ease: "elastic.out(1, 0.6)",
+              scrollTrigger: {
+                trigger: headerRef.current,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            });
+          }
+        }
+      }
+
+      // Cards animation - Scroll-pinned with smooth cards sliding in from left/right
+      const cards = cardsRef.current.filter(Boolean);
+      if (cards.length > 0) {
+        // Calculate total scroll distance (80vh per card for smoother experience)
+        const scrollDistance = cards.length * 80;
+
+        // Create master timeline for all cards
+        const masterTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: `+=${scrollDistance}vh`,
+            pin: true,
+            anticipatePin: 1,
+            scrub: 0.8, // Smoother scrubbing
+          },
+        });
+
+        // Animate each card sliding in from left or right
+        cards.forEach((card, index) => {
+          if (!card) return;
+
+          // Determine direction: alternate between left and right
+          const isLeft = index % 2 === 0;
+          const startX = isLeft ? -window.innerWidth - 500 : window.innerWidth + 500;
+
+          // Set initial position off-screen
+          gsap.set(card, {
+            x: startX,
+            opacity: 0,
+            scale: 0.5,
+            rotationY: isLeft ? -50 : 50,
+            z: -600,
+            willChange: "transform, opacity",
+            transformStyle: "preserve-3d",
+          });
+
+          // Add card animation to master timeline with smooth stagger
+          const cardStart = (index / cards.length) * 0.85; // Start at 85% of timeline
+          const cardDuration = (1 / cards.length) * 0.3; // Each card takes 30% of its slot
+
+          masterTimeline.to(
+            card,
+            {
+              x: 0,
+              opacity: 1,
+              scale: 1,
+              rotationY: 0,
+              z: 0,
+              duration: cardDuration,
+              ease: "power2.out", // Smoother easing
+            },
+            cardStart
+          );
+        });
+      }
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.vars.trigger === sectionRef.current) {
+          trigger.kill();
+        }
+      });
+    };
+  }, [isLoading, services.length]);
+
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/5" />
@@ -74,10 +296,17 @@ export default function StoreManagementSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
         {/* Header */}
-        <div className="flex flex-col items-center justify-center pb-16 sm:pb-20 lg:pb-24">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground mb-4 sm:mb-6 leading-tight max-w-5xl text-center w-full">
-            Your One-Stop Solution for Full-Scale Store Management.{" "}
-            <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+        <div ref={headerRef} className="flex flex-col items-center justify-center pb-16 sm:pb-20 lg:pb-24">
+          <h2
+            data-title
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground mb-4 sm:mb-6 leading-tight max-w-5xl text-center w-full"
+          >
+            <span data-title-text>Your One-Stop Solution for Full-Scale Store Management.</span>{" "}
+            <span
+              data-title-span
+              className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_100%]"
+              style={{ backgroundPosition: "200% 0" }}
+            >
               Done-For-You
             </span>
           </h2>
@@ -93,7 +322,14 @@ export default function StoreManagementSection() {
             {services.map((service, index) => (
               <div
                 key={index}
+                ref={(el) => {
+                  cardsRef.current[index] = el;
+                }}
                 className="group relative rounded-2xl lg:rounded-3xl border border-border/60 bg-muted/30 backdrop-blur-sm p-4 sm:p-6 lg:p-8 cursor-pointer"
+                style={{
+                  transformStyle: "preserve-3d",
+                  willChange: "transform, opacity",
+                }}
               >
                 {/* Left Side Hover Effect */}
                 <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-1/2 group-active:w-1/2 bg-gradient-to-r from-primary to-primary/80 transition-all duration-700 ease-out rounded-l-2xl lg:rounded-l-3xl z-0 overflow-hidden" />
