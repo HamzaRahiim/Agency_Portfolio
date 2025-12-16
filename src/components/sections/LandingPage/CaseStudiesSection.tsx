@@ -30,8 +30,7 @@ export default function CaseStudiesSection() {
   useEffect(() => {
     const fetchCaseStudies = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/case-studies`);
+        const response = await fetch("/api/case-studies");
 
         if (!response.ok) {
           throw new Error("Failed to fetch case studies data");

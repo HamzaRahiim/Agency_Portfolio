@@ -26,8 +26,7 @@ export default function ServicePageClient({ slug }: ServicePageClientProps) {
         setIsLoading(true);
         setError(null);
 
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const res = await fetch(`${baseUrl}/api/services`);
+        const res = await fetch("/api/services");
 
         if (!res.ok) {
           throw new Error(`Failed to load services: ${res.status}`);

@@ -24,8 +24,7 @@ export default function Footer() {
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/footer`);
+        const response = await fetch("/api/footer");
 
         if (!response.ok) {
           throw new Error("Failed to fetch footer data");

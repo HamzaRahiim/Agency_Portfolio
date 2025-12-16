@@ -80,8 +80,7 @@ export default function TrustBadgesSection() {
   useEffect(() => {
     const fetchTrustBadges = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/trust-badges`);
+        const response = await fetch("/api/trust-badges");
 
         if (!response.ok) {
           throw new Error("Failed to fetch trust badges data");

@@ -29,8 +29,7 @@ export default function SuccessfulStoresSection() {
   useEffect(() => {
     const fetchSuccessfulStores = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/successful-stores`);
+        const response = await fetch("/api/successful-stores");
 
         if (!response.ok) {
           throw new Error("Failed to fetch successful stores data");

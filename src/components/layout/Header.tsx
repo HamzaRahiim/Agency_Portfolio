@@ -26,8 +26,7 @@ export default function Header() {
   useEffect(() => {
     const fetchHeaderData = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/header`);
+        const response = await fetch("/api/header");
 
         if (!response.ok) {
           throw new Error("Failed to fetch header data");

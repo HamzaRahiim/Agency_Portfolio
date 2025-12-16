@@ -12,8 +12,7 @@ export default function ServicesSection() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/services`);
+        const response = await fetch("/api/services");
 
         if (!response.ok) {
           throw new Error("Failed to fetch services data");

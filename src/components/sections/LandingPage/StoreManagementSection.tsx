@@ -22,8 +22,7 @@ export default function StoreManagementSection() {
   useEffect(() => {
     const fetchStoreManagement = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/store-management`);
+        const response = await fetch("/api/store-management");
 
         if (!response.ok) {
           throw new Error("Failed to fetch store management data");

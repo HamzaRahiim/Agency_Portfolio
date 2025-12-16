@@ -31,8 +31,7 @@ export default function GrowthProcessSection() {
   useEffect(() => {
     const fetchGrowthProcess = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/growth-process`);
+        const response = await fetch("/api/growth-process");
 
         if (!response.ok) {
           throw new Error("Failed to fetch growth process data");

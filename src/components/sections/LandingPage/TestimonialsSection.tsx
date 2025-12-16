@@ -29,8 +29,7 @@ export default function TestimonialsSection() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
-        const response = await fetch(`${baseUrl}/api/testimonials`);
+        const response = await fetch("/api/testimonials");
 
         if (!response.ok) {
           throw new Error("Failed to fetch testimonials data");
