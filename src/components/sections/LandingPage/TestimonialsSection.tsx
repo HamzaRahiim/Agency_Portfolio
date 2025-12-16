@@ -249,7 +249,8 @@ export default function TestimonialsSection() {
         const cards = carouselRef.current.querySelectorAll('[data-testimonial-card]');
         cards.forEach((card, index) => {
           const direction = index % 3 === 0 ? -1 : index % 3 === 1 ? 1 : 0;
-          gsap.set(card, {
+          const cardElement = card as HTMLElement;
+          gsap.set(cardElement, {
             opacity: 0,
             y: 100,
             rotationY: direction * 30,
@@ -258,7 +259,7 @@ export default function TestimonialsSection() {
             willChange: "transform, opacity",
           });
 
-          gsap.to(card, {
+          gsap.to(cardElement, {
             opacity: 1,
             y: 0,
             rotationY: 0,
@@ -267,7 +268,7 @@ export default function TestimonialsSection() {
             ease: "power3.out",
             delay: index * 0.1,
             scrollTrigger: {
-              trigger: card,
+              trigger: cardElement,
               start: "top 90%",
               toggleActions: "play none none none",
             },
@@ -275,7 +276,7 @@ export default function TestimonialsSection() {
 
           // Enhanced hover effect with GSAP
           const handleMouseEnter = () => {
-            gsap.to(card, {
+            gsap.to(cardElement, {
               y: -10,
               scale: 1.02,
               rotationY: direction * 5,
@@ -285,7 +286,7 @@ export default function TestimonialsSection() {
           };
 
           const handleMouseLeave = () => {
-            gsap.to(card, {
+            gsap.to(cardElement, {
               y: 0,
               scale: 1,
               rotationY: 0,
@@ -294,11 +295,11 @@ export default function TestimonialsSection() {
             });
           };
 
-          card.addEventListener("mouseenter", handleMouseEnter);
-          card.addEventListener("mouseleave", handleMouseLeave);
+          cardElement.addEventListener("mouseenter", handleMouseEnter);
+          cardElement.addEventListener("mouseleave", handleMouseLeave);
           eventListeners.push(
-            { element: card, event: "mouseenter", handler: handleMouseEnter },
-            { element: card, event: "mouseleave", handler: handleMouseLeave }
+            { element: cardElement, event: "mouseenter", handler: handleMouseEnter },
+            { element: cardElement, event: "mouseleave", handler: handleMouseLeave }
           );
         });
       }

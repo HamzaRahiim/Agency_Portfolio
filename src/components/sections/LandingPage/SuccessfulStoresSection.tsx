@@ -248,7 +248,8 @@ export default function SuccessfulStoresSection() {
         const phoneFrames = carouselRef.current.querySelectorAll('[data-phone-frame]');
         phoneFrames.forEach((frame, index) => {
           const direction = index % 2 === 0 ? -1 : 1;
-          gsap.set(frame, {
+          const frameElement = frame as HTMLElement;
+          gsap.set(frameElement, {
             opacity: 0,
             y: 150,
             rotationY: direction * 60,
@@ -258,7 +259,7 @@ export default function SuccessfulStoresSection() {
             willChange: "transform, opacity",
           });
 
-          gsap.to(frame, {
+          gsap.to(frameElement, {
             opacity: 1,
             y: 0,
             rotationY: 0,
@@ -268,7 +269,7 @@ export default function SuccessfulStoresSection() {
             ease: "power3.out",
             delay: index * 0.15,
             scrollTrigger: {
-              trigger: frame,
+              trigger: frameElement,
               start: "top 90%",
               toggleActions: "play none none none",
             },
@@ -276,7 +277,7 @@ export default function SuccessfulStoresSection() {
 
           // Enhanced hover effect with 3D tilt
           const handleMouseEnter = () => {
-            gsap.to(frame, {
+            gsap.to(frameElement, {
               y: -15,
               rotationY: direction * 8,
               rotationX: 5,
@@ -287,7 +288,7 @@ export default function SuccessfulStoresSection() {
           };
 
           const handleMouseLeave = () => {
-            gsap.to(frame, {
+            gsap.to(frameElement, {
               y: 0,
               rotationY: 0,
               rotationX: 0,
@@ -297,15 +298,15 @@ export default function SuccessfulStoresSection() {
             });
           };
 
-          frame.addEventListener("mouseenter", handleMouseEnter);
-          frame.addEventListener("mouseleave", handleMouseLeave);
+          frameElement.addEventListener("mouseenter", handleMouseEnter);
+          frameElement.addEventListener("mouseleave", handleMouseLeave);
           eventListeners.push(
-            { element: frame, event: "mouseenter", handler: handleMouseEnter },
-            { element: frame, event: "mouseleave", handler: handleMouseLeave }
+            { element: frameElement, event: "mouseenter", handler: handleMouseEnter },
+            { element: frameElement, event: "mouseleave", handler: handleMouseLeave }
           );
 
           // Animate phone screen content
-          const screenContent = frame.querySelector('[data-screen-content]');
+          const screenContent = frameElement.querySelector('[data-screen-content]');
           if (screenContent) {
             gsap.set(screenContent, {
               opacity: 0,
@@ -320,7 +321,7 @@ export default function SuccessfulStoresSection() {
               delay: 0.3 + index * 0.15,
               ease: "power2.out",
               scrollTrigger: {
-                trigger: frame,
+                trigger: frameElement,
                 start: "top 90%",
                 toggleActions: "play none none none",
               },

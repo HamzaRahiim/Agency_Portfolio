@@ -388,7 +388,7 @@ export function SectionHeader({
       // Kill only the ScrollTriggers created by THIS instance
       scrollTriggers.forEach((trigger) => {
         try {
-          if (trigger && !trigger.killed) {
+          if (trigger) {
             trigger.kill();
           }
         } catch (e) {
