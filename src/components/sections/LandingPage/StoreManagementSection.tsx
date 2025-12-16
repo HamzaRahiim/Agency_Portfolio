@@ -45,14 +45,22 @@ export default function StoreManagementSection() {
   useEffect(() => {
     if (!sectionRef.current || isLoading || services.length === 0) return;
 
+    // Store original HTML for cleanup
+    let originalTitleHTML = '';
+    let originalSpanHTML = '';
+
     const ctx = gsap.context(() => {
       // Title animation - Same as ServicesSection
       if (headerRef.current) {
         const titleContainer = headerRef.current.querySelector('[data-title]');
-        const titleTextElement = headerRef.current.querySelector('[data-title-text]');
-        const titleSpan = headerRef.current.querySelector('[data-title-span]');
+        const titleTextElement = headerRef.current.querySelector('[data-title-text]') as HTMLElement;
+        const titleSpan = headerRef.current.querySelector('[data-title-span]') as HTMLElement;
 
         if (titleContainer && titleTextElement && titleSpan) {
+          // STORE original HTML before modifying
+          originalTitleHTML = titleTextElement.innerHTML;
+          originalSpanHTML = titleSpan.innerHTML;
+
           // Get the original text content BEFORE modifying
           const mainText = titleTextElement.textContent || "Your One-Stop Solution for Full-Scale Store Management.";
           const spanText = titleSpan.textContent || "Done-For-You";
@@ -243,19 +251,51 @@ export default function StoreManagementSection() {
     }, sectionRef);
 
     return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === sectionRef.current) {
-          trigger.kill();
+      // Kill all ScrollTrigger instances first to prevent removeChild errors
+      if (typeof window !== "undefined" && ScrollTrigger) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          try {
+            trigger.kill();
+          } catch (e) {
+            // Ignore errors if trigger is already killed
+          }
+        });
+      }
+
+      // RESTORE original HTML before React unmounts to avoid removeChild errors
+      // Only restore if elements still exist (component hasn't been unmounted yet)
+      try {
+        if (headerRef.current && headerRef.current.isConnected) {
+          const titleTextElement = headerRef.current.querySelector('[data-title-text]') as HTMLElement;
+          const titleSpan = headerRef.current.querySelector('[data-title-span]') as HTMLElement;
+
+          if (titleTextElement && originalTitleHTML && titleTextElement.isConnected) {
+            titleTextElement.innerHTML = originalTitleHTML;
+          }
+          if (titleSpan && originalSpanHTML && titleSpan.isConnected) {
+            titleSpan.innerHTML = originalSpanHTML;
+          }
         }
-      });
+      } catch (e) {
+        // Ignore errors if elements are already removed
+        console.warn("GSAP cleanup: Elements already removed", e);
+      }
+
+      // Revert GSAP context (this should be safe now that ScrollTriggers are killed)
+      try {
+        ctx.revert();
+      } catch (e) {
+        // Ignore errors if context is already reverted
+        console.warn("GSAP cleanup: Context already reverted", e);
+      }
     };
   }, [isLoading, services.length]);
 
   return (
     <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 -z-10">
+      <div key="store-management-content">
+        {/* Background */}
+        <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/5" />
         {/* Subtle side dots for both themes */}
         {/* Light mode */}
@@ -392,6 +432,7 @@ export default function StoreManagementSection() {
             </svg>
           </Link>
         </div>
+      </div>
       </div>
     </section>
   );

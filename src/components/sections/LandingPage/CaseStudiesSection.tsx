@@ -53,6 +53,13 @@ export default function CaseStudiesSection() {
   useEffect(() => {
     if (!sectionRef.current || isLoading || caseStudies.length === 0) return;
 
+    // Store original HTML for cleanup
+    let originalTitleHTML = "";
+    let originalSpanHTML = "";
+    
+    // Store event listeners for cleanup
+    const eventListeners: Array<{ element: HTMLElement; event: string; handler: () => void }> = [];
+
     const ctx = gsap.context(() => {
       // Badge animation
       if (headerRef.current) {
@@ -108,12 +115,19 @@ export default function CaseStudiesSection() {
         }
 
         // Title animation
-        const titleContainer = headerRef.current.querySelector('[data-title]');
-        const titleTextElement = headerRef.current.querySelector('[data-title-text]');
-        const titleSpan = headerRef.current.querySelector('[data-title-span]');
+        const titleContainer = headerRef.current.querySelector("[data-title]");
+        const titleTextElement =
+          headerRef.current.querySelector("[data-title-text]");
+        const titleSpan =
+          headerRef.current.querySelector("[data-title-span]");
 
         if (titleContainer && titleTextElement && titleSpan) {
-          const mainText = titleTextElement.textContent || "Real Results from";
+          // Store original HTML before we replace it with animated spans
+          originalTitleHTML = titleTextElement.innerHTML;
+          originalSpanHTML = titleSpan.innerHTML;
+
+          const mainText =
+            titleTextElement.textContent || "Real Results from";
           const spanText = titleSpan.textContent || "Real Businesses";
 
           const mainWords = mainText.split(" ").filter(w => w.length > 0);
@@ -287,7 +301,7 @@ export default function CaseStudiesSection() {
           }
 
           // Enhanced hover effect
-          card.addEventListener("mouseenter", () => {
+          const handleMouseEnter = () => {
             gsap.to(card, {
               y: -10,
               scale: 1.02,
@@ -302,9 +316,9 @@ export default function CaseStudiesSection() {
                 ease: "power2.out",
               });
             }
-          });
+          };
 
-          card.addEventListener("mouseleave", () => {
+          const handleMouseLeave = () => {
             gsap.to(card, {
               y: 0,
               scale: 1,
@@ -319,17 +333,80 @@ export default function CaseStudiesSection() {
                 ease: "power2.out",
               });
             }
-          });
+          };
+
+          card.addEventListener("mouseenter", handleMouseEnter);
+          card.addEventListener("mouseleave", handleMouseLeave);
+          eventListeners.push(
+            { element: card, event: "mouseenter", handler: handleMouseEnter },
+            { element: card, event: "mouseleave", handler: handleMouseLeave }
+          );
         });
       }
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      // Remove all event listeners first to prevent React unmount conflicts
+      eventListeners.forEach(({ element, event, handler }) => {
+        try {
+          if (element && element.isConnected) {
+            element.removeEventListener(event, handler);
+          }
+        } catch (e) {
+          // Ignore errors
+        }
+      });
+
+      // Kill all ScrollTrigger instances first to prevent removeChild errors
+      if (typeof window !== "undefined" && ScrollTrigger) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          try {
+            trigger.kill();
+          } catch {
+            // Ignore if already killed
+          }
+        });
+      }
+
+      // Restore original heading HTML if elements still exist
+      try {
+        if (headerRef.current && headerRef.current.isConnected) {
+          const titleTextElement =
+            headerRef.current.querySelector(
+              "[data-title-text]",
+            ) as HTMLElement | null;
+          const titleSpan = headerRef.current.querySelector(
+            "[data-title-span]",
+          ) as HTMLElement | null;
+
+          if (
+            titleTextElement &&
+            originalTitleHTML &&
+            titleTextElement.isConnected
+          ) {
+            titleTextElement.innerHTML = originalTitleHTML;
+          }
+          if (titleSpan && originalSpanHTML && titleSpan.isConnected) {
+            titleSpan.innerHTML = originalSpanHTML;
+          }
+        }
+      } catch {
+        // Elements already removed – safe to ignore
+      }
+
+      // Revert GSAP context safely
+      try {
+        ctx.revert();
+      } catch {
+        // Context may already be reverted – ignore
+      }
+    };
   }, [isLoading, caseStudies.length]);
 
   return (
     <section ref={sectionRef} className="relative py-8 sm:py-12 lg:py-16 overflow-hidden bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div key="case-studies-content">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-8 sm:mb-12">
           <div className="inline-block mb-4">
@@ -407,6 +484,7 @@ export default function CaseStudiesSection() {
             />
           </Carousel>
         </div>
+      </div>
       </div>
     </section>
   );

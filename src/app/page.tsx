@@ -10,14 +10,30 @@ import CaseStudiesSection from "@/components/sections/LandingPage/CaseStudiesSec
 export default function Home() {
   return (
     <>
-      <HeroSection />
-      <TrustBadgesSection />
-      <ServicesSection />
-      <StoreManagementSection />
-      <GrowthProcessSection />
-      <TestimonialsSection />
-      <SuccessfulStoresSection />
-      <CaseStudiesSection />
+      <div key="hero-wrapper">
+        <HeroSection />
+      </div>
+      <div key="trust-badges-wrapper">
+        <TrustBadgesSection />
+      </div>
+      <div key="services-wrapper">
+        <ServicesSection />
+      </div>
+      <div key="store-management-wrapper">
+        <StoreManagementSection />
+      </div>
+      <div key="growth-process-wrapper">
+        <GrowthProcessSection />
+      </div>
+      <div key="testimonials-wrapper">
+        <TestimonialsSection />
+      </div>
+      <div key="successful-stores-wrapper">
+        <SuccessfulStoresSection />
+      </div>
+      <div key="case-studies-wrapper">
+        <CaseStudiesSection />
+      </div>
     </>
   );
 }

@@ -52,6 +52,13 @@ export default function SuccessfulStoresSection() {
   useEffect(() => {
     if (!sectionRef.current || isLoading || stores.length === 0) return;
 
+    // Store original HTML for cleanup
+    let originalTitleHTML = "";
+    let originalSpanHTML = "";
+    
+    // Store event listeners for cleanup
+    const eventListeners: Array<{ element: HTMLElement; event: string; handler: () => void }> = [];
+
     const ctx = gsap.context(() => {
       // Badge animation
       if (headerRef.current) {
@@ -107,11 +114,17 @@ export default function SuccessfulStoresSection() {
         }
 
         // Title animation
-        const titleContainer = headerRef.current.querySelector('[data-title]');
-        const titleTextElement = headerRef.current.querySelector('[data-title-text]');
-        const titleSpan = headerRef.current.querySelector('[data-title-span]');
+        const titleContainer = headerRef.current.querySelector("[data-title]");
+        const titleTextElement =
+          headerRef.current.querySelector("[data-title-text]");
+        const titleSpan =
+          headerRef.current.querySelector("[data-title-span]");
 
         if (titleContainer && titleTextElement && titleSpan) {
+          // Store original HTML before we replace it with animated spans
+          originalTitleHTML = titleTextElement.innerHTML;
+          originalSpanHTML = titleSpan.innerHTML;
+
           const mainText = titleTextElement.textContent || "Our";
           const spanText = titleSpan.textContent || "Successful Stores";
 
@@ -263,7 +276,7 @@ export default function SuccessfulStoresSection() {
           });
 
           // Enhanced hover effect with 3D tilt
-          frame.addEventListener("mouseenter", () => {
+          const handleMouseEnter = () => {
             gsap.to(frame, {
               y: -15,
               rotationY: direction * 8,
@@ -272,9 +285,9 @@ export default function SuccessfulStoresSection() {
               duration: 0.5,
               ease: "power2.out",
             });
-          });
+          };
 
-          frame.addEventListener("mouseleave", () => {
+          const handleMouseLeave = () => {
             gsap.to(frame, {
               y: 0,
               rotationY: 0,
@@ -283,7 +296,14 @@ export default function SuccessfulStoresSection() {
               duration: 0.5,
               ease: "power2.out",
             });
-          });
+          };
+
+          frame.addEventListener("mouseenter", handleMouseEnter);
+          frame.addEventListener("mouseleave", handleMouseLeave);
+          eventListeners.push(
+            { element: frame, event: "mouseenter", handler: handleMouseEnter },
+            { element: frame, event: "mouseleave", handler: handleMouseLeave }
+          );
 
           // Animate phone screen content
           const screenContent = frame.querySelector('[data-screen-content]');
@@ -311,12 +331,68 @@ export default function SuccessfulStoresSection() {
       }
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      // Remove all event listeners first to prevent React unmount conflicts
+      eventListeners.forEach(({ element, event, handler }) => {
+        try {
+          if (element && element.isConnected) {
+            element.removeEventListener(event, handler);
+          }
+        } catch (e) {
+          // Ignore errors
+        }
+      });
+
+      // Kill all ScrollTrigger instances first to prevent removeChild errors
+      if (typeof window !== "undefined" && ScrollTrigger) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          try {
+            trigger.kill();
+          } catch {
+            // Ignore if already killed
+          }
+        });
+      }
+
+      // Restore original heading HTML if elements still exist
+      try {
+        if (headerRef.current && headerRef.current.isConnected) {
+          const titleTextElement =
+            headerRef.current.querySelector(
+              "[data-title-text]",
+            ) as HTMLElement | null;
+          const titleSpan = headerRef.current.querySelector(
+            "[data-title-span]",
+          ) as HTMLElement | null;
+
+          if (
+            titleTextElement &&
+            originalTitleHTML &&
+            titleTextElement.isConnected
+          ) {
+            titleTextElement.innerHTML = originalTitleHTML;
+          }
+          if (titleSpan && originalSpanHTML && titleSpan.isConnected) {
+            titleSpan.innerHTML = originalSpanHTML;
+          }
+        }
+      } catch {
+        // Elements already removed – safe to ignore
+      }
+
+      // Revert GSAP context safely
+      try {
+        ctx.revert();
+      } catch {
+        // Context may already be reverted – ignore
+      }
+    };
   }, [isLoading, stores.length]);
 
   return (
     <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div key="successful-stores-content">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-12 sm:mb-16">
           <div className="inline-block mb-4">
@@ -487,6 +563,7 @@ export default function SuccessfulStoresSection() {
             />
           </Carousel>
         </div>
+      </div>
       </div>
     </section>
   );

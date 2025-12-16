@@ -1,47 +1,170 @@
 {
   "services": [
     {
-      "title": "Amazon Wholesale FBA",
-      "description": "Complete Amazon FBA wholesale solutions for scaling your business with proven strategies and expert support.",
-      "icon": "📦",
-      "href": "/services/amazon-wholesale",
-      "gradient": "from-blue-600 to-blue-500"
+      "title": "Meta Ads Management",
+      "slug": "meta-ads-management",
+      "category": "Paid Social Advertising",
+      "description": "Complete Meta advertising solutions including campaign setup, creative strategy, A/B testing, retargeting and performance optimization.",
+      "icon": "📱",
+      "href": "/services/meta-ads-management",
+      "gradient": "from-blue-500 to-purple-600",
+      "heroTitle": "Meta Ads Management",
+      "heroSubtitle": "Turn your Meta ad spend into predictable, profitable revenue across Facebook and Instagram.",
+      "heroBadge": "Performance Marketing Partner",
+      "heroImage": "/services/hero-metaads.jpg",
+      "metrics": [
+        { "label": "Managed Ad Spend", "value": "$1M+" },
+        { "label": "Average ROAS", "value": "3.5x" },
+        { "label": "Industries Served", "value": "Fashion, Beauty, Home" }
+      ],
+      "painPoints": [
+        "Ad accounts spending without clear return or tracking.",
+        "Campaigns that rely on broad targeting with no proper testing structure.",
+        "Creative fatigue causing results to drop after a few weeks."
+      ],
+      "solutions": [
+        "Build a clear campaign structure with naming conventions and testing frameworks.",
+        "Install and configure proper tracking, events and aggregated events measurement.",
+        "Continuous creative testing with hooks, angles and formats that match your brand."
+      ],
+      "deliverables": [
+        {
+          "title": "Strategy & Planning",
+          "description": "Deep-dive audit, market research and media plan tailored to your goals."
+        },
+        {
+          "title": "Campaign Setup",
+          "description": "Full-funnel campaigns with testing, scaling and retargeting structures."
+        },
+        {
+          "title": "Ongoing Optimization",
+          "description": "Weekly optimization of bids, budgets, creatives and audiences."
+        },
+        {
+          "title": "Reporting & Insights",
+          "description": "Transparent reporting with clear actions and next steps."
+        }
+      ],
+      "processSteps": [
+        {
+          "title": "Audit & Strategy",
+          "description": "We review your ad account, tracking and offers, then build a clear growth plan."
+        },
+        {
+          "title": "Setup & Launch",
+          "description": "We implement campaign structure, tracking and creatives, then launch in phases."
+        },
+        {
+          "title": "Optimize & Scale",
+          "description": "We optimize daily, test aggressively and scale what works while cutting waste."
+        },
+        {
+          "title": "Report & Iterate",
+          "description": "You get simple reports and action items so you always know what is happening."
+        }
+      ],
+      "caseStudies": [
+        {
+          "title": "Fashion Brand Scale-Up",
+          "result": "3.8x ROAS in 90 days",
+          "description": "We rebuilt the account structure and testing process, unlocking profitable scaling."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "What ad budget do I need to start?",
+          "answer": "Most brands see best results starting from $2,000–$3,000 per month in ad spend, but we can review your situation on a call."
+        },
+        {
+          "question": "Do you also create ad creatives?",
+          "answer": "Yes. We can either work with your existing assets or create new concepts based on your brand guidelines."
+        }
+      ],
+      "primaryCtaLabel": "Book Meta Ads Strategy Call",
+      "secondaryCtaLabel": "See Ecommerce Case Studies"
     },
     {
-      "title": "TikTok Shop Automation",
-      "description": "Automate your TikTok Shop operations for maximum efficiency and reach millions of potential customers.",
-      "icon": "🎵",
-      "href": "/services/tiktok-automation",
-      "gradient": "from-blue-500 to-yellow-400"
-    },
-    {
-      "title": "Shopify Dropshipping",
-      "description": "Full-service Shopify dropshipping store setup and management to launch and scale your online business.",
-      "icon": "🛍️",
-      "href": "/services/shopify-dropshipping",
-      "gradient": "from-yellow-400 to-blue-500"
-    },
-    {
-      "title": "Walmart Automation",
-      "description": "End-to-end Walmart marketplace automation services to streamline operations and boost sales.",
-      "icon": "🏪",
-      "href": "/services/walmart-automation",
-      "gradient": "from-blue-700 to-blue-500"
-    },
-    {
-      "title": "Amazon Private Label",
-      "description": "Build and scale your own private label brand on Amazon with comprehensive branding and marketing support.",
-      "icon": "🏷️",
-      "href": "/services/amazon-private-label",
-      "gradient": "from-yellow-500 to-yellow-400"
-    },
-    {
-      "title": "Proxy Marketing",
-      "description": "Strategic marketing solutions to boost your online presence and drive targeted traffic to your stores.",
-      "icon": "📊",
-      "href": "/services/proxy-marketing",
-      "gradient": "from-blue-500 to-blue-600"
+      "title": "Shopify Development",
+      "slug": "shopify-development",
+      "category": "Store Build & Optimization",
+      "description": "Complete Shopify solutions including custom theme development, app integration, payment setup, product listing and store management.",
+      "icon": "🛒",
+      "href": "/services/shopify-development",
+      "gradient": "from-green-400 to-blue-500",
+      "heroTitle": "Shopify Development",
+      "heroSubtitle": "Launch or upgrade a high-converting Shopify store that feels premium and is easy to manage.",
+      "heroBadge": "Shopify Store Specialists",
+      "heroImage": "/services/hero-shopify.png",
+      "metrics": [
+        { "label": "Stores Built & Optimized", "value": "40+" },
+        { "label": "Average Conversion Lift", "value": "+25%" },
+        { "label": "Implementation Time", "value": "2–6 weeks" }
+      ],
+      "painPoints": [
+        "Themes that look generic and do not reflect your brand.",
+        "Slow stores with confusing navigation and low conversion rates.",
+        "Technical setup issues with payments, shipping, apps or tracking."
+      ],
+      "solutions": [
+        "Custom theme work and UX updates focused on conversion and AOV.",
+        "Performance-first build with clean structure and optimized assets.",
+        "Complete setup of payments, shipping, apps and analytics."
+      ],
+      "deliverables": [
+        {
+          "title": "Store Architecture",
+          "description": "Navigation, collections and product structure that make sense to customers."
+        },
+        {
+          "title": "Theme Design & Build",
+          "description": "Custom or heavily optimized theme tailored to your brand."
+        },
+        {
+          "title": "Apps & Integrations",
+          "description": "Installation and configuration of the key apps you actually need."
+        },
+        {
+          "title": "Launch & Handover",
+          "description": "Launch support plus training so your team can manage the store with confidence."
+        }
+      ],
+      "processSteps": [
+        {
+          "title": "Discovery & Planning",
+          "description": "We understand your brand, products and goals, then define the right store structure."
+        },
+        {
+          "title": "Design & Build",
+          "description": "We design and build the theme, set up products and configure key apps."
+        },
+        {
+          "title": "Testing & Launch",
+          "description": "We test checkout, flows and tracking before going live."
+        },
+        {
+          "title": "Optimization & Support",
+          "description": "After launch we monitor performance and implement quick wins."
+        }
+      ],
+      "caseStudies": [
+        {
+          "title": "DTC Home Brand Redesign",
+          "result": "+32% conversion rate",
+          "description": "A new Shopify experience with optimized PDPs and faster load times."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can you work with my existing theme?",
+          "answer": "Yes. We can either improve your current theme or recommend a better starting point."
+        },
+        {
+          "question": "Do you also handle ongoing maintenance?",
+          "answer": "We offer retainers for ongoing changes, optimization and support after launch."
+        }
+      ],
+      "primaryCtaLabel": "Discuss Your Shopify Store",
+      "secondaryCtaLabel": "View Store Case Studies"
     }
   ]
 }
-

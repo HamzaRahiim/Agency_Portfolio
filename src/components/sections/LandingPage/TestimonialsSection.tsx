@@ -52,6 +52,13 @@ export default function TestimonialsSection() {
   useEffect(() => {
     if (!sectionRef.current || isLoading || testimonials.length === 0) return;
 
+    // Store original HTML for cleanup
+    let originalTitleHTML = "";
+    let originalSpanHTML = "";
+    
+    // Store event listeners for cleanup
+    const eventListeners: Array<{ element: HTMLElement; event: string; handler: () => void }> = [];
+
     const ctx = gsap.context(() => {
       // Badge animation
       if (headerRef.current) {
@@ -107,12 +114,19 @@ export default function TestimonialsSection() {
         }
 
         // Title animation
-        const titleContainer = headerRef.current.querySelector('[data-title]');
-        const titleTextElement = headerRef.current.querySelector('[data-title-text]');
-        const titleSpan = headerRef.current.querySelector('[data-title-span]');
+        const titleContainer = headerRef.current.querySelector("[data-title]");
+        const titleTextElement =
+          headerRef.current.querySelector("[data-title-text]");
+        const titleSpan =
+          headerRef.current.querySelector("[data-title-span]");
 
         if (titleContainer && titleTextElement && titleSpan) {
-          const mainText = titleTextElement.textContent || "See What People Say About";
+          // Store original HTML before we inject animated spans
+          originalTitleHTML = titleTextElement.innerHTML;
+          originalSpanHTML = titleSpan.innerHTML;
+
+          const mainText =
+            titleTextElement.textContent || "See What People Say About";
           const spanText = titleSpan.textContent || "Fast Line";
 
           const mainWords = mainText.split(" ").filter(w => w.length > 0);
@@ -261,7 +275,7 @@ export default function TestimonialsSection() {
           });
 
           // Enhanced hover effect with GSAP
-          card.addEventListener("mouseenter", () => {
+          const handleMouseEnter = () => {
             gsap.to(card, {
               y: -10,
               scale: 1.02,
@@ -269,9 +283,9 @@ export default function TestimonialsSection() {
               duration: 0.4,
               ease: "power2.out",
             });
-          });
+          };
 
-          card.addEventListener("mouseleave", () => {
+          const handleMouseLeave = () => {
             gsap.to(card, {
               y: 0,
               scale: 1,
@@ -279,18 +293,81 @@ export default function TestimonialsSection() {
               duration: 0.4,
               ease: "power2.out",
             });
-          });
+          };
+
+          card.addEventListener("mouseenter", handleMouseEnter);
+          card.addEventListener("mouseleave", handleMouseLeave);
+          eventListeners.push(
+            { element: card, event: "mouseenter", handler: handleMouseEnter },
+            { element: card, event: "mouseleave", handler: handleMouseLeave }
+          );
         });
       }
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      // Remove all event listeners first to prevent React unmount conflicts
+      eventListeners.forEach(({ element, event, handler }) => {
+        try {
+          if (element && element.isConnected) {
+            element.removeEventListener(event, handler);
+          }
+        } catch (e) {
+          // Ignore errors
+        }
+      });
+
+      // Kill all ScrollTrigger instances first to prevent removeChild errors
+      if (typeof window !== "undefined" && ScrollTrigger) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          try {
+            trigger.kill();
+          } catch {
+            // Ignore if already killed
+          }
+        });
+      }
+
+      // Restore original heading HTML if elements still exist
+      try {
+        if (headerRef.current && headerRef.current.isConnected) {
+          const titleTextElement =
+            headerRef.current.querySelector(
+              "[data-title-text]",
+            ) as HTMLElement | null;
+          const titleSpan = headerRef.current.querySelector(
+            "[data-title-span]",
+          ) as HTMLElement | null;
+
+          if (
+            titleTextElement &&
+            originalTitleHTML &&
+            titleTextElement.isConnected
+          ) {
+            titleTextElement.innerHTML = originalTitleHTML;
+          }
+          if (titleSpan && originalSpanHTML && titleSpan.isConnected) {
+            titleSpan.innerHTML = originalSpanHTML;
+          }
+        }
+      } catch {
+        // Elements already removed – safe to ignore
+      }
+
+      // Revert GSAP context safely
+      try {
+        ctx.revert();
+      } catch {
+        // Context may already be reverted – ignore
+      }
+    };
   }, [isLoading, testimonials.length]);
 
   return (
     <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
-      {/* Split Background: Top Half - Dark */}
-      <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+      <div key="testimonials-content">
+        {/* Split Background: Top Half - Dark */}
+        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div
@@ -482,6 +559,7 @@ export default function TestimonialsSection() {
             />
           </Carousel>
         </div>
+      </div>
       </div>
     </section>
   );

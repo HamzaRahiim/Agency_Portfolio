@@ -11,12 +11,23 @@ const nextConfig: NextConfig = {
   //   ];
   // },
   /* config options here */
+  // Completely disable source maps as recommended in the docs you shared
+  // to avoid server-side source-map parsing issues in dev/build.
+  productionBrowserSourceMaps: false,
+  // Per docs, this top-level flag controls prerender source maps
+  // when using cacheComponents / prerendering.
+  enablePrerenderSourceMaps: false,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production", // Remove console.log in production
   },
   // TYPESCRIPT - Ignore errors during build (not recommended for production!)
   typescript: {
     ignoreBuildErrors: false, // Keep true for strict type checking
+  },
+  // Disable server source maps in dev to avoid Turbopack's
+  // "Invalid source map" console noise on Windows.
+  experimental: {
+    serverSourceMaps: false,
   },
 };
 

@@ -55,6 +55,10 @@ export default function GrowthProcessSection() {
   useEffect(() => {
     if (!sectionRef.current || isLoading || processSteps.length === 0) return;
 
+    // Store original HTML for cleanup
+    let originalTitleHTML = "";
+    let originalSpanHTML = "";
+
     const ctx = gsap.context(() => {
       // Badge animation
       if (headerRef.current) {
@@ -89,10 +93,14 @@ export default function GrowthProcessSection() {
 
         // Title animation
         const titleContainer = headerRef.current.querySelector('[data-title]');
-        const titleTextElement = headerRef.current.querySelector('[data-title-text]');
-        const titleSpan = headerRef.current.querySelector('[data-title-span]');
+        const titleTextElement = headerRef.current.querySelector('[data-title-text]') as HTMLElement;
+        const titleSpan = headerRef.current.querySelector('[data-title-span]') as HTMLElement;
 
         if (titleContainer && titleTextElement && titleSpan) {
+          // STORE original HTML before modifying
+          originalTitleHTML = titleTextElement.innerHTML;
+          originalSpanHTML = titleSpan.innerHTML;
+
           const mainText = titleTextElement.textContent || "A Proven Path to";
           const spanText = titleSpan.textContent || "Ecommerce Success";
 
@@ -348,13 +356,73 @@ export default function GrowthProcessSection() {
       }
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      // RESTORE original HTML before React unmounts to avoid removeChild errors
+      if (headerRef.current) {
+        const titleTextElement = headerRef.current.querySelector('[data-title-text]') as HTMLElement;
+        const titleSpan = headerRef.current.querySelector('[data-title-span]') as HTMLElement;
+
+        if (titleTextElement && originalTitleHTML) {
+          titleTextElement.innerHTML = originalTitleHTML;
+        }
+        if (titleSpan && originalSpanHTML) {
+          titleSpan.innerHTML = originalSpanHTML;
+        }
+      }
+
+      // Kill all ScrollTrigger instances first to prevent removeChild errors
+      if (typeof window !== "undefined" && ScrollTrigger) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          try {
+            trigger.kill();
+          } catch {
+            // Ignore if already killed
+          }
+        });
+      }
+
+      // RESTORE original HTML before React unmounts to avoid removeChild errors.
+      // Only restore if elements still exist (component hasn't been fully detached).
+      try {
+        if (headerRef.current && headerRef.current.isConnected) {
+          const titleTextElement =
+            headerRef.current.querySelector(
+              "[data-title-text]",
+            ) as HTMLElement | null;
+          const titleSpan = headerRef.current.querySelector(
+            "[data-title-span]",
+          ) as HTMLElement | null;
+
+          if (
+            titleTextElement &&
+            originalTitleHTML &&
+            titleTextElement.isConnected
+          ) {
+            titleTextElement.innerHTML = originalTitleHTML;
+          }
+          if (titleSpan && originalSpanHTML && titleSpan.isConnected) {
+            titleSpan.innerHTML = originalSpanHTML;
+          }
+        }
+      } catch {
+        // If elements are already removed, silently ignore
+      }
+
+      // Revert GSAP context (styles/tweens) – wrapped in try/catch so it can't
+      // throw while React is unmounting DOM nodes.
+      try {
+        ctx.revert();
+      } catch {
+        // Ignore if context already reverted
+      }
+    };
   }, [isLoading, processSteps.length]);
 
   return (
     <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div key="growth-process-content">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
         <div
           className="absolute inset-0"
           style={{
@@ -543,6 +611,7 @@ export default function GrowthProcessSection() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
