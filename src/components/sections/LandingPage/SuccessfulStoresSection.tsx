@@ -475,7 +475,7 @@ export default function SuccessfulStoresSection() {
                           <div className="space-y-3 mb-4">
                             <div>
                               <p className="text-xs text-muted-foreground mb-1">
-                                Sales today so far
+                                Total Sales
                               </p>
                               <p className="text-lg font-bold text-foreground">
                                 {store.sales}
@@ -483,30 +483,33 @@ export default function SuccessfulStoresSection() {
                             </div>
                             <div>
                               <p className="text-xs text-muted-foreground mb-1">
-                                Units today so far
+                                Total Orders
                               </p>
                               <p className="text-base font-semibold text-foreground">
                                 {store.units}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs text-muted-foreground mb-1">Current</p>
+                              <p className="text-xs text-muted-foreground mb-1">Conversion / Sessions</p>
                               <p className="text-base font-semibold text-foreground">
                                 {store.current}
                               </p>
                             </div>
                           </div>
 
-                          {/* Product Sales */}
+                          {/* Performance Metrics */}
                           <div className="mb-4 pb-4 border-b border-border">
-                            <p className="text-xs text-muted-foreground mb-1">Product sales</p>
-                            <p className="text-base font-bold text-foreground">
-                              {store.productSales}
-                            </p>
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className="text-xs text-muted-foreground mb-1">Period</p>
+                            <p className="text-xs font-medium text-foreground mb-2">
                               {store.period}
                             </p>
-                            <p className="text-xs text-emerald-500 font-semibold mt-1">
+                            <p className={`text-xs font-semibold mt-1 ${
+                              store.increase.includes('↗') 
+                                ? 'text-emerald-500' 
+                                : store.increase.includes('↘')
+                                ? 'text-red-500'
+                                : 'text-blue-500'
+                            }`}>
                               {store.increase}
                             </p>
                             <p className="text-xs text-muted-foreground mt-1">

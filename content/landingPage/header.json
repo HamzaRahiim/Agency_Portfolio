@@ -18,14 +18,14 @@
         "href": "/about"
       },
       {
-        "name": "Contact",
-        "href": "/contact"
+        "name": "Pricing",
+        "href": "/plans"
       }
     ]
   },
   "contact": {
     "phone": {
-      "display": "+1 (234) 567-890",
+      "display": "+1 (512) 325-6618",
       "href": "tel:+1234567890"
     }
   },
@@ -33,4 +33,3 @@
     "text": "Get Free Consultation"
   }
 }
-

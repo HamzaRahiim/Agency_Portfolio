@@ -2,58 +2,58 @@
   "stores": [
     {
       "id": 1,
-      "sales": "$868",
-      "units": "40 Units",
-      "current": "721 Current",
-      "productSales": "19.99K USD",
-      "period": "Last 30 days",
-      "increase": "68% increase",
-      "previousIncrease": "1096% increase from Last year",
-      "time": "9:54"
+      "sales": "Rs 118,983",
+      "units": "17 Orders",
+      "current": "4.53% Conversion",
+      "productSales": "Rs 118,983",
+      "period": "Yesterday",
+      "increase": "↗ 22% increase",
+      "previousIncrease": "↘ 31% orders, ↘ 13% conversion",
+      "time": "10:17"
     },
     {
       "id": 2,
-      "sales": "$0.00",
-      "units": "0 Units",
-      "current": "1970 Current",
-      "productSales": "50.38K USD",
-      "period": "Last 12 months",
-      "increase": "43% increase",
-      "previousIncrease": "from Previous period",
-      "time": "2:38"
+      "sales": "Rs 943,768",
+      "units": "62 Orders",
+      "current": "1.11% Conversion",
+      "productSales": "Rs 943,768",
+      "period": "Today",
+      "increase": "↗ 112% increase",
+      "previousIncrease": "↗ 72% orders, ↗ 55% conversion",
+      "time": "10:18"
     },
     {
       "id": 3,
-      "sales": "$868",
-      "units": "40 Units",
-      "current": "721 Current",
-      "productSales": "19.99K USD",
-      "period": "Last 30 days",
-      "increase": "68% increase",
-      "previousIncrease": "1096% increase from Last year",
-      "time": "9:54"
+      "sales": "Rs 22.792M",
+      "units": "1.5K Orders",
+      "current": "117.99K Sessions",
+      "productSales": "Rs 22.792M",
+      "period": "Last month",
+      "increase": "↗ 201% increase",
+      "previousIncrease": "↗ 129% sessions, ↗ 110% orders",
+      "time": "10:18"
     },
     {
       "id": 4,
-      "sales": "$14",
-      "units": "1 Unit",
-      "current": "5819 Current",
-      "productSales": "9.1K USD",
-      "period": "This month",
-      "increase": "39% increase",
-      "previousIncrease": "775% increase from Last year",
-      "time": "2:38"
+      "sales": "PKR 1.754M",
+      "units": "780 Orders",
+      "current": "4.65% Conversion",
+      "productSales": "PKR 1.754M",
+      "period": "Last 30 days",
+      "increase": "↗ 1.2% increase",
+      "previousIncrease": "↗ 650% orders, ↗ 9% conversion",
+      "time": "10:19"
     },
     {
       "id": 5,
-      "sales": "$1,250",
-      "units": "55 Units",
-      "current": "1,200 Current",
-      "productSales": "45.5K USD",
-      "period": "Last 30 days",
-      "increase": "125% increase",
-      "previousIncrease": "890% increase from Last year",
-      "time": "10:15"
+      "sales": "PKR 41,980",
+      "units": "19 Orders",
+      "current": "5.73% Conversion",
+      "productSales": "PKR 41,980",
+      "period": "28 Oct - 30 Oct 2024",
+      "increase": "Active campaign",
+      "previousIncrease": "3-day performance period",
+      "time": "10:19"
     }
   ]
 }

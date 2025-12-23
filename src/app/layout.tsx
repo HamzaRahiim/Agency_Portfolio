@@ -9,6 +9,7 @@ import { ModalProvider } from "@/components/providers/ModalProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import LeadCaptureModal from "@/components/ui/LeadCaptureModal";
+import { getOrganizationSchema, getWebsiteSchema } from "@/lib/seo";
 // import { GoogleAnalytics } from '@next/third-parties/google';
 
 // ============================================
@@ -25,45 +26,50 @@ const inter = Inter({
 // ============================================
 export const metadata: Metadata = {
   title: {
-    default: "Fast Line Media - Ecommerce Automation & Store Management Agency",
-    template: "%s | Fast Line Media",
+    default: "Fast Line Agency - Meta Ads & Shopify Store Management Services",
+    template: "%s | Fast Line Agency",
   },
-  description: "Fast Line Media helps brands scale and succeed on Amazon, Walmart, Shopify, and TikTok with AI-driven automation, expert marketing, and seamless store management. Maximize growth, efficiency, and profitability with our done-for-you ecommerce solutions.",
+  description: "Fast Line Agency specializes in Meta Ads management and Shopify store development. We help ecommerce brands scale with expert Facebook & Instagram advertising and high-converting Shopify stores. Get professional Meta Ads campaigns and custom Shopify solutions.",
   keywords: [
-    "Amazon FBA",
-    "Amazon Wholesale",
-    "Amazon Private Label",
-    "TikTok Shop Automation",
-    "Shopify Dropshipping",
-    "Walmart Automation",
-    "Ecommerce Automation",
-    "Store Management",
+    "Meta Ads Management",
+    "Facebook Ads",
+    "Instagram Ads",
+    "Meta Advertising",
+    "Shopify Development",
+    "Shopify Store Setup",
+    "Shopify Store Management",
     "Ecommerce Agency",
-    "Online Store Setup",
-    "Amazon Account Management",
+    "Facebook Marketing",
+    "Instagram Marketing",
+    "Social Media Advertising",
+    "Shopify Theme Development",
+    "Shopify Optimization",
+    "Meta Ads Agency",
+    "Shopify Agency",
+    "Fast Line Agency",
     "Ecommerce Marketing",
-    "Proxy Marketing",
-    "Ecommerce Solutions",
-    "Fast Line Media",
+    "Paid Social Advertising",
+    "Shopify Store Design",
+    "Meta Campaign Management",
   ],
-  authors: [{ name: "Fast Line Media" }],
-  creator: "Fast Line Media",
-  publisher: "Fast Line Media",
+  authors: [{ name: "Fast Line Agency" }],
+  creator: "Fast Line Agency",
+  publisher: "Fast Line Agency",
 
   // Open Graph (Social media previews)
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://fastliine.netlify.app/",
-    title: "Fast Line Media - Ecommerce Automation & Store Management Agency",
-    description: "We help brands scale and succeed on Amazon, Walmart, Shopify, and TikTok with AI-driven automation, expert marketing, and seamless store management—maximizing growth, efficiency, and profitability.",
-    siteName: "Fast Line Media",
+    url: "https://fastlineagency.com/",
+    title: "Fast Line Agency - Meta Ads & Shopify Store Management Services",
+    description: "Expert Meta Ads management and Shopify store development. We help ecommerce brands scale with professional Facebook & Instagram advertising and high-converting Shopify stores.",
+    siteName: "Fast Line Agency",
     images: [
       {
-        url: "https://fastliine.netlify.app/og-image.jpg",
+        url: "https://fastlineagency.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Fast Line Media - Ecommerce Automation Agency",
+        alt: "Fast Line Agency - Meta Ads & Shopify Services",
       },
     ],
   },
@@ -71,10 +77,10 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: "summary_large_image",
-    title: "Fast Line Media - Ecommerce Automation & Store Management Agency",
-    description: "We help brands scale and succeed on Amazon, Walmart, Shopify, and TikTok with AI-driven automation, expert marketing, and seamless store management.",
-    images: ["https://fastliine.netlify.app/twitter-image.jpg"],
-    creator: "@fastlinemedia",
+    title: "Fast Line Agency - Meta Ads & Shopify Store Management Services",
+    description: "Expert Meta Ads management and Shopify store development. Scale your ecommerce brand with professional advertising and store solutions.",
+    images: ["https://fastlineagency.com/twitter-image.jpg"],
+    creator: "@fastlineagency",
   },
 
   // Icons
@@ -102,9 +108,9 @@ export const metadata: Metadata = {
   },
 
   // Additional metadata
-  metadataBase: new URL("https://fastliine.netlify.app/"),
+  metadataBase: new URL("https://fastlineagency.com/"),
   alternates: {
-    canonical: "https://fastliine.netlify.app/",
+    canonical: "https://fastlineagency.com/",
   },
 };
 
@@ -116,8 +122,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = getOrganizationSchema();
+  const websiteSchema = getWebsiteSchema();
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
         <ThemeProvider>
           <ModalProvider>
