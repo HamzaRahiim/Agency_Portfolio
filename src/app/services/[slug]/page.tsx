@@ -1,5 +1,6 @@
 import ServicePageClient from "@/components/servicePage/ServicePageClient";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getServiceSchema } from "@/lib/seo";
 import { getServices } from "@/lib/services/LandingPage/servicesService";
 
@@ -19,6 +20,10 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
         return {
             title: "Service Not Found",
             description: "The requested service could not be found.",
+            robots: {
+                index: false,
+                follow: false,
+            },
         };
     }
 
@@ -26,6 +31,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     const serviceUrl = `${baseUrl}${service.href}`;
 
     return {
+        metadataBase: new URL(baseUrl),
         title: `${service.title} - Fast Line Agency`,
         description: service.description,
         keywords: [
@@ -58,6 +64,17 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
             description: service.description,
             images: [`${baseUrl}${service.heroImage || "/twitter-image.jpg"}`],
         },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
+        },
         alternates: {
             canonical: serviceUrl,
         },
@@ -73,16 +90,19 @@ export default async function ServicePage({ params }: ServicePageProps) {
     const servicesData = await getServices();
     const service = servicesData.services.find((s) => s.slug === slug);
     
-    const serviceSchema = service ? getServiceSchema(service) : null;
+    // Return 404 if service not found
+    if (!service) {
+        notFound();
+    }
+    
+    const serviceSchema = getServiceSchema(service);
 
     return (
         <main className="min-h-screen bg-background">
-            {serviceSchema && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-                />
-            )}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
             <ServicePageClient slug={slug} />
         </main>
     );

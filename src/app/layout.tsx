@@ -104,7 +104,7 @@ export const metadata: Metadata = {
 
   // Verification (Google Search Console, etc.)
   verification: {
-    // google: "your-google-verification-code", // Add when available
+    google: "hskl6o7fhJs7w1kSEnzqkjIh6NhNnsKQsuIME9PMdMQ",
   },
 
   // Additional metadata
