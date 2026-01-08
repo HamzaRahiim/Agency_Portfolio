@@ -364,7 +364,7 @@ export default function TestimonialsSection() {
   }, [isLoading, testimonials.length]);
 
   return (
-    <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section ref={sectionRef} id="testimonials" className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       <div key="testimonials-content">
         {/* Split Background: Top Half - Dark */}
         <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">

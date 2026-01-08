@@ -56,6 +56,36 @@ export default function Header() {
     return `relative transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-accent after:transition-all after:duration-300 ${active ? activeClass : inactiveClass}`;
   };
 
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Check if it's an anchor link
+    if (href.includes('#')) {
+      const hashIndex = href.indexOf('#');
+      const path = href.substring(0, hashIndex) || '/';
+      const targetId = href.substring(hashIndex + 1);
+      
+      // If we're on the same page (home page or matching path)
+      if (pathname === '/' && (path === '/' || path === '')) {
+        e.preventDefault();
+        const element = document.getElementById(targetId);
+        if (element) {
+          const headerOffset = 80; // Account for fixed header
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      } else if (pathname !== '/') {
+        // If we're on a different page, navigate first
+        // The scroll will happen after navigation via useEffect
+        e.preventDefault();
+        window.location.href = href;
+      }
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -67,6 +97,26 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle smooth scrolling after page load if there's a hash in the URL
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
+  }, [pathname]);
 
   return (
     <header
@@ -100,6 +150,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className={navLinkClass(link.href)}
+                onClick={(e) => handleLinkClick(e, link.href)}
               >
                 {link.name}
               </Link>
@@ -219,7 +270,10 @@ export default function Header() {
                     key={link.href}
                     href={link.href}
                     className="py-2 text-foreground/90 hover:text-foreground transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={(e) => {
+                      handleLinkClick(e, link.href);
+                      setIsMenuOpen(false);
+                    }}
                   >
                     {link.name}
                   </Link>

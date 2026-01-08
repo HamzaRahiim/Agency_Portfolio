@@ -3,19 +3,19 @@
     "links": [
       {
         "name": "Home",
-        "href": "/"
+        "href": "/#home"
       },
       {
         "name": "Services",
-        "href": "/services"
+        "href": "/#services"
       },
       {
         "name": "Portfolio",
-        "href": "/portfolio"
+        "href": "/#portfolio"
       },
       {
         "name": "About Us",
-        "href": "/about"
+        "href": "/#about"
       },
       {
         "name": "Pricing",

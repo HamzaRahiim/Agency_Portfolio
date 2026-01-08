@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Service, ServicesData } from "@/types/services";
+import { trackServicePageView } from "@/lib/analytics";
 import { ServiceHero } from "@/components/servicePage/ServiceHero";
 import { ServiceProblemSolution } from "@/components/servicePage/ServiceProblemSolution";
 import { ServiceDeliverables } from "@/components/servicePage/ServiceDeliverables";
@@ -44,6 +45,11 @@ export default function ServicePageClient({ slug }: ServicePageClientProps) {
         if (isMounted) {
           setService(found);
           setIsLoading(false);
+          
+          // Track service page view
+          if (found) {
+            trackServicePageView(found.title, found.slug);
+          }
         }
       } catch (err) {
         console.error("ServicePageClient: error loading service", err);

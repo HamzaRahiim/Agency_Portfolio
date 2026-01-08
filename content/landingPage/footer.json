@@ -5,41 +5,29 @@
   "quickLinks": [
     {
       "name": "Home",
-      "href": "/"
+      "href": "/#home"
     },
     {
       "name": "About Us",
-      "href": "/about"
+      "href": "/#about"
     },
     {
-      "name": "Blog",
-      "href": "/blog"
+      "name": "Services",
+      "href": "/#services"
     },
     {
-      "name": "Contact",
-      "href": "/contact"
+      "name": "Portfolio",
+      "href": "/#portfolio"
     }
   ],
   "services": [
     {
-      "name": "Amazon Wholesale FBA",
-      "href": "/services/amazon-wholesale"
+      "name": "Meta Ads Management",
+      "href": "/services/meta-ads-management"
     },
     {
-      "name": "TikTok Shop Automation",
-      "href": "/services/tiktok-automation"
-    },
-    {
-      "name": "Shopify Dropshipping",
-      "href": "/services/shopify-dropshipping"
-    },
-    {
-      "name": "Walmart Automation",
-      "href": "/services/walmart-automation"
-    },
-    {
-      "name": "Amazon Private Label",
-      "href": "/services/amazon-private-label"
+      "name": "Shopify Development",
+      "href": "/services/shopify-development"
     }
   ],
   "socialLinks": [

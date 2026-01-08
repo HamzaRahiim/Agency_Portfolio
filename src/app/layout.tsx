@@ -10,7 +10,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import LeadCaptureModal from "@/components/ui/LeadCaptureModal";
 import { getOrganizationSchema, getWebsiteSchema } from "@/lib/seo";
-// import { GoogleAnalytics } from '@next/third-parties/google';
+import GoogleTagManager from "@/components/analytics/GoogleTagManager";
 
 // ============================================
 // FONT CONFIGURATION
@@ -125,6 +125,9 @@ export default function RootLayout({
   const organizationSchema = getOrganizationSchema();
   const websiteSchema = getWebsiteSchema();
 
+  // Get GTM ID from environment variable
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "";
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -138,6 +141,8 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
+        {/* Google Tag Manager */}
+        {gtmId && <GoogleTagManager gtmId={gtmId} />}
         <ThemeProvider>
           <ModalProvider>
           <Header />

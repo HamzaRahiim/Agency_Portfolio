@@ -20,6 +20,35 @@ export default function Footer() {
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Check if it's an anchor link
+    if (href.includes('#')) {
+      const hashIndex = href.indexOf('#');
+      const path = href.substring(0, hashIndex) || '/';
+      const targetId = href.substring(hashIndex + 1);
+      
+      // If we're on the home page
+      if (window.location.pathname === '/' && (path === '/' || path === '')) {
+        e.preventDefault();
+        const element = document.getElementById(targetId);
+        if (element) {
+          const headerOffset = 80; // Account for fixed header
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      } else if (window.location.pathname !== '/') {
+        // If we're on a different page, navigate first
+        e.preventDefault();
+        window.location.href = href;
+      }
+    }
+  };
+
   // Fetch footer data from API route
   useEffect(() => {
     const fetchFooterData = async () => {
@@ -105,6 +134,7 @@ export default function Footer() {
                   <Link
                     href={link.href}
                     className="text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors duration-200 "
+                    onClick={(e) => handleLinkClick(e, link.href)}
                   >
                     {link.name}
                   </Link>
@@ -193,6 +223,7 @@ export default function Footer() {
                   key={index}
                   href={link.href}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  onClick={(e) => handleLinkClick(e, link.href)}
                 >
                   {link.name}
                 </Link>

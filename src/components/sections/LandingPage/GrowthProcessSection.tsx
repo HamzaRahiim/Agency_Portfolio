@@ -418,7 +418,7 @@ export default function GrowthProcessSection() {
   }, [isLoading, processSteps.length]);
 
   return (
-    <section ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+    <section ref={sectionRef} id="about" className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
       <div key="growth-process-content">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">

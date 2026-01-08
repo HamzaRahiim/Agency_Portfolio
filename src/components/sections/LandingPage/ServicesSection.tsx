@@ -35,7 +35,7 @@ export default function ServicesSection() {
   // renders purely with React and Tailwind (no manual DOM changes).
 
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section id="services" className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Wrapper div with key to fix React removeChild error during navigation */}
       <div key="services-section-content">
         {/* Background */}

@@ -3,7 +3,7 @@
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-20">
+    <section id="home" className="relative overflow-hidden pt-20">
       {/* Background Video */}
       <div
         className="relative w-full overflow-hidden"

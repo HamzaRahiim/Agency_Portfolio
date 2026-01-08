@@ -404,7 +404,7 @@ export default function CaseStudiesSection() {
   }, [isLoading, caseStudies.length]);
 
   return (
-    <section ref={sectionRef} className="relative py-8 sm:py-12 lg:py-16 overflow-hidden bg-background">
+    <section ref={sectionRef} id="portfolio" className="relative py-8 sm:py-12 lg:py-16 overflow-hidden bg-background">
       <div key="case-studies-content">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
