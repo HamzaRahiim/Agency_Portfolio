@@ -165,6 +165,255 @@
       ],
       "primaryCtaLabel": "Discuss Your Shopify Store",
       "secondaryCtaLabel": "View Store Case Studies"
+    },
+    {
+      "title": "TikTok Ads Management",
+      "slug": "tiktok-ads-management",
+      "category": "Paid Social Advertising",
+      "description": "Data-driven TikTok Ads management including campaign strategy, audience targeting, creative testing and performance optimization for maximum ROI.",
+      "icon": "🎵",
+      "href": "/services/tiktok-ads-management",
+      "gradient": "from-black to-gray-800",
+      "heroTitle": "TikTok Ads Management",
+      "heroSubtitle": "Reach your ideal customers on TikTok with performance-driven campaigns that convert and scale.",
+      "heroBadge": "TikTok Advertising Specialist",
+      "heroImage": "/services/hero-tiktok.png",
+      "metrics": [
+        { "label": "Campaigns Managed", "value": "50+" },
+        { "label": "Average Campaign ROI", "value": "4.2x" },
+        { "label": "Total Ad Spend Managed", "value": "$2M+" }
+      ],
+      "painPoints": [
+        "Ad campaigns not targeted correctly, wasting budget on wrong audiences.",
+        "Low engagement and conversion rates from TikTok Ads.",
+        "Lack of expertise in TikTok's unique algorithm and ad formats."
+      ],
+      "solutions": [
+        "Data-driven campaign strategy with proper audience segmentation and targeting.",
+        "Continuous creative testing and optimization based on real performance data.",
+        "Expert knowledge of TikTok Ads formats, placements and algorithm best practices."
+      ],
+      "deliverables": [
+        {
+          "title": "Campaign Strategy",
+          "description": "Comprehensive strategy audit and tailored TikTok Ads campaign plan for your goals."
+        },
+        {
+          "title": "Ad Setup & Launch",
+          "description": "Campaign setup with proper targeting, creative variations and conversion tracking."
+        },
+        {
+          "title": "Ongoing Optimization",
+          "description": "Daily campaign monitoring with bid adjustments, budget allocation and creative testing."
+        },
+        {
+          "title": "Performance Reporting",
+          "description": "Weekly reports with clear metrics, insights and actionable recommendations."
+        }
+      ],
+      "processSteps": [
+        {
+          "title": "Strategy & Audit",
+          "description": "We analyze your business goals and develop a TikTok Ads strategy tailored to your audience."
+        },
+        {
+          "title": "Campaign Setup",
+          "description": "We create and launch campaigns with targeted audiences, compelling creatives and proper tracking."
+        },
+        {
+          "title": "Test & Optimize",
+          "description": "We run A/B tests, analyze results and continuously optimize for better performance."
+        },
+        {
+          "title": "Scale & Report",
+          "description": "We scale winning campaigns and provide transparent reporting on results and ROI."
+        }
+      ],
+      "caseStudies": [
+        {
+          "title": "E-Commerce Brand Growth",
+          "result": "4.5x ROAS in 60 days",
+          "description": "We built a profitable TikTok Ads strategy that scaled from test budget to 5-figure monthly spend."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "What's the minimum ad budget to start?",
+          "answer": "We recommend starting with $1,500–$2,500 per month for meaningful results and proper testing."
+        },
+        {
+          "question": "How is TikTok Ads different from Meta Ads?",
+          "answer": "TikTok has a unique algorithm, different audience demographics, and native ad formats that require a different strategy."
+        }
+      ],
+      "primaryCtaLabel": "Start TikTok Ads Campaign",
+      "secondaryCtaLabel": "View TikTok Case Studies"
+    },
+    {
+      "title": "Social Media Management",
+      "slug": "social-media-management",
+      "category": "Content & Community",
+      "description": "Full-service social media management including content strategy, posting, community engagement, analytics and brand growth across all platforms.",
+      "icon": "👥",
+      "href": "/services/social-media-management",
+      "gradient": "from-pink-500 to-rose-600",
+      "heroTitle": "Social Media Management",
+      "heroSubtitle": "Build an engaged community and consistent brand presence across all your social platforms.",
+      "heroBadge": "Social Media Growth Expert",
+      "heroImage": "/services/hero-socialmedia.jpg",
+      "metrics": [
+        { "label": "Accounts Managed", "value": "60+" },
+        { "label": "Average Engagement Lift", "value": "+120%" },
+        { "label": "Follower Growth", "value": "5-15% monthly" }
+      ],
+      "painPoints": [
+        "Inconsistent posting and content that doesn't align with your brand voice.",
+        "Low engagement rates and minimal community interaction.",
+        "Managing multiple platforms without a clear strategy or measurable results."
+      ],
+      "solutions": [
+        "Comprehensive content calendar with consistent, on-brand posting across all platforms.",
+        "Strategic engagement tactics that build real community and loyal followers.",
+        "Data-driven approach with monthly analytics and growth optimization."
+      ],
+      "deliverables": [
+        {
+          "title": "Content Strategy & Calendar",
+          "description": "Custom content strategy and 30-60 day content calendar tailored to your brand."
+        },
+        {
+          "title": "Content Creation",
+          "description": "Professional copywriting, graphics and media management for all platforms."
+        },
+        {
+          "title": "Community Management",
+          "description": "Daily engagement, responding to comments and building authentic community relationships."
+        },
+        {
+          "title": "Analytics & Reporting",
+          "description": "Monthly performance reports with growth metrics and strategic recommendations."
+        }
+      ],
+      "processSteps": [
+        {
+          "title": "Brand Audit",
+          "description": "We review your brand voice, audience and existing social presence."
+        },
+        {
+          "title": "Strategy Development",
+          "description": "We create a content strategy, platform roadmap and posting calendar."
+        },
+        {
+          "title": "Content Execution",
+          "description": "We create and post content, manage community and engage with your audience daily."
+        },
+        {
+          "title": "Measure & Iterate",
+          "description": "We track performance, report monthly results and optimize strategy based on data."
+        }
+      ],
+      "caseStudies": [
+        {
+          "title": "Beauty Brand Social Growth",
+          "result": "45K new followers in 6 months",
+          "description": "We built a cohesive social strategy across Instagram, TikTok and YouTube with consistent growth."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Which platforms do you manage?",
+          "answer": "We manage Instagram, TikTok, Facebook, YouTube, LinkedIn and Twitter. We customize based on where your audience is."
+        },
+        {
+          "question": "How much content do you create?",
+          "answer": "Depends on your plan, but typically 5-10 posts per week across all platforms with daily community engagement."
+        }
+      ],
+      "primaryCtaLabel": "Build Your Social Presence",
+      "secondaryCtaLabel": "View Social Media Results"
+    },
+    {
+      "title": "Etsy Store Setup",
+      "slug": "etsy-store-setup",
+      "category": "Marketplace Optimization",
+      "description": "Complete Etsy shop setup and optimization including store design, product listings, SEO, shop policies and launch strategy for maximum visibility.",
+      "icon": "🎨",
+      "href": "/services/etsy-store-setup",
+      "gradient": "from-amber-400 to-orange-500",
+      "heroTitle": "Etsy Store Setup",
+      "heroSubtitle": "Launch a professional Etsy shop that ranks high in search and converts browsers into customers.",
+      "heroBadge": "Etsy Shop Optimization Specialist",
+      "heroImage": "/services/hero-etsy.jpg",
+      "metrics": [
+        { "label": "Shops Launched", "value": "35+" },
+        { "label": "Average Search Visibility", "value": "+180%" },
+        { "label": "Time to First Sale", "value": "2-4 weeks" }
+      ],
+      "painPoints": [
+        "Generic Etsy shop design that doesn't stand out from competitors.",
+        "Poor product listing optimization leading to low search visibility.",
+        "Unclear shop policies and unclear brand story confusing potential buyers."
+      ],
+      "solutions": [
+        "Professional shop branding and customization that reflects your unique product line.",
+        "SEO-optimized product listings with keyword research and high-quality photos.",
+        "Clear shop story, policies and messaging that build trust with buyers."
+      ],
+      "deliverables": [
+        {
+          "title": "Shop Setup & Customization",
+          "description": "Complete shop setup with branding, banner, policies and shop sections."
+        },
+        {
+          "title": "Product Listings",
+          "description": "SEO-optimized product listings with descriptions, tags and high-quality photos."
+        },
+        {
+          "title": "Shop Branding",
+          "description": "Cohesive brand story, shop announcement and clear messaging for buyer confidence."
+        },
+        {
+          "title": "Launch Support",
+          "description": "Launch checklist, initial promotion strategy and post-launch optimization tips."
+        }
+      ],
+      "processSteps": [
+        {
+          "title": "Shop Planning",
+          "description": "We understand your products, target market and set up shop structure."
+        },
+        {
+          "title": "Shop Setup",
+          "description": "We create shop branding, customize the storefront and implement all essential settings."
+        },
+        {
+          "title": "Product Listing",
+          "description": "We create and optimize all product listings with SEO and high-quality photography."
+        },
+        {
+          "title": "Launch & Optimize",
+          "description": "We launch your shop and implement initial promotion tactics and optimization strategies."
+        }
+      ],
+      "caseStudies": [
+        {
+          "title": "Handmade Jewelry Shop Launch",
+          "result": "$8K in sales first month",
+          "description": "We set up an optimized Etsy shop with SEO-friendly listings and professional branding."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Do you handle product photography?",
+          "answer": "We optimize listings with best practices, but recommend professional photography for best results. We can guide you or recommend photographers."
+        },
+        {
+          "question": "How long does it take to see sales?",
+          "answer": "With proper optimization, most shops see their first sales within 2-4 weeks, with growth accelerating after that."
+        }
+      ],
+      "primaryCtaLabel": "Launch Your Etsy Shop",
+      "secondaryCtaLabel": "View Etsy Success Stories"
     }
   ]
 }

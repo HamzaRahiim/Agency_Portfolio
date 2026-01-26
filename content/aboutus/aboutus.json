@@ -1,0 +1,145 @@
+{
+  "hero": {
+    "badge": "About Fast Line Agency",
+    "title": "We Transform",
+    "titleHighlight": "Ecommerce Brands",
+    "subtitle": "Fast Line Agency is a full-service digital marketing and ecommerce growth agency dedicated to helping online businesses scale profitably and sustainably.",
+    "description": "With years of experience across Meta Ads, Shopify development, TikTok advertising, social media management, and marketplace optimization, we've helped hundreds of brands achieve remarkable growth.",
+    "ceoImage": "/about/ceo-image.jpg",
+    "ceoName": "Alex Johnson",
+    "ceoRole": "Founder & CEO"
+  },
+  "mission": {
+    "title": "Our Mission",
+    "description": "To empower ecommerce entrepreneurs with the tools, strategies, and expertise they need to build thriving online businesses. We believe every brand has the potential to scale—they just need the right partner.",
+    "values": [
+      {
+        "title": "Results-Driven",
+        "description": "We focus on metrics that matter: ROAS, conversion rates, and revenue growth. Every strategy is built around measurable outcomes.",
+        "icon": "📊"
+      },
+      {
+        "title": "Transparency",
+        "description": "Clear reporting, honest communication, and no hidden fees. You always know what's happening with your campaigns and store.",
+        "icon": "🔍"
+      },
+      {
+        "title": "Innovation",
+        "description": "We stay ahead of platform changes, algorithm updates, and industry trends to keep your brand competitive.",
+        "icon": "🚀"
+      },
+      {
+        "title": "Partnership",
+        "description": "We're not just vendors—we're your growth partners. Your success is our success, and we're invested in your long-term growth.",
+        "icon": "🤝"
+      }
+    ]
+  },
+  "story": {
+    "title": "Our Story",
+    "sections": [
+      {
+        "year": "2020",
+        "title": "The Beginning",
+        "description": "Fast Line Agency was founded with a simple vision: make expert ecommerce growth services accessible to brands of all sizes. We started with a small team of Meta Ads specialists and Shopify developers."
+      },
+      {
+        "year": "2022",
+        "title": "Rapid Expansion",
+        "description": "As our client base grew, we expanded our services to include TikTok Ads, social media management, and Etsy optimization. We built a reputation for delivering consistent, measurable results."
+      },
+      {
+        "year": "2024",
+        "title": "Industry Leaders",
+        "description": "Today, we've managed over $3M+ in ad spend, launched 40+ Shopify stores, and helped hundreds of brands achieve their growth goals. We continue to innovate and adapt to the ever-changing ecommerce landscape."
+      }
+    ]
+  },
+  "team": {
+    "title": "Meet Our Team",
+    "subtitle": "A dedicated group of ecommerce experts, digital marketers, and growth strategists",
+    "members": [
+      {
+        "name": "Alex Johnson",
+        "role": "Founder & CEO",
+        "bio": "10+ years in ecommerce and digital marketing. Former Meta Ads manager for Fortune 500 brands.",
+        "expertise": ["Meta Ads", "Growth Strategy", "Business Development"]
+      },
+      {
+        "name": "Sarah Chen",
+        "role": "Head of Shopify Development",
+        "bio": "Shopify Plus certified developer with expertise in custom themes, app integrations, and store optimization.",
+        "expertise": ["Shopify Development", "UX/UI Design", "Store Optimization"]
+      },
+      {
+        "name": "Marcus Rodriguez",
+        "role": "Paid Advertising Director",
+        "bio": "Specializes in Meta Ads, TikTok Ads, and Google Ads. Managed $2M+ in ad spend with 4x+ average ROAS.",
+        "expertise": ["Meta Ads", "TikTok Ads", "Performance Marketing"]
+      },
+      {
+        "name": "Emily Watson",
+        "role": "Social Media & Content Lead",
+        "bio": "Content strategist and community builder. Grew multiple brands from 0 to 100K+ followers across platforms.",
+        "expertise": ["Social Media", "Content Strategy", "Community Management"]
+      }
+    ]
+  },
+  "stats": {
+    "title": "By The Numbers",
+    "items": [
+      {
+        "value": "$3M+",
+        "label": "Ad Spend Managed",
+        "description": "Total advertising budget we've optimized across Meta, TikTok, and Google"
+      },
+      {
+        "value": "40+",
+        "label": "Stores Launched",
+        "description": "Shopify stores built, optimized, and launched for our clients"
+      },
+      {
+        "value": "200+",
+        "label": "Brands Helped",
+        "description": "Ecommerce businesses we've partnered with to drive growth"
+      },
+      {
+        "value": "4.2x",
+        "label": "Average ROAS",
+        "description": "Average return on ad spend across all managed campaigns"
+      }
+    ]
+  },
+  "approach": {
+    "title": "Our Approach",
+    "subtitle": "How we work with brands to drive sustainable growth",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Discovery & Strategy",
+        "description": "We start with a deep dive into your business, goals, and challenges. We analyze your current performance, identify opportunities, and create a customized growth roadmap."
+      },
+      {
+        "number": "02",
+        "title": "Implementation",
+        "description": "Our team executes the strategy with precision—setting up campaigns, optimizing stores, creating content, and implementing tracking. We move fast but never sacrifice quality."
+      },
+      {
+        "number": "03",
+        "title": "Optimization & Scaling",
+        "description": "We continuously monitor performance, test new strategies, and optimize what's working. When campaigns perform, we scale them intelligently to maximize growth."
+      },
+      {
+        "number": "04",
+        "title": "Reporting & Insights",
+        "description": "You receive transparent, actionable reports that show exactly what's working and why. We provide insights and recommendations to keep your brand ahead of the curve."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to Grow Your Brand?",
+    "subtitle": "Let's discuss how Fast Line Agency can help you achieve your ecommerce goals",
+    "primaryButton": "Schedule a Strategy Call",
+    "secondaryButton": "View Our Services"
+  }
+}
