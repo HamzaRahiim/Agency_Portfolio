@@ -22,15 +22,15 @@
   ],
   "services": [
     {
-      "name": "Meta Ads Management",
+      "name": "Meta Ads",
       "href": "/services/meta-ads-management"
     },
     {
-      "name": "Shopify Development",
+      "name": "Shopify Store Setup & Management",
       "href": "/services/shopify-development"
     },
     {
-      "name": "TikTok Ads Management",
+      "name": "TikTok Ads",
       "href": "/services/tiktok-ads-management"
     },
     {
@@ -38,8 +38,12 @@
       "href": "/services/social-media-management"
     },
     {
-      "name": "Etsy Store Setup",
+      "name": "Etsy Store Setup & Management",
       "href": "/services/etsy-store-setup"
+    },
+    {
+      "name": "TikTok Shop Setup & Management",
+      "href": "/services/tiktok-shop-setup"
     }
   ],
   "socialLinks": [
@@ -50,7 +54,7 @@
     },
     {
       "name": "Instagram",
-      "href": "https://www.instagram.com",
+      "href": "https://www.instagram.com/fastlinemarketing?igsh=ZmNxMm85cmNheXJx",
       "icon": "Instagram"
     },
     {

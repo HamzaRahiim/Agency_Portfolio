@@ -1,11 +1,11 @@
 {
   "services": [
     {
-      "title": "Meta Ads Management",
+      "title": "Meta Ads",
       "slug": "meta-ads-management",
       "category": "Paid Social Advertising",
       "description": "Complete Meta advertising solutions including campaign setup, creative strategy, A/B testing, retargeting and performance optimization.",
-      "icon": "📱",
+      "icon": "/services/icon-meta.png",
       "href": "/services/meta-ads-management",
       "gradient": "from-blue-500 to-purple-600",
       "heroTitle": "Meta Ads Management",
@@ -84,11 +84,11 @@
       "secondaryCtaLabel": "See Ecommerce Case Studies"
     },
     {
-      "title": "Shopify Development",
+      "title": "Shopify Store Setup & Management",
       "slug": "shopify-development",
       "category": "Store Build & Optimization",
       "description": "Complete Shopify solutions including custom theme development, app integration, payment setup, product listing and store management.",
-      "icon": "🛒",
+      "icon": "/services/icon-shopify.png",
       "href": "/services/shopify-development",
       "gradient": "from-green-400 to-blue-500",
       "heroTitle": "Shopify Development",
@@ -167,11 +167,11 @@
       "secondaryCtaLabel": "View Store Case Studies"
     },
     {
-      "title": "TikTok Ads Management",
+      "title": "TikTok Ads",
       "slug": "tiktok-ads-management",
       "category": "Paid Social Advertising",
       "description": "Data-driven TikTok Ads management including campaign strategy, audience targeting, creative testing and performance optimization for maximum ROI.",
-      "icon": "🎵",
+      "icon": "/services/icon-tiktok.png",
       "href": "/services/tiktok-ads-management",
       "gradient": "from-black to-gray-800",
       "heroTitle": "TikTok Ads Management",
@@ -254,7 +254,7 @@
       "slug": "social-media-management",
       "category": "Content & Community",
       "description": "Full-service social media management including content strategy, posting, community engagement, analytics and brand growth across all platforms.",
-      "icon": "👥",
+      "icon": "/services/icon-socialmedia.png",
       "href": "/services/social-media-management",
       "gradient": "from-pink-500 to-rose-600",
       "heroTitle": "Social Media Management",
@@ -333,11 +333,11 @@
       "secondaryCtaLabel": "View Social Media Results"
     },
     {
-      "title": "Etsy Store Setup",
+      "title": "Etsy Store Setup & Management",
       "slug": "etsy-store-setup",
       "category": "Marketplace Optimization",
       "description": "Complete Etsy shop setup and optimization including store design, product listings, SEO, shop policies and launch strategy for maximum visibility.",
-      "icon": "🎨",
+      "icon": "/services/icon-etsy.png",
       "href": "/services/etsy-store-setup",
       "gradient": "from-amber-400 to-orange-500",
       "heroTitle": "Etsy Store Setup",
@@ -414,6 +414,89 @@
       ],
       "primaryCtaLabel": "Launch Your Etsy Shop",
       "secondaryCtaLabel": "View Etsy Success Stories"
+    },
+    {
+      "title": "TikTok Shop Setup & Management",
+      "slug": "tiktok-shop-setup",
+      "category": "Marketplace & Store Management",
+      "description": "Full TikTok Shop setup and optimization — from onboarding and product catalog setup to live promotions and conversion improvements.",
+      "icon": "/services/icon-tiktokshop.png",
+      "href": "/services/tiktok-shop-setup",
+      "gradient": "from-red-500 to-pink-500",
+      "heroTitle": "TikTok Shop Setup & Management",
+      "heroSubtitle": "Launch, optimize and grow your TikTok Shop to turn discovery into consistent sales.",
+      "heroBadge": "TikTok Shop Specialist",
+      "heroImage": "/services/hero-tiktok-shop.jfif",
+      "metrics": [
+        { "label": "Shops Launched", "value": "30+" },
+        { "label": "Average Conversion Lift", "value": "+18%" },
+        { "label": "Time to Launch", "value": "1–4 weeks" }
+      ],
+      "painPoints": [
+        "Difficulty configuring product catalogs and feeds for TikTok Shop.",
+        "Low discoverability and poor conversion from native listings.",
+        "Unclear promotional strategy and ineffective live selling setup."
+      ],
+      "solutions": [
+        "Complete catalog setup, product mapping and feed optimization.",
+        "Shopfront optimization and PDP enhancements for higher conversion.",
+        "Live-selling enablement, promotion planning and measurement setup."
+      ],
+      "deliverables": [
+        {
+          "title": "Shop Onboarding",
+          "description": "Account setup, catalog import and policy configuration."
+        },
+        {
+          "title": "Product & Catalog Optimization",
+          "description": "SEO-friendly titles, tags, and properly structured product data."
+        },
+        {
+          "title": "Promotions & Live Strategy",
+          "description": "Campaign and live-selling playbook to drive immediate sales."
+        },
+        {
+          "title": "Analytics & Reporting",
+          "description": "Tracking setup and clear reports with optimization recommendations."
+        }
+      ],
+      "processSteps": [
+        {
+          "title": "Discovery & Onboarding",
+          "description": "We audit products, assets and requirements, then onboard the shop."
+        },
+        {
+          "title": "Catalog & Listing",
+          "description": "We import, map and optimize your product catalog for TikTok Shop."
+        },
+        {
+          "title": "Promote & Sell",
+          "description": "We run launch promos, ads and live events to generate traction."
+        },
+        {
+          "title": "Optimize & Scale",
+          "description": "We iterate on listings, creatives and promotions to increase revenue."
+        }
+      ],
+      "caseStudies": [
+        {
+          "title": "Direct-to-Consumer Launch",
+          "result": "$12K first-week sales",
+          "description": "We set up the shop and coordinated live promotions that drove early revenue."
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can you connect my existing product catalog?",
+          "answer": "Yes — we support imports from CSV, Shopify and other platforms and will map fields for TikTok."
+        },
+        {
+          "question": "Do you run the live selling events?",
+          "answer": "We can run or support live events, including script, host coaching and promotion."
+        }
+      ],
+      "primaryCtaLabel": "Start TikTok Shop Setup",
+      "secondaryCtaLabel": "See TikTok Shop Results"
     }
   ]
 }

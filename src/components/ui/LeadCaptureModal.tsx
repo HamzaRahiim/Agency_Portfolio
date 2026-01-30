@@ -13,10 +13,10 @@ export default function LeadCaptureModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     phone: "",
+    website: "",
     message: "",
   });
   const [errors, setErrors] = useState({
@@ -148,12 +148,12 @@ export default function LeadCaptureModal() {
     try {
       // Formspree accepts form-encoded data
       const formDataToSend = new URLSearchParams();
-      formDataToSend.append('firstName', formData.firstName);
-      formDataToSend.append('lastName', formData.lastName);
+      formDataToSend.append('fullName', formData.fullName);
       formDataToSend.append('email', formData.email);
       formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('website', formData.website);
       formDataToSend.append('message', formData.message);
-      formDataToSend.append('_subject', `New Lead from ${formData.firstName} ${formData.lastName}`);
+      formDataToSend.append('_subject', `New Lead from ${formData.fullName}`);
 
       const response = await fetch(formspreeEndpoint, {
         method: 'POST',
@@ -169,10 +169,10 @@ export default function LeadCaptureModal() {
 
       // Reset form and show success message
       setFormData({
-        firstName: "",
-        lastName: "",
+        fullName: "",
         email: "",
         phone: "",
+        website: "",
         message: "",
       });
       setErrors({ email: "", phone: "" });
@@ -328,32 +328,18 @@ export default function LeadCaptureModal() {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-3 pb-10">
-              {/* First Name & Last Name */}
-              <div className="grid grid-cols-2 gap-3 pb-2">
+              {/* Full Name & Email */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
                 <input
                   type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
-                  placeholder="First Name"
+                  placeholder="Full Name"
                 />
-                <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
-                  placeholder="Last Name"
-                />
-              </div>
-
-              {/* Email & Phone */}
-              <div className="grid grid-cols-2 gap-3 pb-2">
                 <div>
                   <input
                     type="email"
@@ -370,6 +356,10 @@ export default function LeadCaptureModal() {
                     <p className="mt-1 text-xs text-red-500">{errors.email}</p>
                   )}
                 </div>
+              </div>
+
+              {/* Phone & Website */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
                 <div>
                   <div className={`${errors.phone ? "border border-red-500 rounded-lg" : ""}`}>
                     <PhoneInput
@@ -391,6 +381,17 @@ export default function LeadCaptureModal() {
                     <p className="mt-1 text-xs text-red-500">{errors.phone}</p>
                   )}
                 </div>
+                <div>
+                  <input
+                    type="url"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                    placeholder="Website (Optional)"
+                  />
+                </div>
               </div>
 
               {/* Message */}
@@ -403,7 +404,6 @@ export default function LeadCaptureModal() {
                 className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200 resize-none pb-2"
                 placeholder="Message"
               />
-
             </form>
           </div>
 

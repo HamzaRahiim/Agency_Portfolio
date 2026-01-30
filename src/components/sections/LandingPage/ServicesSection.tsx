@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { Service, ServicesData } from "@/types/services";
 
 export default function ServicesSection() {
@@ -141,9 +142,20 @@ export default function ServicesSection() {
 
                         {/* Icon Container with Circular Animation */}
                         <div className="relative h-full w-full rounded-xl bg-gradient-to-br from-background to-muted/50 border border-border/60 flex items-center justify-center text-2xl sm:text-3xl lg:text-4xl group-hover:border-primary/40 group-hover:shadow-lg transition-all duration-500">
-                          {/* Icon with GSAP rotation */}
+                          {/* Icon with Image */}
                           <div data-icon-container className="h-6 sm:h-8 lg:h-10 w-6 sm:w-8 lg:w-10 flex items-center justify-center">
-                            <span className="block">{service.icon}</span>
+                            {service.icon && typeof service.icon === 'string' && service.icon.startsWith('/') ? (
+                              <Image
+                                src={service.icon}
+                                alt={service.title}
+                                width={40}
+                                height={40}
+                                className="w-full h-full object-contain"
+                                priority={false}
+                              />
+                            ) : (
+                              <span className="text-xl">{service.icon}</span>
+                            )}
                           </div>
                         </div>
                       </div>

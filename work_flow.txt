@@ -1,0 +1,9 @@
+1. Names correction of the services.   done
+2. video change.         Done
+3. add all services one by one over the video. (one title, promotional line below and then below action button related to service.)... Done
+4. instagram link needs to be added in footer.       done
+5. complete about section by removing ceo pictures and updating team section to real names and overall layout setting.
+6. icon issues need to be solved for browser search.
+7. google console issue for indexing need to be completed.
+8. google analytics.
+9. website link ask enquiry box .. Done
